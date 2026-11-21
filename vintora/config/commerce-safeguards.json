@@ -1,0 +1,65 @@
+{
+  "policyVersion": "v1",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "enforcement": "fail-closed",
+  "defaultOutcome": "denied",
+  "allowedResultCodes": ["clear", "simulated_clear"],
+  "deniedResultCodes": [
+    "denied",
+    "unknown",
+    "error",
+    "expired",
+    "sanctions_hit",
+    "aml_alert",
+    "payment_declined"
+  ],
+  "maxEvidenceAgeMinutes": 15,
+  "maxAgeEvidenceHours": 720,
+  "evidencePrefix": "simulated:",
+  "simulationDeniedJurisdictions": ["UNVERIFIED", "BLOCKED_BY_COUNSEL"],
+  "simulationNote": "Fixture-only deny labels. This is not an official sanctions, AML, PEP or payment screening list.",
+  "controls": [
+    {
+      "id": "age",
+      "required": true,
+      "label": "Age assurance",
+      "adapter": "local dob assertion",
+      "evidenceRefExample": "simulated:age:<opaque-hash>"
+    },
+    {
+      "id": "kyc",
+      "required": true,
+      "label": "Identity/KYC",
+      "adapter": "deterministic local",
+      "evidenceRefExample": "simulated:kyc:<opaque-hash>"
+    },
+    {
+      "id": "aml",
+      "required": true,
+      "label": "AML / transaction monitoring",
+      "adapter": "deterministic local",
+      "evidenceRefExample": "simulated:aml:<opaque-hash>"
+    },
+    {
+      "id": "sanctions",
+      "required": true,
+      "label": "Sanctions / PEP screening",
+      "adapter": "deterministic local",
+      "evidenceRefExample": "simulated:sanctions:<opaque-hash>"
+    },
+    {
+      "id": "payment",
+      "required": true,
+      "label": "Payment authorisation",
+      "adapter": "simulated processor",
+      "evidenceRefExample": "simulated:payment:<opaque-hash>"
+    }
+  ],
+  "evidenceGaps": [
+    "No certified age or identity provider response is stored.",
+    "No official sanctions, PEP or AML list is consulted.",
+    "No PSP authorisation, capture confirmation or settlement feed exists.",
+    "No transaction-monitoring case or suspicious-activity workflow exists."
+  ]
+}

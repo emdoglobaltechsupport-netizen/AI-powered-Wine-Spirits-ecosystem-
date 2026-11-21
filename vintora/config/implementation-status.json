@@ -1,0 +1,172 @@
+{
+  "policyVersion": "v1",
+  "purpose": "Machine-readable lifecycle states for README, FEATURE_STATUS.md and ROADMAP.md capability claims. No Phase 1 component is in the Pilot or Production state.",
+  "states": {
+    "Design": "Documented intent, register, wireframe or workflow with no runnable artifact or live effect.",
+    "Prototype": "Runnable local demo using demo data or deterministic/simulated adapters; no external side effects.",
+    "Pilot": "Restricted live operation with licensed providers, named operators, controlled real users and recorded evidence. Not present in Phase 1.",
+    "Production": "Public live operation after security, reliability and compliance evidence plus explicit launch approval. Not present in Phase 1."
+  },
+  "currentRepositoryState": "Prototype",
+  "pilotComponents": [],
+  "productionComponents": [],
+  "productionReadyRule": "Every current component is not production-ready. The term is reserved for a component that has passed security, reliability and compliance evidence and has an approved launch record.",
+  "modules": [
+    {
+      "name": "Vintora Market",
+      "state": "Prototype",
+      "scope": "Age-gated demo catalogue, search, product detail, cart and checkout with five simulated safeguards.",
+      "gate": "No real catalogue rights, jurisdictional age assurance, PSP, fulfilment or live inventory."
+    },
+    {
+      "name": "Vintora Trade",
+      "state": "Prototype",
+      "scope": "RFQ and wholesale screens with deterministic responses.",
+      "gate": "No contracts, credit engine, distributor KYB or live ordering."
+    },
+    {
+      "name": "Vintora Sommelier",
+      "state": "Prototype",
+      "scope": "Deterministic pairing and safety note in the local UI and API.",
+      "gate": "No model calls, evaluation evidence, voice or multilingual production service."
+    },
+    {
+      "name": "Vintora Assist",
+      "state": "Prototype",
+      "scope": "Confirmation-based concierge demo and cross-module routing.",
+      "gate": "No external actions, real personalization or tool execution."
+    },
+    {
+      "name": "Vintora Studio",
+      "state": "Prototype",
+      "scope": "Rule-derived marketing draft UI with a human-release gate.",
+      "gate": "No generative model, live platform, ad spend or automatic publishing."
+    },
+    {
+      "name": "Vintora Seller",
+      "state": "Prototype",
+      "scope": "Merchant screens with demo listings and inventory.",
+      "gate": "No real seller onboarding, payouts, tax or order fulfilment."
+    },
+    {
+      "name": "Vintora Flow",
+      "state": "Prototype",
+      "scope": "Shipment-tracking demo with deterministic events.",
+      "gate": "No carrier integrations, customs/tax engine, cold-chain telemetry or delivery age check."
+    },
+    {
+      "name": "Vintora Club",
+      "state": "Prototype",
+      "scope": "Tier and box screens.",
+      "gate": "No billing, dunning, allocation or fulfilment."
+    },
+    {
+      "name": "Vintora Vault",
+      "state": "Prototype",
+      "scope": "Portfolio and fee-explanation demo.",
+      "gate": "Custody, fractional title, secondary settlement and investor eligibility are blocked."
+    },
+    {
+      "name": "Vintora Rewards",
+      "state": "Prototype",
+      "scope": "Unified points-balance demo.",
+      "gate": "No ledger of record, partner integration or redemption."
+    }
+  ],
+  "internalLayers": [
+    {
+      "name": "Admin Panel",
+      "state": "Prototype",
+      "scope": "19-workspace console, count-only coverage, guarded mutations and append-only audit.",
+      "gate": "No production IdP/MFA, retained audit store or live privileged operations."
+    },
+    {
+      "name": "Global Payments",
+      "state": "Prototype",
+      "scope": "Simulated payment adapter, 15-minute FX lock and idempotent checkout.",
+      "gate": "No PSP, ledger of record, reconciliation or disputes."
+    },
+    {
+      "name": "AI Marketing Automation",
+      "state": "Prototype",
+      "scope": "Draft-only evaluator, approval gate and audit events.",
+      "gate": "No ad platform, spend, email send or automatic publishing."
+    },
+    {
+      "name": "Ultimate AI TechOps",
+      "state": "Prototype",
+      "scope": "24-agent advisory evaluator, allowlist, approval, isolation and safe-stop controls.",
+      "gate": "No autonomous execution or timed kill-switch drill."
+    }
+  ],
+  "environments": [
+    {
+      "name": "Local runtime",
+      "state": "Prototype",
+      "profile": "local",
+      "scope": "Docker Compose or manual PostgreSQL fallback serving the API and storefront.",
+      "gate": "Localhost and demo identities only."
+    },
+    {
+      "name": "Test profile",
+      "state": "Prototype",
+      "profile": "test",
+      "scope": "Boundary profile, shared domain tests, offline selftests and API smoke checks.",
+      "gate": "No hosted test environment."
+    },
+    {
+      "name": "Staging profile",
+      "state": "Design",
+      "profile": "staging",
+      "scope": "Profile contract and startup self-test only.",
+      "gate": "No hosted staging environment, credentials or licensed providers."
+    },
+    {
+      "name": "Production profile",
+      "state": "Design",
+      "profile": "production",
+      "scope": "Fail-closed guard and boundary configuration only.",
+      "gate": "Startup is rejected; no Production-state environment exists."
+    },
+    {
+      "name": "Hosted CI",
+      "state": "Design",
+      "profile": "n/a",
+      "scope": "Workflow definitions for typechecks, tests, migrations, scanning and release.",
+      "gate": "No hosted CI result is attached to this local snapshot."
+    },
+    {
+      "name": "Web shell",
+      "state": "Design",
+      "profile": "n/a",
+      "scope": "Next.js landing shell that links to the local prototype.",
+      "gate": "Not a functional web application."
+    },
+    {
+      "name": "Mobile shell",
+      "state": "Design",
+      "profile": "n/a",
+      "scope": "Expo placeholder showing canon facts and the Phase 3 target.",
+      "gate": "Not a functional mobile application."
+    }
+  ],
+  "claimReview": {
+    "scope": [
+      "INVESTOR_DOCUMENTATION.md and README.md capability tables",
+      "ROADMAP.md",
+      "01-business-plan.md",
+      "02-revenue-model.md",
+      "07-marketing-strategy.md",
+      "09-growth-strategy.md",
+      "10-investor-pitch-deck.md",
+      "any external investor or roadmap artifact"
+    ],
+    "requiredApprovers": [
+      "Canon Steward",
+      "distinct approver",
+      "Compliance/Legal reviewer for regulated claims",
+      "CFO/Finance lead for financial figures"
+    ],
+    "rule": "Record an RFC before publication. A documentation-only change cannot promote a module or environment from Design or Prototype to Pilot or Production."
+  }
+}

@@ -1,0 +1,117 @@
+{
+  "policyVersion": "v1",
+  "purpose": "Jurisdiction-routing and evidence contract for age assurance. This is a planning and fail-closed prototype register, not legal advice or evidence that alcohol sales are lawful in any jurisdiction.",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "status": "blocked-pending-legal-and-provider",
+  "enforcement": "fail-closed",
+  "defaultDecision": "deny",
+  "unknownJurisdictionDecision": "deny",
+  "legalReview": {
+    "status": "not_obtained",
+    "evidenceRef": null,
+    "requiredApproverRoles": ["Legal", "Compliance"],
+    "requiredGates": [
+      "jurisdiction-minimum-ages",
+      "assurance-method-and-record-retention",
+      "privacy-dpia",
+      "accessibility-notice",
+      "age-at-delivery"
+    ]
+  },
+  "providerIntegration": {
+    "status": "not_integrated",
+    "providerName": null,
+    "evidenceRef": null,
+    "independentVerification": false,
+    "signedStatusRequired": true
+  },
+  "requiredStages": [
+    {
+      "id": "account-age-assertion",
+      "timing": "before_checkout",
+      "controlId": "age",
+      "status": "simulated-local",
+      "note": "Prototype DOB assertion only; not a licensed age assurance result."
+    },
+    {
+      "id": "checkout-safeguard",
+      "timing": "before_quote_and_order",
+      "controlId": "age",
+      "status": "enforced-simulated",
+      "note": "Missing, unknown, stale, future or denied age evidence blocks quote and order."
+    },
+    {
+      "id": "fulfilment-review",
+      "timing": "before_release",
+      "controlId": "age",
+      "status": "not_implemented",
+      "note": "Requires licensed warehouse and carrier controls."
+    },
+    {
+      "id": "delivery-age-check",
+      "timing": "at_delivery",
+      "controlId": "age",
+      "status": "not_implemented",
+      "note": "Requires jurisdiction-specific age-at-delivery rules and carrier evidence."
+    }
+  ],
+  "jurisdictions": [
+    { "code": "US", "minimumAge": null, "ruleSourceRef": null, "status": "not_obtained", "decision": "deny_until_legal_review" },
+    { "code": "GB", "minimumAge": null, "ruleSourceRef": null, "status": "not_obtained", "decision": "deny_until_legal_review" },
+    { "code": "UNVERIFIED", "minimumAge": null, "ruleSourceRef": null, "status": "fixture-deny", "decision": "deny" },
+    { "code": "BLOCKED_BY_COUNSEL", "minimumAge": null, "ruleSourceRef": null, "status": "fixture-deny", "decision": "deny" }
+  ],
+  "reverificationTriggers": [
+    { "id": "jurisdiction-change", "action": "require_new_evidence", "status": "policy-defined" },
+    { "id": "transaction-risk-change", "action": "require_new_evidence", "status": "policy-defined" },
+    { "id": "evidence-expiry", "action": "require_new_evidence", "status": "enforced-simulated" },
+    { "id": "provider-or-method-change", "action": "require_new_evidence_and_legal_review", "status": "policy-defined" }
+  ],
+  "evidence": {
+    "prefix": "simulated:",
+    "maxAgeHours": 720,
+    "signatureRequired": true,
+    "signedStatusRequired": true,
+    "requiredFields": [
+      "control_id",
+      "result",
+      "evidence_ref",
+      "jurisdiction",
+      "evaluated_at",
+      "provider_label",
+      "subject_hash",
+      "signature"
+    ],
+    "minimization": "Store signed status, opaque subject hash, jurisdiction, timestamp and provider label only; do not store full identity documents in commerce records."
+  },
+  "privacy": {
+    "noticeVersion": "v1",
+    "accessibilityTarget": "WCAG 2.2 AA",
+    "granularConsentRequired": true,
+    "recommendationMarketingSeparation": true,
+    "retentionScheduleStatus": "not_obtained",
+    "dsarWorkflowStatus": "simulated"
+  },
+  "auditEvents": [
+    "age_assertion_written",
+    "commerce_safeguard_decision_written",
+    "age_reverification_required",
+    "fulfilment_age_check_required"
+  ],
+  "fraudScenarios": [
+    { "id": "underage-dob", "expected": "denied", "coveredBy": "services/api/scripts/smoke.mjs" },
+    { "id": "invalid-dob-format", "expected": "denied", "coveredBy": "services/api/scripts/smoke.mjs" },
+    { "id": "missing-age-evidence", "expected": "denied", "coveredBy": "services/api/scripts/smoke.mjs" },
+    { "id": "denied-jurisdiction", "expected": "denied", "coveredBy": "services/api/scripts/smoke.mjs" },
+    { "id": "stale-age-evidence", "expected": "denied", "coveredBy": "packages/shared/src/commerce-safeguards.test.ts" },
+    { "id": "future-age-evidence", "expected": "denied", "coveredBy": "packages/shared/src/commerce-safeguards.test.ts" }
+  ],
+  "evidenceGaps": [
+    "No licensed jurisdiction-specific age or identity provider response exists.",
+    "No legal review of assurance method, retention or privacy notice is attached.",
+    "No fulfilment or delivery age-check integration exists.",
+    "No signed provider status or signature verification is implemented.",
+    "No real fraud, chargeback or account-takeover scenario suite has run."
+  ]
+}

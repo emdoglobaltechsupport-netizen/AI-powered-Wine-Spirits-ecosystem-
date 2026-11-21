@@ -1,0 +1,86 @@
+{
+  "_notice": "CONTRACT EXAMPLE ONLY — replace every value with licensed, authorised supplier/brand data before import. URLs use the reserved example.invalid domain and REPLACE ME values are rejected by quality gates.",
+  "license": "EXAMPLE_LICENSE_REPLACE_WITH_ACTUAL_SUPPLIER_TERMS",
+  "retrieved_at": "2026-01-01T00:00:00Z",
+  "records": [
+    {
+      "sku": "EXAMPLE-GLASS-001",
+      "source_url": "https://example.invalid/supplier-feed/glass-001",
+      "category": "Glassware",
+      "brand": "EXAMPLE BRAND — REPLACE ME",
+      "product_name": "EXAMPLE Crystal Wine Glass — REPLACE ME",
+      "materials": ["REPLACE ME material declaration"],
+      "dimensions": {
+        "height": 22,
+        "width": 8,
+        "linear_unit": "cm",
+        "weight": 180,
+        "weight_unit": "g",
+        "source": "https://example.invalid/supplier-feed/glass-001/specs"
+      },
+      "care_instructions": ["REPLACE ME verified care instruction"],
+      "tags": ["replace-me", "contract-example"],
+      "compliance_notes": [
+        {
+          "text": "REPLACE ME verified compliance note",
+          "origin": "verified",
+          "reference": "https://example.invalid/compliance/glass-001"
+        }
+      ],
+      "msrp_usd": null,
+      "regional_prices": [
+        {
+          "region": "US",
+          "currency": "USD",
+          "amount": null,
+          "price_type": "msrp",
+          "effective_date": null,
+          "source": "REPLACE ME supplier pricing sheet",
+          "source_url": "https://example.invalid/pricing/glass-001"
+        }
+      ],
+      "cross_sell_skus": [],
+      "bundles": [],
+      "asset_authorization_reference": "REPLACE-ME-CONTRACT-ID",
+      "image_moderation_checked_at": "2026-01-01T00:00:00Z",
+      "image_moderation_checked_by": "REPLACE ME moderator",
+      "assets": [
+        {
+          "role": "official",
+          "url": "https://assets.example.invalid/replace-me/official.jpg",
+          "licence": "SUPPLIER_AUTHORIZED",
+          "licence_holder": "REPLACE ME rights holder",
+          "authorizing_party": "REPLACE ME authorised licensor",
+          "authorization_reference": "REPLACE-ME-CONTRACT-ID",
+          "authorized": true,
+          "source_url": "https://example.invalid/assets/glass-001",
+          "checksum_sha256": null,
+          "width_px": 1600,
+          "height_px": 1600,
+          "moderation": {
+            "status": "approved",
+            "checked_at": "2026-01-01T00:00:00Z",
+            "checked_by": "REPLACE ME moderator",
+            "reasons": []
+          }
+        },
+        {
+          "role": "backup",
+          "url": "https://assets.example.invalid/replace-me/detail.jpg",
+          "licence": "SUPPLIER_AUTHORIZED",
+          "licence_holder": "REPLACE ME rights holder",
+          "authorizing_party": "REPLACE ME authorised licensor",
+          "authorization_reference": "REPLACE-ME-CONTRACT-ID",
+          "authorized": true,
+          "source_url": "https://example.invalid/assets/glass-001/detail",
+          "moderation": {
+            "status": "approved",
+            "checked_at": "2026-01-01T00:00:00Z",
+            "checked_by": "REPLACE ME moderator",
+            "reasons": []
+          }
+        }
+      ]
+    }
+  ]
+}

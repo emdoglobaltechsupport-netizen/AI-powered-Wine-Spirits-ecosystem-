@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/generate-test-counts.mjs",
+  "sources": {
+    "browser": "apps/prototype/selftest.js",
+    "catalogue": "packages/db/scripts/catalogue-selftest.mjs",
+    "accessories": "packages/db/scripts/wine-accessories-selftest.mjs",
+    "africa": "packages/db/scripts/africa-marketplace-selftest.mjs"
+  },
+  "suites": {
+    "browser": {
+      "label": "Browser self-test",
+      "runtime": "Browser DOM (?selftest=1)",
+      "source": "apps/prototype/selftest.js",
+      "countKind": "checks",
+      "count": 65,
+      "staticCheckSites": 56,
+      "sections": [
+        {
+          "name": "Data and i18n",
+          "count": 9
+        },
+        {
+          "name": "Age gate and navigation",
+          "count": 14
+        },
+        {
+          "name": "Product, cart and checkout",
+          "count": 6
+        },
+        {
+          "name": "Preferences and FX",
+          "count": 3
+        },
+        {
+          "name": "Sommelier and Assist",
+          "count": 6
+        },
+        {
+          "name": "Studio, Trade, Seller and Flow",
+          "count": 6
+        },
+        {
+          "name": "Prototype safeguards",
+          "count": 1
+        },
+        {
+          "name": "Admin and TechOps",
+          "count": 20
+        }
+      ],
+      "scope": "Rendered age gate, catalogue, product, cart, checkout, ten market modules and the 19-workspace Admin/TechOps simulation."
+    },
+    "catalogue": {
+      "label": "Verified catalogue pipeline",
+      "runtime": "Node offline",
+      "source": "packages/db/scripts/catalogue-selftest.mjs",
+      "countKind": "assertions",
+      "count": 18,
+      "scope": "Fixture ingestion, normalisation, coverage, validation and licensed-feed example handling."
+    },
+    "accessories": {
+      "label": "Wine Accessories pipeline",
+      "runtime": "Node offline",
+      "source": "packages/db/scripts/wine-accessories-selftest.mjs",
+      "countKind": "assertions",
+      "count": 36,
+      "scope": "Accessory taxonomy, normalisation, validation rules, schema and append-only DDL contract."
+    },
+    "africa": {
+      "label": "Africa Marketplace registry",
+      "runtime": "Node offline",
+      "source": "packages/db/scripts/africa-marketplace-selftest.mjs",
+      "countKind": "assertions",
+      "count": 54,
+      "scope": "Market registry, candidate brands, draft templates, workflows, schema, DDL and storefront snapshot source."
+    }
+  },
+  "totals": {
+    "browserChecks": 65,
+    "offlineAssertions": 108,
+    "independentPhase1Checks": 173,
+    "suites": 4
+  },
+  "overlap": {
+    "invokesAnotherSuite": false,
+    "duplicateAssertions": 0,
+    "explanation": "The browser suite asserts rendered DOM behaviour; the three offline suites run in Node against ingestion/registry artefacts. No suite invokes another and no assertion is counted in two suites. Shared product and Admin facts are separate checks at different layers, not combined totals."
+  }
+}

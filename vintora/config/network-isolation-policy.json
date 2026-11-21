@@ -1,0 +1,46 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-network-isolation-design",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "composeFile": "docker-compose.yml",
+  "requiredBindHost": "127.0.0.1",
+  "publishedPorts": ["5432", "6379", "4000", "8123"],
+  "expectedBindings": [
+    "127.0.0.1:${POSTGRES_PORT:-5432}:5432",
+    "127.0.0.1:${REDIS_PORT:-6379}:6379",
+    "127.0.0.1:${API_PORT:-4000}:4000",
+    "127.0.0.1:${PROTOTYPE_PORT:-8123}:8123"
+  ],
+  "networks": {
+    "dataNetwork": "vintora-internal",
+    "dataNetworkInternal": true,
+    "edgeNetwork": "vintora-edge",
+    "dataServices": ["db", "redis"],
+    "edgeServices": ["api", "prototype"]
+  },
+  "secrets": {
+    "source": "generated gitignored .env or host process environment",
+    "requiredVariables": ["POSTGRES_PASSWORD", "SESSION_SECRET", "SEED_ADMIN_PASSWORD", "SEED_USER_PASSWORD"],
+    "inImage": false,
+    "inComposeFile": false,
+    "sharedSecretStore": null
+  },
+  "forbidden": [
+    "0.0.0.0:5432",
+    "0.0.0.0:6379",
+    "0.0.0.0:4000",
+    "0.0.0.0:8123",
+    "network_mode: host",
+    "production-vpc",
+    "shared-vpc"
+  ],
+  "productionNetworkAccess": false,
+  "sharedNetworkAccess": false,
+  "egressRestriction": "Data network is Compose-internal; no production or shared VPC attachment is defined. Hosted firewall policy is not evidenced.",
+  "evidenceGaps": [
+    "No hosted network policy, firewall rule, VPC attachment or network ACL evidence is attached.",
+    "Docker Compose daemon reachability passed local setup:doctor, but full container startup is not exercised in this workspace.",
+    "No secrets-manager integration exists; secrets come from generated local environment values only."
+  ]
+}

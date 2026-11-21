@@ -1,0 +1,55 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-sandbox-only-external-effects-disabled",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "externalEffectsEnabled": false,
+  "sandboxOnly": true,
+  "allowedChannels": ["sandbox", "prototype_local"],
+  "blockedChannels": ["live", "ad_platform", "email_send", "social_publish", "seo_publish", "influencer_outreach", "paid_search", "paid_social"],
+  "approval": {
+    "requiredForExternalOrPaidAction": true,
+    "distinctApproverRequired": true,
+    "reasonMinLength": 8,
+    "requiredFields": ["approverUserId", "actorUserId", "reason", "recordedAt", "promptHash", "modelVersion", "payloadHash"],
+    "selfApprovalDenied": true
+  },
+  "preview": {
+    "renderedVariantRequired": true,
+    "audienceVerificationRequired": true,
+    "verificationFields": ["age_gate", "jurisdiction", "consent_state", "segment_exclusions"],
+    "deniedSegments": ["underage", "age_unknown", "harmful_use_inferred", "self_excluded", "recovery_seeking", "health_adjacent"]
+  },
+  "budget": {
+    "ownerRequired": true,
+    "maxSandboxSpendUsd": 0,
+    "requestedSpendMustBeZero": true,
+    "alertVariancePct": 20,
+    "enforcedOutsideModel": true
+  },
+  "legalApproval": {
+    "requiredForRegulatedClaims": true,
+    "requiredFields": ["reviewer", "jurisdiction", "claimSetHash", "approvedAt"],
+    "regulatedClaimPatterns": ["health", "medical", "price", "award", "provenance", "comparative", "investment", "guaranteed", "safe drinking"]
+  },
+  "killSwitch": {
+    "enabled": true,
+    "activationRequiresReason": true,
+    "activationRequiresDistinctApprover": false,
+    "alertRequired": true,
+    "scope": ["sandbox_campaign", "audience_export", "scheduler", "all_prototype_channels"],
+    "drillCompleted": false,
+    "evidenceRef": null
+  },
+  "audit": {
+    "appendOnly": true,
+    "requiredFields": ["correlationId", "tenantId", "actorUserId", "campaignId", "action", "channel", "decision", "reasonCode", "reason", "occurredAt"]
+  },
+  "evidenceGaps": [
+    "No ad platform, email sender, social publisher, SEO publisher or influencer outreach connector exists.",
+    "No live budget API, spend cap enforcement or owner validation against a finance system exists.",
+    "No production legal approval service or jurisdiction-specific counsel review is attached.",
+    "No immutable external audit sink, alert routing or kill-switch drill result is attached.",
+    "All approvals, previews and audiences in the prototype are deterministic demo values."
+  ]
+}

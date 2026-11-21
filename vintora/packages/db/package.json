@@ -1,0 +1,26 @@
+{
+  "name": "@vintora/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "migrate": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f migrations/0001_initial.sql",
+    "seed": "psql \"$DATABASE_URL\" -v ON_ERROR_STOP=1 -f seed/001_seed.sql",
+    "catalogue:ingest": "node scripts/catalogue-ingest.mjs",
+    "catalogue:import": "node scripts/catalogue-import.mjs",
+    "catalogue:selftest": "node scripts/catalogue-selftest.mjs",
+    "accessories:ingest": "node scripts/wine-accessories-ingest.mjs",
+    "accessories:import": "node scripts/wine-accessories-import.mjs",
+    "accessories:selftest": "node scripts/wine-accessories-selftest.mjs",
+    "africa:build": "node scripts/africa-marketplace-build.mjs",
+    "africa:import": "node scripts/africa-marketplace-import.mjs",
+    "africa:selftest": "node scripts/africa-marketplace-selftest.mjs",
+    "build": "echo 'db: SQL package, no build'",
+    "typecheck": "echo 'db: SQL package, no typecheck'",
+    "lint": "echo 'db: SQL package, no lint'"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {}
+}

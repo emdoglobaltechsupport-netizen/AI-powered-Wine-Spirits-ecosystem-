@@ -1,0 +1,101 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-recommendation-only-deny-by-default",
+  "autonomousPricingEnabled": false,
+  "personalizedPricingEnabled": false,
+  "liveCompetitorDataEnabled": false,
+  "applyExecutionEnabled": false,
+  "failClosed": true,
+  "notice": "Pricing and promotions are recommendation engines only. No listing price, promotion, discount or personalized offer is applied automatically. Metadata checks prove constraint parity, not legal or empirical fairness.",
+  "permittedVariables": [
+    "verified_unit_cost",
+    "verified_provenance_grade",
+    "verified_stock_and_custody_state",
+    "published_list_price",
+    "fixed_public_promotion_calendar",
+    "jurisdiction_tax_and_eligibility_rules",
+    "fulfilment_cost_and_insurance"
+  ],
+  "prohibitedVariables": [
+    "protected_class_or_proxy",
+    "age_except_legal_eligibility",
+    "health_or_recovery_profile",
+    "inferred_demographic_segment",
+    "browsing_or_purchase_history_without_opt_in",
+    "postcode_or_neighbourhood_willingness_to_pay",
+    "device_or_browser_type",
+    "unlicensed_competitor_price",
+    "competitor_identity_for_coordination"
+  ],
+  "hardConstraints": {
+    "minimumGrossMarginPct": 12,
+    "maximumIncreasePct": 10,
+    "maximumDiscountPct": 15,
+    "minimumDaysBetweenPublicChanges": 30,
+    "maximumChangesPerSkuPerQuarter": 2,
+    "sameSkuSamePublishedPrice": true,
+    "noHiddenFees": true,
+    "publicEffectiveDateRequired": true
+  },
+  "humanApproval": {
+    "requiredForAnyPublishedChange": true,
+    "distinctApproverRequired": true,
+    "selfApprovalDenied": true,
+    "reasonMinLength": 8,
+    "sellerApprovalForListingPrice": true,
+    "financeApprovalForPlatformPromotion": true,
+    "approvalExpires": true
+  },
+  "competitorData": {
+    "licensedSourceRequired": true,
+    "allowScraping": false,
+    "allowIndividualCompetitorTargeting": false,
+    "aggregatedIndicesOnly": true,
+    "noPriceSignallingOrCoordination": true
+  },
+  "explainability": {
+    "requiredFields": ["ruleVersion", "inputs", "marginBeforePct", "marginAfterPct", "changePct", "reasons", "evidenceRefs"],
+    "appendOnlyAudit": true,
+    "retainPromptModelAndRuleVersion": true
+  },
+  "auditFields": [
+    "correlationId",
+    "sku",
+    "actorUserId",
+    "approverUserId",
+    "currentPriceUsd",
+    "proposedPriceUsd",
+    "inputs",
+    "decision",
+    "reasonCode",
+    "ruleVersion",
+    "explanationHash",
+    "occurredAt"
+  ],
+  "legalReviews": [
+    { "id": "competition_law", "status": "not_obtained", "evidenceRef": null, "owner": null },
+    { "id": "consumer_pricing", "status": "not_obtained", "evidenceRef": null, "owner": null },
+    { "id": "alcohol_promotion", "status": "not_obtained", "evidenceRef": null, "owner": null }
+  ],
+  "disparityTesting": {
+    "geographicReviewRequired": true,
+    "demographicReviewRequired": true,
+    "protectedProxyScanRequired": true,
+    "publishBlockedUntilReview": true,
+    "evidenceRef": null,
+    "reviewer": null,
+    "reviewedAt": null
+  },
+  "codeBoundaryRefs": [
+    "packages/shared/src/pricing-controls.ts",
+    "services/api/src/sommelier.ts",
+    "19-ai-pricing-engine.md",
+    "PRICING_CONTROLS.md"
+  ],
+  "evidenceGaps": [
+    "No competition-law or consumer-pricing counsel opinion is attached.",
+    "No measured geographic or demographic disparity result is attached.",
+    "No live licensed competitor feed exists.",
+    "No human-approved published price change exists in the prototype."
+  ]
+}

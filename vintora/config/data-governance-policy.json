@@ -1,0 +1,118 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-design-controls",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "profilingEnabled": false,
+  "crossBorderTransfersEnabled": false,
+  "lawfulBasisStatus": "design_target_evidence_missing",
+  "notice": "This register specifies lifecycle controls for personal, sensitive and regulated data. A green check proves register and code parity, not lawful processing, a completed DPIA or launch approval.",
+  "identitySeparation": {
+    "analyticsDomain": "analytics",
+    "regulatedDomain": "regulated",
+    "commerceDomain": "commerce",
+    "auditDomain": "audit",
+    "analyticsIdentityCategory": "analytics_identity",
+    "regulatedIdentityCategory": "regulated_identity",
+    "crossDomainJoinAllowed": false,
+    "rawIdentityDocumentsInAnalytics": false,
+    "ageTokenOnlyInMarketing": true
+  },
+  "dataInventory": [
+    { "id": "taste_profile", "category": "preference", "identityDomain": "commerce", "source": "explicit user selection", "sensitivity": "personal", "purposes": ["recommendations", "closed_loop_personalization"], "retentionDays": 90, "systemOfRecord": "prototype profile" },
+    { "id": "catalogue_interactions", "category": "behavioural", "identityDomain": "analytics", "source": "product views and searches", "sensitivity": "personal", "purposes": ["recommendations", "experimentation"], "retentionDays": 30, "systemOfRecord": "prototype event stream" },
+    { "id": "purchase_history", "category": "transactional", "identityDomain": "commerce", "source": "simulated order records", "sensitivity": "personal", "purposes": ["closed_loop_personalization"], "retentionDays": 365, "systemOfRecord": "prototype order store" },
+    { "id": "consumption_events", "category": "behavioural", "identityDomain": "commerce", "source": "consumption logging", "sensitivity": "sensitive-adjacent", "purposes": [], "retentionDays": 0, "systemOfRecord": "not collected" },
+    { "id": "email_engagement", "category": "communication", "identityDomain": "analytics", "source": "message opens and clicks", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 180, "systemOfRecord": "prototype engagement log" },
+    { "id": "experiment_exposure", "category": "experimentation", "identityDomain": "analytics", "source": "assignment and exposure events", "sensitivity": "pseudonymous", "purposes": ["experimentation"], "retentionDays": 30, "systemOfRecord": "prototype experiment log" },
+    { "id": "analytics_identity", "category": "pseudonymous identity", "identityDomain": "analytics", "source": "first-party pseudonymous identifier", "sensitivity": "pseudonymous", "purposes": ["experimentation"], "retentionDays": 30, "systemOfRecord": "analytics identity store" },
+    { "id": "age_verified_region", "category": "compliance token", "identityDomain": "commerce", "source": "verified age country token", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 365, "systemOfRecord": "age token store" },
+    { "id": "age_documents", "category": "identity", "identityDomain": "regulated", "source": "KYC evidence documents", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190, "systemOfRecord": "regulated identity vault" },
+    { "id": "regulated_identity", "category": "identity", "identityDomain": "regulated", "source": "verified legal identity record", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190, "systemOfRecord": "regulated identity vault" },
+    { "id": "kyc_log", "category": "compliance audit", "identityDomain": "regulated", "source": "KYC/AML decision log", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190, "systemOfRecord": "regulated audit log" },
+    { "id": "custody_record", "category": "custody", "identityDomain": "regulated", "source": "Vault custody and title evidence", "sensitivity": "restricted", "purposes": [], "retentionDays": 3650, "systemOfRecord": "custody evidence store" },
+    { "id": "transaction_record", "category": "financial audit", "identityDomain": "commerce", "source": "simulated order and ledger record", "sensitivity": "personal", "purposes": [], "retentionDays": 2555, "systemOfRecord": "commerce ledger" },
+    { "id": "ai_interaction_log", "category": "AI audit", "identityDomain": "audit", "source": "prompt, model, retrieval and response metadata", "sensitivity": "personal", "purposes": [], "retentionDays": 90, "systemOfRecord": "AI provenance log" },
+    { "id": "marketing_audience", "category": "derived audience", "identityDomain": "analytics", "source": "consented engagement and age-region token only", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 180, "systemOfRecord": "audience draft store" },
+    { "id": "health_adjacent", "category": "health", "identityDomain": "commerce", "source": "health or wellbeing assertions", "sensitivity": "restricted", "purposes": [], "retentionDays": 0, "systemOfRecord": "not collected" },
+    { "id": "precise_location", "category": "location", "identityDomain": "analytics", "source": "precise geolocation", "sensitivity": "restricted", "purposes": [], "retentionDays": 0, "systemOfRecord": "not collected" },
+    { "id": "biometric", "category": "biometric", "identityDomain": "regulated", "source": "biometric identifiers", "sensitivity": "restricted", "purposes": [], "retentionDays": 0, "systemOfRecord": "not collected" }
+  ],
+  "lawfulBasisRegister": [
+    { "id": "LB-01", "dataCategory": "taste_profile", "purpose": "recommendations", "lawfulBasis": "consent", "status": "design_target", "ownerRole": "Data Protection Lead", "evidenceRef": null },
+    { "id": "LB-02", "dataCategory": "catalogue_interactions", "purpose": "recommendations", "lawfulBasis": "consent", "status": "design_target", "ownerRole": "Data Protection Lead", "evidenceRef": null },
+    { "id": "LB-03", "dataCategory": "purchase_history", "purpose": "closed_loop_personalization", "lawfulBasis": "consent", "status": "design_target", "ownerRole": "Data Protection Lead", "evidenceRef": null },
+    { "id": "LB-04", "dataCategory": "email_engagement", "purpose": "marketing", "lawfulBasis": "consent", "status": "design_target", "ownerRole": "Data Protection Lead", "evidenceRef": null },
+    { "id": "LB-05", "dataCategory": "age_verified_region", "purpose": "marketing", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Compliance Lead", "evidenceRef": null },
+    { "id": "LB-06", "dataCategory": "marketing_audience", "purpose": "marketing", "lawfulBasis": "consent", "status": "design_target", "ownerRole": "Growth Lead", "evidenceRef": null },
+    { "id": "LB-07", "dataCategory": "experiment_exposure", "purpose": "experimentation", "lawfulBasis": "legitimate_interests", "status": "design_target", "ownerRole": "Product Lead", "evidenceRef": null },
+    { "id": "LB-08", "dataCategory": "analytics_identity", "purpose": "experimentation", "lawfulBasis": "legitimate_interests", "status": "design_target", "ownerRole": "Data Protection Lead", "evidenceRef": null },
+    { "id": "LB-09", "dataCategory": "catalogue_interactions", "purpose": "experimentation", "lawfulBasis": "legitimate_interests", "status": "design_target", "ownerRole": "Product Lead", "evidenceRef": null },
+    { "id": "LB-10", "dataCategory": "age_documents", "purpose": "legal_compliance_hold", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Compliance Lead", "evidenceRef": null },
+    { "id": "LB-11", "dataCategory": "regulated_identity", "purpose": "legal_compliance_hold", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Compliance Lead", "evidenceRef": null },
+    { "id": "LB-12", "dataCategory": "kyc_log", "purpose": "legal_compliance_hold", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Compliance Lead", "evidenceRef": null },
+    { "id": "LB-13", "dataCategory": "custody_record", "purpose": "legal_compliance_hold", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Vault Compliance Lead", "evidenceRef": null },
+    { "id": "LB-14", "dataCategory": "transaction_record", "purpose": "legal_compliance_hold", "lawfulBasis": "legal_obligation", "status": "design_target", "ownerRole": "Finance Lead", "evidenceRef": null },
+    { "id": "LB-15", "dataCategory": "ai_interaction_log", "purpose": "ai_safety_audit", "lawfulBasis": "legitimate_interests", "status": "design_target", "ownerRole": "Chief AI Officer", "evidenceRef": null }
+  ],
+  "lifecycleWorkflows": {
+    "export": {
+      "endpoint": "POST /v1/privacy/export",
+      "confirmation": "EXPORT_MY_DATA",
+      "steps": ["verify session identity", "queue simulated manifest", "human-reviewed fulfilment", "record decision"],
+      "slaDays": 30,
+      "implemented": "simulated-only"
+    },
+    "deletion": {
+      "endpoint": "POST /v1/privacy/deletion-request",
+      "confirmation": "DELETE_MY_DATA",
+      "steps": ["verify session identity", "queue reviewed request", "check legal hold", "delete or crypto-shred", "emit erasure event"],
+      "slaDays": 30,
+      "implemented": "human-reviewed-request-only"
+    },
+    "optOut": {
+      "endpoint": "POST /v1/privacy/consents",
+      "decision": "withdraw",
+      "steps": ["record versioned withdrawal", "propagate to purpose store", "deny on next evaluation"],
+      "implemented": "prototype-decision-only"
+    },
+    "revocation": {
+      "endpoint": "POST /v1/privacy/consents",
+      "decision": "withdraw",
+      "steps": ["record versioned withdrawal", "propagate to purpose and audience stores", "deny on next evaluation", "record propagation result"],
+      "propagationTargets": ["recommendations", "marketing", "experimentation", "audience_drafts"],
+      "propagationWindowHours": 24,
+      "propagationCompleted": false,
+      "implemented": "required-not-executed"
+    }
+  },
+  "retentionSchedule": {
+    "aiLogDays": 90,
+    "transactionRecordDays": 2555,
+    "kycLogDays": 2190,
+    "custodyRecordDays": 3650,
+    "marketingAudienceDays": 180,
+    "enforced": false,
+    "legalHoldModel": "required-not-implemented"
+  },
+  "crossBorderTransfer": {
+    "enabled": false,
+    "allowedRegions": [],
+    "approvedMechanisms": [],
+    "transferImpactAssessmentCompleted": false,
+    "subprocessors": [],
+    "evidenceRef": null,
+    "rule": "No regulated or personal data may leave its storage region until a lawful mechanism, TIA and processor agreement are attached."
+  },
+  "audit": {
+    "appendOnly": true,
+    "requiredFields": ["correlationId", "tenantId", "actorUserId", "purpose", "dataCategory", "action", "decision", "reasonCode", "reason", "occurredAt"]
+  },
+  "evidenceGaps": [
+    "No production consent receipt, processor agreement or signed record of processing exists.",
+    "No retention or deletion job is implemented; schedules are design targets only.",
+    "No cross-border mechanism, transfer impact assessment or subprocessor list is approved.",
+    "No production DSAR fulfilment, legal-hold check or withdrawal propagation to downstream systems exists.",
+    "No DPIA has been completed; all lawful bases are design targets without evidence references."
+  ]
+}

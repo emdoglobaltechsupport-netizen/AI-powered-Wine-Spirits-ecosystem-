@@ -1,0 +1,61 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-release-gates",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "promotionAllowed": false,
+  "stages": [
+    {
+      "id": "local-verify",
+      "label": "Local Phase 1 verification",
+      "commands": ["npm run ci:verify", "npm run verify"],
+      "required": true,
+      "hostedEvidenceRef": null
+    },
+    {
+      "id": "migration-contract",
+      "label": "Fresh apply, idempotency, rollback and embedding-mode health",
+      "commands": ["npm run db:ops:check", "npm run db:migrations:test"],
+      "required": true,
+      "hostedEvidenceRef": null
+    },
+    {
+      "id": "repository-policy",
+      "label": "Licence, contribution and governance gates",
+      "commands": ["npm run policy:check", "npm run adr:check", "npm run evidence:check", "npm run fixtures:check", "npm run claims-change:check", "npm run status:check", "npm run markdown:check", "npm run schemas:check"],
+      "required": true,
+      "hostedEvidenceRef": null
+    },
+    {
+      "id": "security-and-supply-chain",
+      "label": "Secret, licence, artefact, SBOM and container policy",
+      "commands": ["npm run secrets:scan", "npm run licenses:check", "npm run artifacts:check", "npm run sbom:check", "npm run security:check"],
+      "required": true,
+      "hostedEvidenceRef": null
+    },
+    {
+      "id": "hosted-ci",
+      "label": "Hosted CI and signed release",
+      "workflowRefs": [".github/workflows/ci-typecheck-tests.yml", ".github/workflows/ci-governance.yml", ".github/workflows/ci-migrations.yml", ".github/workflows/ci-security.yml", ".github/workflows/ci-supply-chain.yml", ".github/workflows/ci-build.yml", ".github/workflows/release.yml"],
+      "required": true,
+      "hostedEvidenceRef": null
+    },
+    {
+      "id": "launch-approval",
+      "label": "Independent legal, security, reliability and launch approval",
+      "commands": ["npm run launch:check", "npm run jurisdiction:check", "npm run gates:check"],
+      "required": true,
+      "hostedEvidenceRef": null
+    }
+  ],
+  "blockingRules": [
+    "A stage with null hostedEvidenceRef cannot promote the repository beyond Prototype.",
+    "Documentation-only changes cannot satisfy a security, legal or operational gate.",
+    "The production profile remains rejected regardless of green checks."
+  ],
+  "evidenceGaps": [
+    "No hosted CI, signed release, load test, penetration test, DPIA or counsel approval is attached.",
+    "No promotion decision record exists; promotionAllowed remains false."
+  ]
+}

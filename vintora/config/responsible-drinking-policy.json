@@ -1,0 +1,64 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-deterministic-guardrails",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Limits below are illustrative prototype guardrails, not legal determinations. They constrain deterministic recommendation and simulated checkout flows; no real order, payment or delivery is executed.",
+  "recommendationControls": {
+    "maxSuggestionsPerAnswer": 3,
+    "maxBottlesPerSuggestionSet": 6,
+    "noExcessEncouragement": true,
+    "noHealthClaims": true,
+    "noMinorTargeting": true,
+    "harmSignalPatterns": ["binge", "get drunk", "intoxicated", "hangover cure", "drink until", "for kids", "for children", "underage", "recovery", "alcohol problem"],
+    "blockWhenHarmSignalDetected": true
+  },
+  "purchaseVelocityControls": {
+    "maxBottlesPerOrder": 6,
+    "maxBottles24h": 12,
+    "maxBottles7d": 24,
+    "maxPromoEmailsPerWeek": 3,
+    "maxPromoPushesPerDay": 2,
+    "enforcedAtPrototypeCheckout": true,
+    "enforcedLive": false,
+    "humanReviewOnThreshold": true
+  },
+  "targetingControls": {
+    "deniedAudienceSegments": ["underage", "age_unknown", "harmful_use_inferred", "self_excluded", "recovery_seeking", "health_adjacent"],
+    "noRetargetingFromConsumptionEvents": true,
+    "suppressionListPropagationHours": 24,
+    "suppressionPropagationCompleted": false
+  },
+  "ageGate": {
+    "requiredBeforeCheckout": true,
+    "maxAgeEvidenceHours": 720,
+    "reverificationTriggers": ["evidence_expired", "country_changed", "document_mismatch", "age_threshold_changed", "supervisor_override"],
+    "reverificationImplemented": "checkout-safeguards-only"
+  },
+  "warnings": {
+    "notice": "Please enjoy responsibly. Vintora does not sell to minors. Answers are guidance, not health claims.",
+    "supportNotice": "If alcohol use is a concern, pause and contact a local support service or a healthcare professional.",
+    "showSupportNoticeWhenHarmSignalsDetected": true,
+    "showResponsibleLineInMarketingDraft": true
+  },
+  "audit": {
+    "appendOnly": true,
+    "eventTypes": ["recommendation_screened", "campaign_screened", "checkout_limit_checked", "policy_reviewed"],
+    "requiredFields": ["correlationId", "surface", "action", "decision", "reasonCode", "reason", "noticeVersion", "occurredAt"]
+  },
+  "policyReview": {
+    "required": true,
+    "reviewRoles": ["Compliance Lead", "Addiction/Health Adviser", "Product Lead"],
+    "minorsReviewRequired": true,
+    "addictionReviewRequired": true,
+    "healthSensitiveContextReviewRequired": true,
+    "reviewCompleted": false,
+    "evidenceRef": null
+  },
+  "evidenceGaps": [
+    "No licensed harm classifier, clinical adviser report or completed policy review is attached.",
+    "No measured purchase-velocity outcome, complaint-rate evidence or regional ad-rule validation exists.",
+    "No production age re-verification provider or age-at-delivery proof exists.",
+    "No immutable responsible-drinking event sink or suppression propagation job is implemented."
+  ]
+}

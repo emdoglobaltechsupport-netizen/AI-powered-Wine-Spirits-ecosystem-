@@ -1,0 +1,28 @@
+Vintora — The World's Cellar, Intelligent.
+Copyright 2026 Vintora
+
+This repository is a Phase 1 prototype. It is NO-GO for public launch and
+Prototype mode — no real orders are placed.
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+Trademarks and brand assets:
+- "Vintora", the Vintora word mark, the tagline "The World's Cellar, Intelligent."
+  and all Vintora product/module names are reserved. No trademark, service mark
+  or product-name licence is granted by the Apache License.
+- Third-party producer, appellation, brand or retailer names that appear in
+  demo content are fictional or illustrative. No authorisation or endorsement
+  is claimed. Third-party names require written permission before any use
+  outside this prototype.
+
+Data and claims:
+- The 12 catalogue rows, ratings, prices, awards, provenance scores, vault lots,
+  financial figures, market forecasts and scale figures in this repository are
+  fictional demo rows, illustrative estimates, projections or unmeasured Design
+  targets. No licensed feed, verified inventory, supplier contract, real order,
+  real settlement, personal data or regulatory approval is included.
+- 10M+ SKUs by 2034 is an unmeasured target by 2034, not current inventory.
+
+Security and contributions:
+- Report vulnerabilities privately as described in SECURITY.md.
+- Contributions are governed by CONTRIBUTING.md and ASSET_PROVENANCE.md.

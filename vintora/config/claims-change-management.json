@@ -1,0 +1,56 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-claims-change-management",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Change control for financial, safety and regulatory claims. It records required approvals; it is not a signed approval log or evidence that a claim is true.",
+  "processDoc": "CLAIMS_CHANGE_MANAGEMENT.md",
+  "canonGovernanceRef": "CANON_GOVERNANCE.md",
+  "changeRecordPrefix": "CCR-2026-",
+  "requiredFields": [
+    "id",
+    "date",
+    "category",
+    "claim",
+    "priorValue",
+    "newValue",
+    "sourceRef",
+    "ownerRole",
+    "approverRole",
+    "evidenceRef",
+    "reviewDate",
+    "decision"
+  ],
+  "selfApprovalAllowed": false,
+  "distinctApproverRequired": true,
+  "requiredChecks": ["claims:check", "docs:check", "financial:check", "forecasts:check", "gates:check", "launch:check"],
+  "categories": {
+    "financial": {
+      "ownerRole": "CFO / Finance Lead",
+      "approverRole": "Founder / Finance Lead",
+      "evidenceRef": null,
+      "rules": ["Every figure needs a dated assumption, definition, owner, source status, confidence and range.", "Valuation figures are illustrative and non-offer."]
+    },
+    "safety": {
+      "ownerRole": "Chief AI Officer / Platform Security Lead",
+      "approverRole": "Architecture Review Board",
+      "evidenceRef": null,
+      "rules": ["AI action tiers, human release gates and responsible-drinking limits must remain fail-closed.", "No safety check may be weakened without a named reviewer and test evidence."]
+    },
+    "regulatory": {
+      "ownerRole": "Legal / Compliance Lead",
+      "approverRole": "Distinct counsel or compliance approver",
+      "evidenceRef": null,
+      "rules": ["No claim may imply a licence, regulator approval or active jurisdiction without evidence.", "High-risk feature status only changes after signed legal/compliance review."]
+    }
+  },
+  "changeLog": [],
+  "review": {
+    "cadence": "every financial, safety or regulatory claim change and quarterly",
+    "lastReviewed": "2026-11-21"
+  },
+  "evidenceGaps": [
+    "No populated change record, named individual approver or signed review is attached.",
+    "No external counsel opinion or regulator acknowledgement exists for any regulated claim."
+  ]
+}

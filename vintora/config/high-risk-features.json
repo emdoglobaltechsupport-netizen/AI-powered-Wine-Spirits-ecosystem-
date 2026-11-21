@@ -1,0 +1,320 @@
+{
+  "version": "1.0.0",
+  "policy": {
+    "productionStartupDisabled": true,
+    "criticalExceptionsAllowed": false,
+    "approvalRoles": ["Legal", "Compliance"],
+    "emergencyExceptionMaxHours": 72,
+    "workflowStates": [
+      "blocked",
+      "draft",
+      "evidence",
+      "legal_review",
+      "compliance_review",
+      "approved",
+      "activated",
+      "monitored",
+      "denied",
+      "expired"
+    ],
+    "signoffFields": [
+      "featureId",
+      "approverName",
+      "approverRole",
+      "legalApproverName",
+      "legalApproverRole",
+      "complianceApproverName",
+      "complianceApproverRole",
+      "date",
+      "evidenceReference",
+      "scope",
+      "expiryReviewDate",
+      "rollbackPlan",
+      "decision"
+    ],
+    "note": "No high-risk feature is active in this repository. Activation requires distinct Legal and Compliance approvers, neither of whom is the feature owner."
+  },
+  "features": [
+    {
+      "id": "live-payments",
+      "name": "Live payments",
+      "risk": "Financial / PCI",
+      "status": "blocked",
+      "owner": "Payments Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "licensed-psp", "satisfied": false, "evidenceRef": null },
+        { "id": "pci-scope-review", "satisfied": false, "evidenceRef": null },
+        { "id": "double-entry-ledger", "satisfied": false, "evidenceRef": null },
+        { "id": "reconciliation-dispute-tests", "satisfied": false, "evidenceRef": null },
+        { "id": "idempotency-verification", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "age-kyc",
+      "name": "Age assurance / KYC",
+      "risk": "Identity / regulatory",
+      "status": "blocked",
+      "owner": "Compliance/Legal reviewer",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "provider-due-diligence", "satisfied": false, "evidenceRef": null },
+        { "id": "jurisdiction-minimum-ages", "satisfied": false, "evidenceRef": null },
+        { "id": "privacy-dpia", "satisfied": false, "evidenceRef": null },
+        { "id": "minor-rejection-tests", "satisfied": false, "evidenceRef": null },
+        { "id": "audit-retention", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "alcohol-fulfilment",
+      "name": "Alcohol fulfilment",
+      "risk": "Regulatory",
+      "status": "blocked",
+      "owner": "Operations / Compliance Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "licensed-warehouse", "satisfied": false, "evidenceRef": null },
+        { "id": "carrier-authority", "satisfied": false, "evidenceRef": null },
+        { "id": "age-at-delivery", "satisfied": false, "evidenceRef": null },
+        { "id": "temperature-controls", "satisfied": false, "evidenceRef": null },
+        { "id": "jurisdiction-rule-engine", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "tax",
+      "name": "Tax calculation and filing",
+      "risk": "Financial / regulatory",
+      "status": "blocked",
+      "owner": "Finance / Tax Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "jurisdiction-registrations", "satisfied": false, "evidenceRef": null },
+        { "id": "rate-source-evidence", "satisfied": false, "evidenceRef": null },
+        { "id": "effective-dating", "satisfied": false, "evidenceRef": null },
+        { "id": "reconciliation-tests", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "ad-spend-marketing-automation",
+      "name": "Ad spend / marketing automation",
+      "risk": "Financial / advertising",
+      "status": "blocked",
+      "owner": "CMO / Growth lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "human-release-approval", "satisfied": false, "evidenceRef": null },
+        { "id": "advertising-cap-enforcement", "satisfied": false, "evidenceRef": null },
+        { "id": "channel-consent", "satisfied": false, "evidenceRef": null },
+        { "id": "alcohol-advertising-rules", "satisfied": false, "evidenceRef": null },
+        { "id": "suppression-lists", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "ai-publishing",
+      "name": "AI publishing of customer-facing content",
+      "risk": "Reputational / regulatory",
+      "status": "blocked",
+      "owner": "Chief AI Officer / Product lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "fact-packet-grounding", "satisfied": false, "evidenceRef": null },
+        { "id": "eval-gates", "satisfied": false, "evidenceRef": null },
+        { "id": "human-publisher", "satisfied": false, "evidenceRef": null },
+        { "id": "prompt-output-audit", "satisfied": false, "evidenceRef": null },
+        { "id": "kill-switch-drill", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "vault-custody",
+      "name": "Vault custody / fractional ownership",
+      "risk": "Financial promotion / custody",
+      "status": "blocked",
+      "owner": "Vault / Investment Product lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "licensed-custodian", "satisfied": false, "evidenceRef": null },
+        { "id": "legal-opinions", "satisfied": false, "evidenceRef": null },
+        { "id": "segregation-controls", "satisfied": false, "evidenceRef": null },
+        { "id": "kyc-aml", "satisfied": false, "evidenceRef": null },
+        { "id": "investor-protections", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "africa-country-activation",
+      "name": "Africa country activation",
+      "risk": "Regulatory / market access",
+      "status": "blocked",
+      "owner": "Global Beverage Marketplace Strategist",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "local-counsel-review", "satisfied": false, "evidenceRef": null },
+        { "id": "tax-profile", "satisfied": false, "evidenceRef": null },
+        { "id": "payment-diligence", "satisfied": false, "evidenceRef": null },
+        { "id": "distributor-authorisation", "satisfied": false, "evidenceRef": null },
+        { "id": "import-export-rules", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "privacy-sensitive-data-processing",
+      "name": "Privacy-sensitive data processing",
+      "risk": "Privacy",
+      "status": "blocked",
+      "owner": "Data Protection / Privacy lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "dpia", "satisfied": false, "evidenceRef": null },
+        { "id": "lawful-basis", "satisfied": false, "evidenceRef": null },
+        { "id": "retention-schedule", "satisfied": false, "evidenceRef": null },
+        { "id": "dsar-process", "satisfied": false, "evidenceRef": null },
+        { "id": "processor-agreements", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "refunds-disputes",
+      "name": "Refunds and disputes",
+      "risk": "Financial",
+      "status": "blocked",
+      "owner": "Finance / Support Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "psp-dispute-integration", "satisfied": false, "evidenceRef": null },
+        { "id": "evidence-pack-controls", "satisfied": false, "evidenceRef": null },
+        { "id": "dual-approval", "satisfied": false, "evidenceRef": null },
+        { "id": "ledger-compensating-entries", "satisfied": false, "evidenceRef": null },
+        { "id": "deadline-tracking", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "pricing-promotions",
+      "name": "Automated pricing and promotions",
+      "risk": "Financial / fairness",
+      "status": "blocked",
+      "owner": "Pricing / Product lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "human-approver", "satisfied": false, "evidenceRef": null },
+        { "id": "alcohol-promotion-rules", "satisfied": false, "evidenceRef": null },
+        { "id": "margin-floor", "satisfied": false, "evidenceRef": null },
+        { "id": "audit-trail", "satisfied": false, "evidenceRef": null },
+        { "id": "rollback-plan", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "ai-agent-autonomy",
+      "name": "Internal AI agent tool execution and autonomy",
+      "risk": "AI / operational / data exfiltration",
+      "status": "blocked",
+      "owner": "CTO / AI Ops Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "least-privilege-tool-allowlist", "satisfied": false, "evidenceRef": null },
+        { "id": "distinct-human-approval-for-irreversible-actions", "satisfied": false, "evidenceRef": null },
+        { "id": "agent-credential-and-network-isolation", "satisfied": false, "evidenceRef": null },
+        { "id": "untrusted-tool-output-prompt-injection-defence", "satisfied": false, "evidenceRef": null },
+        { "id": "append-only-agent-decision-and-tool-call-audit", "satisfied": false, "evidenceRef": null },
+        { "id": "independent-agent-kill-switch-under-60s-drill", "satisfied": false, "evidenceRef": null },
+        { "id": "sandbox-canary-and-replay-evidence", "satisfied": false, "evidenceRef": null },
+        { "id": "high-impact-tool-action-review", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "ai-personalization-consent",
+      "name": "AI personalization and customer profiling",
+      "risk": "Privacy / profiling / fairness",
+      "status": "blocked",
+      "owner": "Data Protection / Product lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "data-inventory-and-purpose-map", "satisfied": false, "evidenceRef": null },
+        { "id": "granular-purpose-limited-opt-in", "satisfied": false, "evidenceRef": null },
+        { "id": "sensitive-and-health-adjacent-data-minimization", "satisfied": false, "evidenceRef": null },
+        { "id": "recommendation-marketing-experimentation-separation", "satisfied": false, "evidenceRef": null },
+        { "id": "export-and-deletion-workflows", "satisfied": false, "evidenceRef": null },
+        { "id": "retention-schedules-enforced", "satisfied": false, "evidenceRef": null },
+        { "id": "privacy-preserving-defaults", "satisfied": false, "evidenceRef": null },
+        { "id": "dpia-or-privacy-impact-review", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "ai-marketing-human-release",
+      "name": "AI-generated marketing and campaign release",
+      "risk": "Advertising / regulatory / financial",
+      "status": "blocked",
+      "owner": "CMO / Growth lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "human-approval-gateway", "satisfied": false, "evidenceRef": null },
+        { "id": "restricted-geography-and-age-deny-lists", "satisfied": false, "evidenceRef": null },
+        { "id": "alcohol-advertising-compliance-validation", "satisfied": false, "evidenceRef": null },
+        { "id": "budget-increase-authorization", "satisfied": false, "evidenceRef": null },
+        { "id": "campaign-provenance-and-immutable-audit", "satisfied": false, "evidenceRef": null },
+        { "id": "pause-and-rollback-controls", "satisfied": false, "evidenceRef": null },
+        { "id": "unusual-spend-or-performance-alerting", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "personal-data-lifecycle-governance",
+      "name": "Personal-data lifecycle and cross-border transfers",
+      "risk": "Privacy / regulatory",
+      "status": "blocked",
+      "owner": "Data Protection Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "lawful-basis-evidence-attached", "satisfied": false, "evidenceRef": null },
+        { "id": "analytics-regulated-identity-separation", "satisfied": false, "evidenceRef": null },
+        { "id": "retention-and-deletion-jobs-enforced", "satisfied": false, "evidenceRef": null },
+        { "id": "withdrawal-propagation-completed", "satisfied": false, "evidenceRef": null },
+        { "id": "cross-border-tia-and-mechanism", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "external-marketing-execution",
+      "name": "External marketing execution and paid channels",
+      "risk": "Advertising / financial / reputational",
+      "status": "blocked",
+      "owner": "CMO / Growth lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "sandbox-only-channels", "satisfied": false, "evidenceRef": null },
+        { "id": "recorded-distinct-human-approval", "satisfied": false, "evidenceRef": null },
+        { "id": "preview-and-audience-verification", "satisfied": false, "evidenceRef": null },
+        { "id": "budget-owner-and-spend-cap", "satisfied": false, "evidenceRef": null },
+        { "id": "legal-approval-for-regulated-claims", "satisfied": false, "evidenceRef": null },
+        { "id": "kill-switch-drill", "satisfied": false, "evidenceRef": null }
+      ]
+    },
+    {
+      "id": "responsible-drinking-velocity-controls",
+      "name": "Responsible-drinking velocity and targeting controls",
+      "risk": "Consumer safety / advertising",
+      "status": "blocked",
+      "owner": "Compliance Lead / Product Lead",
+      "legalSignoff": null,
+      "complianceSignoff": null,
+      "activationGates": [
+        { "id": "recommendation-and-purchase-limits", "satisfied": false, "evidenceRef": null },
+        { "id": "harmful-use-targeting-suppression", "satisfied": false, "evidenceRef": null },
+        { "id": "age-reverification-provider", "satisfied": false, "evidenceRef": null },
+        { "id": "support-resource-localisation", "satisfied": false, "evidenceRef": null },
+        { "id": "clinical-and-minors-policy-review", "satisfied": false, "evidenceRef": null },
+        { "id": "responsibility-event-audit-sink", "satisfied": false, "evidenceRef": null }
+      ]
+    }
+  ]
+}

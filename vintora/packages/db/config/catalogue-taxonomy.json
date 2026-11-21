@@ -1,0 +1,73 @@
+{
+  "version": "1.0.0",
+  "notice": "Target counts are requested catalogue coverage goals, not verified or populated inventory. The ingestion pipeline never fabricates records to meet them.",
+  "categories": {
+    "Wine": [
+      "Red Wine",
+      "White Wine",
+      "Rosé Wine",
+      "Sparkling Wine",
+      "Champagne",
+      "Dessert Wine",
+      "Fortified Wine"
+    ],
+    "Whisky & Whiskey": [
+      "Scotch Whisky",
+      "Single Malt",
+      "Blended Scotch",
+      "Bourbon",
+      "Rye Whiskey",
+      "Irish Whiskey",
+      "Japanese Whisky",
+      "Indian Whisky"
+    ],
+    "Vodka": ["Premium Vodka", "Flavored Vodka"],
+    "Gin": ["London Dry Gin", "Premium Gin", "Craft Gin"],
+    "Rum": ["White Rum", "Dark Rum", "Spiced Rum", "Aged Rum"],
+    "Tequila & Mezcal": ["Blanco", "Reposado", "Añejo", "Extra Añejo", "Mezcal"],
+    "Brandy & Cognac": ["Cognac", "Armagnac", "Brandy"],
+    "Liqueurs": ["Coffee Liqueur", "Cream Liqueur", "Fruit Liqueur", "Herbal Liqueur"],
+    "Beer": ["Lager", "Ale", "IPA", "Stout", "Craft Beer"]
+  },
+  "targets": [
+    { "category": "Wine", "target": 500 },
+    { "category": "Whisky & Whiskey", "target": 300 },
+    { "category": "Vodka", "target": 200 },
+    { "category": "Gin", "target": 150 },
+    { "category": "Rum", "target": 150 },
+    { "category": "Tequila & Mezcal", "target": 150 },
+    { "category": "Brandy & Cognac", "subcategory": "Cognac", "target": 100 },
+    { "category": "Beer", "target": 300 }
+  ],
+  "sourcePriority": {
+    "licensed-feed": 100,
+    "openfoodfacts": 60,
+    "fixture": 10
+  },
+  "openFoodFacts": {
+    "baseUrl": "https://world.openfoodfacts.org",
+    "pageSize": 100,
+    "pagesPerQuery": 5,
+    "delayMs": 1000,
+    "queries": [
+      "en:wines",
+      "en:red-wines",
+      "en:white-wines",
+      "en:rose-wines",
+      "en:sparkling-wines",
+      "en:champagne",
+      "en:fortified-wines",
+      "en:whiskies",
+      "en:bourbon",
+      "en:vodkas",
+      "en:gins",
+      "en:rums",
+      "en:tequila",
+      "en:mezcal",
+      "en:cognacs",
+      "en:brandies",
+      "en:liqueurs",
+      "en:beers"
+    ]
+  }
+}

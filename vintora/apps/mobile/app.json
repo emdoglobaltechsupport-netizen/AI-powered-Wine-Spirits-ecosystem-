@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Vintora",
+    "slug": "vintora",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "vintora",
+    "userInterfaceStyle": "automatic",
+    "ios": { "supportsTablet": true, "bundleIdentifier": "com.vintora.app" },
+    "android": { "package": "com.vintora.app" },
+    "plugins": ["expo-secure-store"],
+    "experiments": { "typedRoutes": false }
+  }
+}

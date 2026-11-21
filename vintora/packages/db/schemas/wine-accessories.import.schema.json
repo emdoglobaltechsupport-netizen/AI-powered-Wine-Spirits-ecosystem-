@@ -1,0 +1,248 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vintora.local/schemas/wine-accessories.import.schema.json",
+  "title": "Vintora Wine Accessories import payload",
+  "description": "Source-backed Wine Accessories catalogue rows with search, deterministic AI enrichment, asset authorisation, image moderation and append-ready audit entries. Nulls and empty arrays mean the source did not supply a value.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["meta", "validation_rules", "rows", "audit_log", "coverage", "validation"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["domain", "marketModule", "generatedAt", "notice", "validationOptions"],
+      "properties": {
+        "domain": { "const": "Wine Accessories" },
+        "marketModule": { "const": "Vintora Market" },
+        "generatedAt": { "type": "string", "format": "date-time" },
+        "notice": { "type": "string" },
+        "validationOptions": {
+          "type": "object",
+          "properties": {
+            "requireApprovedImages": { "type": "boolean" },
+            "allowTestFixtures": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "validation_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^WA-[0-9]{3}$" },
+          "severity": { "enum": ["error", "warning"] },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "rows": { "type": "array", "items": { "$ref": "#/$defs/row" } },
+    "audit_log": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/auditEntry" }
+    },
+    "coverage": { "type": "object" },
+    "validation": { "type": "object" }
+  },
+  "$defs": {
+    "row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sku", "category", "brand", "product_name", "materials", "dimensions",
+        "care_instructions", "tags", "compliance_notes", "msrp_usd",
+        "regional_prices", "assets", "official_image_url", "backup_image_urls",
+        "image_moderation", "search_index", "ai_enrichment", "cross_sells",
+        "bundles", "provenance", "validation", "audit_log"
+      ],
+      "properties": {
+        "sku": { "type": "string", "pattern": "^[A-Z0-9][A-Z0-9._-]{2,64}$" },
+        "category": {
+          "enum": [
+            "Glassware", "Decanters", "Corkscrews", "Aerators", "Chillers",
+            "Storage Racks", "Preservation Systems", "Gift Sets", "Cleaning Tools",
+            "Unclassified"
+          ]
+        },
+        "brand": { "type": ["string", "null"] },
+        "product_name": { "type": ["string", "null"] },
+        "materials": { "type": "array", "items": { "type": "string" } },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "length": { "type": ["number", "null"] },
+            "width": { "type": ["number", "null"] },
+            "height": { "type": ["number", "null"] },
+            "weight": { "type": ["number", "null"] },
+            "linear_unit": { "type": ["string", "null"] },
+            "weight_unit": { "type": ["string", "null"] },
+            "source": { "type": ["string", "null"] }
+          }
+        },
+        "care_instructions": { "type": "array", "items": { "type": "string" } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "compliance_notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["text", "origin"],
+            "properties": {
+              "text": { "type": "string" },
+              "origin": { "enum": ["verified", "derived"] },
+              "reference": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "msrp_usd": { "type": ["number", "null"], "minimum": 0 },
+        "regional_prices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["region", "currency", "amount"],
+            "properties": {
+              "region": { "type": ["string", "null"] },
+              "currency": { "type": ["string", "null"] },
+              "amount": { "type": ["number", "null"], "minimum": 0 },
+              "price_type": { "type": ["string", "null"] },
+              "effective_date": { "type": ["string", "null"] },
+              "source": { "type": ["string", "null"] },
+              "source_url": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "role", "url", "licence", "authorized", "authorizing_party",
+              "authorization_reference", "moderation"
+            ],
+            "properties": {
+              "role": { "enum": ["official", "backup"] },
+              "url": { "type": "string", "format": "uri" },
+              "licence": {
+                "enum": ["OWNED", "COMMERCIAL_LICENSED", "SUPPLIER_AUTHORIZED", "AGENCY_LICENSED"]
+              },
+              "licence_holder": { "type": ["string", "null"] },
+              "authorizing_party": { "type": ["string", "null"] },
+              "authorization_reference": { "type": ["string", "null"] },
+              "authorized": { "type": "boolean" },
+              "source_url": { "type": ["string", "null"] },
+              "checksum_sha256": { "type": ["string", "null"] },
+              "width_px": { "type": ["number", "null"] },
+              "height_px": { "type": ["number", "null"] },
+              "origin": { "type": ["string", "null"] },
+              "moderation": {
+                "type": "object",
+                "required": ["status"],
+                "properties": {
+                  "status": { "enum": ["approved", "pending", "rejected", "missing"] },
+                  "checked_at": { "type": ["string", "null"] },
+                  "checked_by": { "type": ["string", "null"] },
+                  "reasons": { "type": "array", "items": { "type": "string" } }
+                }
+              }
+            }
+          }
+        },
+        "official_image_url": { "type": ["string", "null"] },
+        "backup_image_urls": { "type": "array", "items": { "type": "string" } },
+        "image_moderation": {
+          "type": "object",
+          "required": ["status", "asset_statuses"],
+          "properties": {
+            "status": { "enum": ["approved", "pending", "rejected", "missing"] },
+            "checked_at": { "type": ["string", "null"] },
+            "checked_by": { "type": ["string", "null"] },
+            "reasons": { "type": "array", "items": { "type": "string" } },
+            "asset_statuses": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "search_index": {
+          "type": "object",
+          "required": ["search_document", "search_keywords", "category_path"],
+          "properties": {
+            "search_document": { "type": "string", "maxLength": 8000 },
+            "search_keywords": { "type": "array", "items": { "type": "string" } },
+            "normalized_brand": { "type": "string" },
+            "normalized_name": { "type": "string" },
+            "category_path": { "type": "array", "items": { "type": "string" } },
+            "searchable": { "type": "boolean" }
+          }
+        },
+        "ai_enrichment": {
+          "type": "object",
+          "required": ["provider", "model", "generated_at", "confidence", "seo", "bundles", "cross_sells"],
+          "properties": {
+            "provider": { "type": "string" },
+            "model": { "type": "string" },
+            "generated_at": { "type": "string" },
+            "notice": { "type": "string" },
+            "confidence": { "const": "derived" },
+            "seo": {
+              "type": "object",
+              "required": ["title", "description", "slug", "keywords"],
+              "properties": {
+                "title": { "type": "string" },
+                "description": { "type": "string" },
+                "slug": { "type": "string" },
+                "keywords": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+            "bundles": { "type": "array", "items": { "type": "object" } },
+            "cross_sells": { "type": "array", "items": { "type": "object" } }
+          }
+        },
+        "cross_sells": { "type": "array", "items": { "type": "object" } },
+        "bundles": { "type": "array", "items": { "type": "object" } },
+        "provenance": {
+          "type": "object",
+          "required": ["source", "source_record_id", "source_url", "licence", "retrieved_at", "source_priority", "field_confidence", "overall_confidence"],
+          "properties": {
+            "source": { "type": "string" },
+            "sources": { "type": "array", "items": { "type": "string" } },
+            "source_record_id": { "type": "string" },
+            "source_url": { "type": ["string", "null"] },
+            "licence": { "type": ["string", "null"] },
+            "retrieved_at": { "type": ["string", "null"] },
+            "source_priority": { "type": "number" },
+            "field_confidence": { "type": "object", "additionalProperties": { "enum": ["verified", "derived", "missing"] } },
+            "overall_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+            "notes": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "required": ["valid", "errors", "warnings", "rules_version"],
+          "properties": {
+            "valid": { "type": ["boolean", "null"] },
+            "errors": { "type": "array", "items": { "type": "object" } },
+            "warnings": { "type": "array", "items": { "type": "object" } },
+            "rules_version": { "type": "string" }
+          }
+        },
+        "audit_log": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/auditEntry" }
+        }
+      }
+    },
+    "auditEntry": {
+      "type": "object",
+      "required": ["action", "sku", "at", "actor", "source", "reason"],
+      "properties": {
+        "action": { "enum": ["create", "ingested", "deduplicated", "insert", "update", "delete", "import"] },
+        "sku": { "type": ["string", "null"] },
+        "at": { "type": ["string", "null"] },
+        "actor": { "type": ["string", "null"] },
+        "source": { "type": ["string", "null"] },
+        "reason": { "type": ["string", "null"] },
+        "row_hash": { "type": ["string", "null"] },
+        "validation": { "type": ["boolean", "null"] },
+        "before": { "type": ["object", "null"] },
+        "after": { "type": ["object", "null"] }
+      }
+    }
+  }
+}

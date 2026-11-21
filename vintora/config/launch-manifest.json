@@ -1,0 +1,16 @@
+{
+  "policyVersion": "v1",
+  "environment": "prototype",
+  "publicLaunch": false,
+  "enabledHighRiskFeatures": [],
+  "licenceEvidenceRefs": {},
+  "legalApprover": null,
+  "complianceApprover": null,
+  "guardRemovalApprovalRef": null,
+  "phase1GatesOnlyBanner": true,
+  "notes": [
+    "This manifest is fail-closed. A green CI run proves Phase 1 gates only, not launch approval.",
+    "Enabling publicLaunch requires distinct Legal and Compliance sign-offs, evidenced commercial licences and an approved production guard removal record.",
+    "No high-risk feature may be enabled while config/high-risk-features.json records it as blocked or unsigned."
+  ]
+}

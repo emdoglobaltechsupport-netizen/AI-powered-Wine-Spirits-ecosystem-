@@ -1,0 +1,10 @@
+{
+  "name": "@vintora/prototype",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-build modular storefront prototype",
+  "scripts": {
+    "serve": "powershell -ExecutionPolicy Bypass -File ./serve.ps1"
+  }
+}

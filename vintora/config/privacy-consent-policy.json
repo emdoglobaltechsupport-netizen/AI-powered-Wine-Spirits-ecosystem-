@@ -1,0 +1,102 @@
+{
+  "version": "v1",
+  "status": "prototype-deny-by-default",
+  "profilingEnabled": false,
+  "optInRequired": true,
+  "defaultState": "off",
+  "privacyByDefault": true,
+  "purposeSeparation": true,
+  "lawfulBasisRequired": true,
+  "purposes": [
+    {
+      "id": "recommendations",
+      "description": "On-device or tenant-scoped pairing suggestions from explicit taste signals.",
+      "defaultState": "off",
+      "allowedData": ["taste_profile", "catalogue_interactions"],
+      "deniedData": ["purchase_history", "consumption_events", "health_adjacent", "precise_location", "age_documents", "biometric"],
+      "retentionDays": 90,
+      "requiresOptIn": true
+    },
+    {
+      "id": "closed_loop_personalization",
+      "description": "Future adaptive model trained on consented taste and purchase signals; disabled in the prototype.",
+      "defaultState": "off",
+      "allowedData": ["taste_profile", "purchase_history"],
+      "deniedData": ["consumption_events", "health_adjacent", "precise_location", "age_documents", "biometric"],
+      "retentionDays": 365,
+      "requiresOptIn": true,
+      "requiresDpia": true
+    },
+    {
+      "id": "marketing",
+      "description": "Campaign audience selection and message testing; never uses health-adjacent or age-document data.",
+      "defaultState": "off",
+      "allowedData": ["email_engagement", "age_verified_region", "marketing_audience"],
+      "deniedData": ["taste_profile", "purchase_history", "consumption_events", "health_adjacent", "precise_location", "age_documents", "regulated_identity", "kyc_log", "custody_record"],
+      "retentionDays": 180,
+      "requiresOptIn": true
+    },
+    {
+      "id": "experimentation",
+      "description": "Aggregated or pseudonymous product experiments with no commercial profiling.",
+      "defaultState": "off",
+      "allowedData": ["experiment_exposure", "catalogue_interactions", "analytics_identity"],
+      "deniedData": ["taste_profile", "purchase_history", "consumption_events", "health_adjacent", "precise_location", "age_documents", "regulated_identity", "kyc_log", "custody_record"],
+      "retentionDays": 30,
+      "requiresOptIn": true
+    }
+  ],
+  "dataInventory": [
+    { "id": "taste_profile", "category": "preference", "source": "explicit user selection", "sensitivity": "personal", "purposes": ["recommendations", "closed_loop_personalization"], "retentionDays": 90 },
+    { "id": "catalogue_interactions", "category": "behavioural", "source": "product views and searches", "sensitivity": "personal", "purposes": ["recommendations", "experimentation"], "retentionDays": 30 },
+    { "id": "purchase_history", "category": "transactional", "source": "simulated order records", "sensitivity": "personal", "purposes": ["closed_loop_personalization"], "retentionDays": 365 },
+    { "id": "consumption_events", "category": "behavioural", "source": "consumption logging", "sensitivity": "sensitive-adjacent", "purposes": [], "retentionDays": 0 },
+    { "id": "email_engagement", "category": "communication", "source": "message opens and clicks", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 180 },
+    { "id": "experiment_exposure", "category": "experimentation", "source": "assignment and exposure events", "sensitivity": "pseudonymous", "purposes": ["experimentation"], "retentionDays": 30 },
+    { "id": "analytics_identity", "category": "pseudonymous identity", "source": "first-party pseudonymous identifier", "sensitivity": "pseudonymous", "purposes": ["experimentation"], "retentionDays": 30 },
+    { "id": "age_verified_region", "category": "compliance", "source": "verified age country token", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 365 },
+    { "id": "age_documents", "category": "identity", "source": "KYC evidence", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190 },
+    { "id": "regulated_identity", "category": "identity", "source": "verified legal identity record", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190 },
+    { "id": "kyc_log", "category": "compliance audit", "source": "KYC/AML decision log", "sensitivity": "restricted", "purposes": [], "retentionDays": 2190 },
+    { "id": "custody_record", "category": "custody", "source": "Vault custody and title evidence", "sensitivity": "restricted", "purposes": [], "retentionDays": 3650 },
+    { "id": "transaction_record", "category": "financial audit", "source": "simulated order and ledger record", "sensitivity": "personal", "purposes": [], "retentionDays": 2555 },
+    { "id": "ai_interaction_log", "category": "AI audit", "source": "prompt, model, retrieval and response metadata", "sensitivity": "personal", "purposes": [], "retentionDays": 90 },
+    { "id": "marketing_audience", "category": "derived audience", "source": "consented engagement and age-region token only", "sensitivity": "personal", "purposes": ["marketing"], "retentionDays": 180 },
+    { "id": "health_adjacent", "category": "health", "source": "health or wellbeing assertions", "sensitivity": "restricted", "purposes": [], "retentionDays": 0 },
+    { "id": "precise_location", "category": "location", "source": "precise geolocation", "sensitivity": "restricted", "purposes": [], "retentionDays": 0 },
+    { "id": "biometric", "category": "biometric", "source": "biometric identifiers", "sensitivity": "restricted", "purposes": [], "retentionDays": 0 }
+  ],
+  "sensitiveDataRules": {
+    "neverUseForProfiling": ["health_adjacent", "precise_location", "biometric", "age_documents", "regulated_identity", "kyc_log", "custody_record", "consumption_events"],
+    "minimizeCollection": true,
+    "noHealthClaims": true
+  },
+  "rights": {
+    "export": "simulated-demo-export",
+    "deletion": "human-reviewed-request",
+    "recordDenials": true,
+    "verifyRequester": true
+  },
+  "retention": {
+    "defaultDays": 30,
+    "enforced": false,
+    "deletionQueueRequired": true
+  },
+  "audit": {
+    "appendOnly": true,
+    "recordDenials": true,
+    "requiredFields": ["correlationId", "tenantId", "actorUserId", "purpose", "action", "decision", "reasonCode", "reason", "occurredAt"]
+  },
+  "dpia": {
+    "requiredForClosedLoopPersonalization": true,
+    "completed": false,
+    "reviewOwner": "Data Protection Lead",
+    "evidenceRef": null
+  },
+  "evidenceGaps": [
+    "Consent is recorded for the prototype but no production consent receipt or withdrawal propagation exists.",
+    "Export is a demo manifest; deletion is a reviewed request and does not erase production records.",
+    "Retention schedules are declared but no deletion/retention job is implemented.",
+    "No DPIA has been completed and no closed-loop profiling is active."
+  ]
+}

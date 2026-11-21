@@ -1,0 +1,42 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-markdown-and-schema-ci",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Offline Markdown link and JSON schema consistency checks. No external URL, hosted linter or signed schema registry is contacted.",
+  "excludedDirs": ["node_modules", ".git", "dist", ".next", "out", "coverage", ".turbo", "sbom"],
+  "jsonDirs": ["config"],
+  "requiredDocMarkers": [
+    "README.md",
+    "ADR_PROCESS.md",
+    "CANONICAL_METADATA.md",
+    "EVIDENCE_INDEX.md",
+    "FIXTURE_TAXONOMY.md",
+    "CLAIMS_CHANGE_MANAGEMENT.md",
+    "STATUS_DASHBOARD.md",
+    "RELEASE_GATES.md",
+    "DATA_RETENTION_ARCHITECTURE.md",
+    "NETWORK_ISOLATION.md",
+    "INVESTOR_DOCUMENTATION.md",
+    "REGULATORY_DOCUMENTATION.md",
+    "DATABASE_OPERATIONS.md",
+    "CATALOGUE_PROVENANCE.md",
+    "CONTRIBUTING.md",
+    "ASSET_PROVENANCE.md",
+    "SECURITY.md",
+    "DOCS_GOVERNANCE.md",
+    "adr/README.md",
+    "adr/TEMPLATE.md"
+  ],
+  "requiredMarkers": ["# ", "Prototype mode — no real orders are placed", "NO-GO"],
+  "crossFileRules": [
+    "config/canonical-metadata.json#counts matches config/docs-governance.json#schemas.numbers and config/test-counts.json#totals",
+    "config/evidence-index.json result refs are all null until external evidence is attached",
+    "config/fixture-taxonomy.json has no present or purchasable live fixtures",
+    "config/release-gates.json promotionAllowed is false and all hostedEvidenceRef values are null"
+  ],
+  "evidenceGaps": [
+    "No external URL availability check, hosted Markdown linter or remote JSON Schema registry is attached.",
+    "The checker validates local relative links and parseable JSON only; it does not certify prose correctness."
+  ]
+}

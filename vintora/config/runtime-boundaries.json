@@ -1,0 +1,134 @@
+{
+  "policyVersion": "v1",
+  "purpose": "Machine-readable runtime, adapter and privileged-action boundary for the Phase 1 prototype. Real providers are opt-in and remain blocked until legal, licensing and launch gates are satisfied.",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "productionStartupAllowed": false,
+  "profileEnv": "RUNTIME_PROFILE",
+  "globalRealOptInEnv": "REAL_PROVIDER_OPT_IN",
+  "simulatedProviderOptInEnv": "ALLOW_SIMULATED_PROVIDERS",
+  "credentialEnvPattern": "REAL_{PROVIDER}_KEY_{PROFILE}",
+  "profiles": {
+    "local": {
+      "nodeEnv": "development",
+      "allowed": true,
+      "allowDemoIdentities": true,
+      "simulatedProviders": "default",
+      "realProvidersAllowed": false,
+      "privilegedAuditRequired": true
+    },
+    "test": {
+      "nodeEnv": "test",
+      "allowed": true,
+      "allowDemoIdentities": true,
+      "simulatedProviders": "default",
+      "realProvidersAllowed": false,
+      "privilegedAuditRequired": true
+    },
+    "staging": {
+      "nodeEnv": "staging",
+      "allowed": true,
+      "allowDemoIdentities": false,
+      "simulatedProviders": "opt-in",
+      "realProvidersAllowed": false,
+      "privilegedAuditRequired": true
+    },
+    "production": {
+      "nodeEnv": "production",
+      "allowed": false,
+      "allowDemoIdentities": false,
+      "simulatedProviders": "blocked",
+      "realProvidersAllowed": false,
+      "privilegedAuditRequired": true,
+      "blockReason": "Prototype production startup is disabled; launch, licence, provider and audit evidence gates are unsatisfied."
+    }
+  },
+  "providers": [
+    {
+      "id": "age",
+      "label": "Age assurance",
+      "env": "AGE_VERIFICATION_PROVIDER",
+      "simulatedValues": ["local", "simulated"],
+      "defaultValue": "local",
+      "realOptInEnv": "REAL_AGE_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "age-kyc",
+      "commercialLicenceDomains": ["alcohol-retail", "alcohol-fulfilment"],
+      "legalReviewRequired": true
+    },
+    {
+      "id": "kyc",
+      "label": "Identity/KYC",
+      "env": "KYC_PROVIDER",
+      "simulatedValues": ["local", "simulated"],
+      "defaultValue": "local",
+      "realOptInEnv": "REAL_KYC_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "age-kyc",
+      "commercialLicenceDomains": ["alcohol-retail"],
+      "legalReviewRequired": true
+    },
+    {
+      "id": "payment",
+      "label": "Payment authorisation",
+      "env": "PAYMENT_PROVIDER",
+      "simulatedValues": ["simulated"],
+      "defaultValue": "simulated",
+      "realOptInEnv": "REAL_PAYMENT_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "live-payments",
+      "commercialLicenceDomains": ["payment-processing"],
+      "legalReviewRequired": true
+    },
+    {
+      "id": "marketing",
+      "label": "Marketing automation",
+      "env": "MARKETING_PROVIDER",
+      "simulatedValues": ["simulated"],
+      "defaultValue": "simulated",
+      "realOptInEnv": "REAL_MARKETING_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "ad-spend-marketing-automation",
+      "commercialLicenceDomains": ["alcohol-retail"],
+      "legalReviewRequired": true
+    },
+    {
+      "id": "custody",
+      "label": "Custody / investment settlement",
+      "env": "CUSTODY_PROVIDER",
+      "simulatedValues": ["simulated"],
+      "defaultValue": "simulated",
+      "realOptInEnv": "REAL_CUSTODY_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "vault-custody",
+      "commercialLicenceDomains": ["custody-investment"],
+      "legalReviewRequired": true
+    },
+    {
+      "id": "ai",
+      "label": "AI inference",
+      "env": "AI_PROVIDER",
+      "simulatedValues": ["deterministic", "local", "simulated"],
+      "defaultValue": "deterministic",
+      "realOptInEnv": "REAL_AI_PROVIDER_OPT_IN",
+      "highRiskFeatureId": "ai-agent-autonomy",
+      "commercialLicenceDomains": [],
+      "legalReviewRequired": false
+    }
+  ],
+  "privilegedActions": [
+    { "id": "admin.elevation.grant", "auditEvent": "admin_elevation_granted", "approval": "distinct-human" },
+    { "id": "admin.elevation.revoke", "auditEvent": "admin_elevation_revoked", "approval": "session-owner-or-admin" },
+    { "id": "commerce.age.assertion.write", "auditEvent": "age_assertion_written", "approval": "system-evidence" },
+    { "id": "commerce.safeguard.decision.write", "auditEvent": "commerce_safeguard_decision_written", "approval": "fail-closed-evaluator" },
+    { "id": "commerce.age.reverification.required", "auditEvent": "age_reverification_required", "approval": "policy-trigger" },
+    { "id": "commerce.age.fulfilment.check", "auditEvent": "fulfilment_age_check_required", "approval": "carrier-evidence" },
+    { "id": "marketing.campaign.release", "auditEvent": "marketing_campaign_released", "approval": "distinct-human" },
+    { "id": "marketing.budget.increase", "auditEvent": "marketing_budget_increase_blocked", "approval": "distinct-human" },
+    { "id": "agent.tool.execute", "auditEvent": "agent_tool_call_evaluated", "approval": "advisory-only" },
+    { "id": "privacy.dsar.export", "auditEvent": "privacy_export_requested", "approval": "data-subject-confirmation" },
+    { "id": "privacy.dsar.delete", "auditEvent": "privacy_deletion_requested", "approval": "data-subject-confirmation" },
+    { "id": "catalogue.verified.import", "auditEvent": "catalogue_verified_import", "approval": "rights-evidence" }
+  ],
+  "evidenceGaps": [
+    "No licensed age, KYC, AML, sanctions or PSP provider is integrated or credentialled.",
+    "No staging or production credential set exists; the credential environment pattern is a contract only.",
+    "Audit events are simulated or append-only local records, not a centralised retained audit store.",
+    "Production startup remains disabled by config and by the API startup boundary."
+  ]
+}

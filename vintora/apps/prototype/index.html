@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="Vintora — The World's Cellar, Intelligent. AI-powered wine and spirits discovery.">
+  <meta name="color-scheme" content="light dark">
+  <title>Vintora — The World's Cellar, Intelligent</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ AGE GATE ============ -->
+  <div class="age-gate" id="age-gate" role="dialog" aria-modal="true" aria-labelledby="age-title" hidden>
+    <div class="age-card">
+      <div class="brand-mark" aria-hidden="true"><span>V</span></div>
+      <p class="eyebrow">VINTORA · EST. 2026</p>
+      <h1 id="age-title" data-i18n="ageTitle">Welcome to Vintora</h1>
+      <p class="muted" data-i18n="ageQuestion">Are you of legal drinking age in your country?</p>
+
+      <div class="field-row">
+        <label class="field">
+          <span data-i18n="dateOfBirth">Date of birth</span>
+          <input type="date" id="age-dob" max="2010-12-31" autocomplete="bday">
+        </label>
+        <label class="field">
+          <span data-i18n="country">Country / region</span>
+          <select id="age-country">
+            <option value="">—</option>
+            <option value="US">United States</option>
+            <option value="GB">United Kingdom</option>
+            <option value="SG">Singapore</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="IT">Italy</option>
+            <option value="ES">Spain</option>
+            <option value="NL">Netherlands</option>
+            <option value="JP">Japan</option>
+            <option value="AE">United Arab Emirates</option>
+            <option value="AU">Australia</option>
+            <option value="BR">Brazil</option>
+            <option value="CA">Canada</option>
+            <option value="ZA">South Africa</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="form-error" id="age-error" role="alert" hidden></p>
+      <button class="btn btn-primary btn-block" id="age-enter" data-i18n="enter">Enter Vintora</button>
+      <p class="fine-print" data-i18n="responsible">Please enjoy responsibly. By entering you agree to our Terms and Privacy Policy.</p>
+      <p class="fine-print">🔒 Age assurance runs on every surface. Prototype stores verification in this browser only.</p>
+    </div>
+  </div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="topbar" id="topbar" hidden>
+    <button class="brand" data-view="home" aria-label="Vintora home">
+      <span class="brand-mark small" aria-hidden="true"><span>V</span></span>
+      <span class="brand-word">VINTORA</span>
+    </button>
+
+    <nav class="desktop-nav" aria-label="Primary">
+      <button data-view="home" data-i18n="discover">Discover</button>
+      <button data-view="sommelier" data-i18n="sommelier">Sommelier</button>
+      <button data-view="assist" data-i18n="assist">Assist</button>
+      <button data-view="club" data-i18n="club">Club</button>
+      <button data-view="vault" data-i18n="vault">Vault</button>
+      <button data-view="trade" data-i18n="trade">Trade</button>
+      <button data-view="flow" data-i18n="flow">Flow</button>
+      <button data-view="seller" data-i18n="seller">Seller</button>
+      <button data-view="rewards" data-i18n="rewards">Rewards</button>
+      <button data-view="studio" data-i18n="studio">Studio</button>
+      <button data-view="admin">Admin</button>
+    </nav>
+
+    <div class="top-actions">
+      <label class="icon-field search-field">
+        <span aria-hidden="true">⌕</span>
+        <input id="global-search" type="search" data-i18n-ph="search" placeholder="Search the cellar…" aria-label="Search">
+      </label>
+      <select id="lang-select" aria-label="Language" class="mini-select">
+        <option value="en">EN</option><option value="fr">FR</option><option value="es">ES</option>
+      </select>
+      <select id="currency-select" aria-label="Currency" class="mini-select"></select>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+      <button class="icon-btn cart-btn" data-view="cart" aria-label="Cart">
+        <span aria-hidden="true">▣</span><span class="cart-count" id="cart-count" hidden>0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ VIEW ============ -->
+  <main id="view" class="view" tabindex="-1"></main>
+
+  <!-- ============ MOBILE TABS ============ -->
+  <nav class="mobile-tabs" id="mobile-tabs" hidden aria-label="Mobile primary">
+    <button data-view="home"><span>⌂</span><small data-i18n="discover">Discover</small></button>
+    <button data-view="sommelier"><span>✧</span><small data-i18n="sommelier">Sommelier</small></button>
+    <button data-view="assist"><span>◎</span><small data-i18n="assist">Assist</small></button>
+    <button data-view="club"><span>❉</span><small data-i18n="club">Club</small></button>
+    <button data-view="vault"><span>⬡</span><small data-i18n="vault">Vault</small></button>
+    <button data-view="flow"><span>➤</span><small data-i18n="flow">Flow</small></button>
+    <button data-view="cart"><span>▣</span><small data-i18n="cart">Cart</small></button>
+    <button data-view="admin"><span>⚙</span><small>Admin</small></button>
+  </nav>
+
+  <footer class="site-footer" id="site-footer" hidden>
+    <div class="footer-grid">
+      <div>
+        <div class="brand"><span class="brand-mark small"><span>V</span></span><span class="brand-word">VINTORA</span></div>
+        <p class="muted">The World's Cellar, Intelligent.</p>
+      </div>
+      <div><strong>Platform</strong><p>Market · Trade · Sommelier · Assist<br>Studio · Seller · Flow · Club · Vault · Rewards</p></div>
+      <div><strong>Trust (planned)</strong><p>Age assurance · KYC/AML · Provenance graph<br>Bonded custody · SOC 2 / ISO 27001 / PCI DSS controls</p></div>
+      <div><strong>Prototype</strong><p class="muted" data-i18n="demo">Prototype mode — no real orders are placed.</p><p class="muted">All prices in USD base; FX locked at checkout.</p></div>
+    </div>
+    <p class="fine-print">Please enjoy responsibly. Vintora does not sell to minors. Blueprint documentation lives in <code>vintora/*.md</code>.</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <div id="modal-root"></div>
+
+  <script type="module" src="data.js"></script>
+  <script type="module" src="src/app.js"></script>
+  <script src="selftest-manifest.js"></script>
+  <script src="selftest.js"></script>
+</body>
+</html>

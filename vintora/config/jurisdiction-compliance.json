@@ -1,0 +1,143 @@
+{
+  "policyVersion": "v1",
+  "publicLaunch": false,
+  "liveTransactionsAllowed": false,
+  "notice": "Prototype jurisdiction register. Scope classes are phase1 (canonical US/UK/Singapore design phase), planned (post-gate sequencing) and target (registry/catalogue domain with no activation approval). No jurisdiction is active, licensed, counsel-reviewed or permitted to transact.",
+  "globalScope": {
+    "countries": "200+",
+    "languages": "24 launch languages -> 60+ by 2030",
+    "currencies": "135+",
+    "claimLabel": "unmeasured design target",
+    "activeCountries": 0,
+    "activeLanguages": [],
+    "activeCurrencies": []
+  },
+  "scopeClasses": {
+    "phase1": ["US", "UK", "SG"],
+    "planned": [],
+    "target": ["ZA", "NG", "KE", "GH", "TZ", "UG", "RW", "MA", "EG", "AO", "BW", "NA", "ZM", "MZ"]
+  },
+  "jurisdictions": [
+    { "code": "US", "name": "United States", "scopeClass": "phase1", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "UK", "name": "United Kingdom", "scopeClass": "phase1", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "SG", "name": "Singapore", "scopeClass": "phase1", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "ZA", "name": "South Africa", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "NG", "name": "Nigeria", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "KE", "name": "Kenya", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "GH", "name": "Ghana", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "TZ", "name": "Tanzania", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "UG", "name": "Uganda", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "RW", "name": "Rwanda", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "MA", "name": "Morocco", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "EG", "name": "Egypt", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "AO", "name": "Angola", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "BW", "name": "Botswana", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "NA", "name": "Namibia", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "ZM", "name": "Zambia", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false },
+    { "code": "MZ", "name": "Mozambique", "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null, "taxRuleRef": null, "paymentLaunchCleared": false }
+  ],
+  "regulatedActivities": [
+    {
+      "id": "alcohol_sale_and_delivery",
+      "activity": "Alcohol retail, wholesale, fulfilment and age-at-delivery",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_local_counsel",
+      "requiredControls": ["licence_register", "age_assurance", "age_at_delivery", "tax_registration", "carrier_authority", "restricted_geography_deny_list"],
+      "implementationMode": "simulated",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "Deny checkout and fulfilment when jurisdiction is blocked or any control is unsatisfied.",
+      "rejection": "Return a plain-language reason and record the decision in the append-only audit log.",
+      "appeal": "Human review by Compliance; no automated reversal.",
+      "retention": "Retain decision evidence under the approved retention schedule; no retention schedule is approved yet."
+    },
+    {
+      "id": "age_kyc_aml_sanctions",
+      "activity": "Age assurance, KYC, AML and sanctions screening",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_local_counsel",
+      "requiredControls": ["certified_provider", "jurisdiction_minimum_age_table", "kyc_aml", "sanctions_screening", "dpia", "manual_review"],
+      "implementationMode": "simulated",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "Fail closed; age/KYC providers default to local simulation and real-provider opt-ins default false.",
+      "rejection": "No order or trade ability; show the reason without collecting additional sensitive data.",
+      "appeal": "Named Compliance reviewer with identity evidence; no automated override.",
+      "retention": "Append-only decision evidence; retention schedule pending approval."
+    },
+    {
+      "id": "payments_and_settlement",
+      "activity": "Payment capture, payouts, FX and Vault settlement",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_local_counsel",
+      "requiredControls": ["licensed_psp", "pci_scope", "ledger", "reconciliation", "disputes", "sanctions_screening", "no_real_usdc"],
+      "implementationMode": "simulated",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "Only simulated adapters may clear; any non-simulated provider is unknown and blocks checkout.",
+      "rejection": "Block checkout and record the unknown/unlicensed adapter attempt.",
+      "appeal": "Finance and Compliance review of evidence; no production override in this prototype.",
+      "retention": "Financial-control records are design requirements; no approved retention schedule exists."
+    },
+    {
+      "id": "investment_custody_and_promotion",
+      "activity": "Rare-wine investment, fractional ownership, custody and secondary trading",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_securities_advice",
+      "requiredControls": ["securities_advice", "title_holder_defined", "licensed_custodian", "segregation", "suitability", "risk_disclosure", "independent_reconciliation", "no_real_usdc"],
+      "implementationMode": "blueprint_only",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "Vault remains a non-live blueprint; no order, wallet, custody transfer or settlement is permitted.",
+      "rejection": "Display non-performance and blocked-status notice; do not accept funds or lot instructions.",
+      "appeal": "Board, Legal and Compliance review with jurisdiction-specific securities opinion.",
+      "retention": "Blueprint decision records only; no investor record is created."
+    },
+    {
+      "id": "privacy_advertising_and_health_claims",
+      "activity": "Privacy, alcohol advertising and health-related claims",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_local_counsel",
+      "requiredControls": ["lawful_basis", "consent_receipts", "age_and_geography_deny_lists", "alcohol_ad_validation", "no_health_claims", "human_release"],
+      "implementationMode": "simulated",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "Campaigns remain drafts until human release; blocked geographies and age groups are denied.",
+      "rejection": "Reject copy with health claims or missing geography/age targeting.",
+      "appeal": "Human reviewer with documented legal basis.",
+      "retention": "Consent and campaign audit records are design requirements; retention schedule pending."
+    },
+    {
+      "id": "customs_tax_and_consumer_protection",
+      "activity": "Customs, excise, tax and consumer-protection obligations",
+      "lawReferences": [],
+      "lawStatus": "unmapped_pending_local_counsel",
+      "requiredControls": ["tax_rule_reference", "customs_documents", "excise_registration", "consumer_terms", "refunds_disputes"],
+      "implementationMode": "simulated",
+      "liveAllowed": false,
+      "counsel": { "owner": null, "firm": null, "reviewRef": null, "effectiveDate": null },
+      "enforcement": "No shipment, tax calculation filing or dispute settlement is performed in the prototype.",
+      "rejection": "Block fulfilment when tax/customs evidence is absent.",
+      "appeal": "Finance/Tax and Compliance review with named evidence.",
+      "retention": "Evidence retention is pending approval."
+    }
+  ],
+  "launchClearance": {
+    "required": true,
+    "granted": false,
+    "jurisdiction": null,
+    "effectiveDate": null,
+    "legalApprover": null,
+    "complianceApprover": null,
+    "licenceEvidenceRefs": [],
+    "counselOpinionRefs": [],
+    "guardRemovalApprovalRef": null
+  },
+  "workflowRequirements": ["enforcement", "rejection", "appeal", "record_retention"],
+  "codeBoundaryRefs": [
+    "services/api/src/config.ts",
+    "services/api/src/modules/commerce/payment-adapter.ts",
+    "config/high-risk-features.json",
+    "config/commercial-licensing-policy.json"
+  ]
+}

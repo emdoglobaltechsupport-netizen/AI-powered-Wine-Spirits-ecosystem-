@@ -1,0 +1,15 @@
+node_modules
+.git
+.env
+.env.*
+!.env.example
+npm-debug.log*
+*.log
+coverage
+dist
+.next
+out
+.turbo
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

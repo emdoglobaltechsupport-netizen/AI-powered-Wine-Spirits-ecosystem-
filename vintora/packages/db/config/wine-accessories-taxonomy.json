@@ -1,0 +1,61 @@
+{
+  "version": "1.0.1",
+  "domain": "Wine Accessories",
+  "marketModule": "Vintora Market",
+  "catalogueDomain": "wine-accessories",
+  "notice": "Internal catalogue domain under Vintora Market. No product or asset records are bundled; real rows must come from licensed or authorized sources.",
+  "categories": [
+    "Glassware",
+    "Decanters",
+    "Corkscrews",
+    "Aerators",
+    "Chillers",
+    "Storage Racks",
+    "Preservation Systems",
+    "Gift Sets",
+    "Cleaning Tools"
+  ],
+  "allowedAssetLicences": [
+    "OWNED",
+    "COMMERCIAL_LICENSED",
+    "SUPPLIER_AUTHORIZED",
+    "AGENCY_LICENSED"
+  ],
+  "assetRoles": ["official", "backup"],
+  "requiredAssetRoles": ["official"],
+  "assetModerationStatuses": ["approved", "pending", "rejected"],
+  "requiredModerationStatus": "approved",
+  "reservedUrlSuffixes": [".invalid", ".example", ".test", ".localhost", ".local"],
+  "reservedHosts": ["example.com", "example.net", "example.org", "localhost"],
+  "skuPattern": "^[A-Z0-9][A-Z0-9._-]{2,64}$",
+  "allowedCurrencies": ["USD", "EUR", "GBP", "CAD", "AUD", "JPY", "INR", "SGD", "CHF"],
+  "sourcePriority": {
+    "licensed-feed": 100,
+    "fixture": 10
+  },
+  "crossSellMap": {
+    "Glassware": ["Decanters", "Corkscrews", "Cleaning Tools"],
+    "Decanters": ["Glassware", "Aerators", "Cleaning Tools"],
+    "Corkscrews": ["Glassware", "Gift Sets"],
+    "Aerators": ["Decanters", "Glassware"],
+    "Chillers": ["Glassware", "Gift Sets"],
+    "Storage Racks": ["Preservation Systems", "Cleaning Tools"],
+    "Preservation Systems": ["Storage Racks", "Corkscrews"],
+    "Gift Sets": ["Glassware", "Corkscrews", "Decanters"],
+    "Cleaning Tools": ["Glassware", "Decanters", "Storage Racks"]
+  },
+  "validation": {
+    "minMaterials": 1,
+    "minCareInstructions": 1,
+    "minComplianceNotes": 1,
+    "minRegionalPrices": 1,
+    "minAssets": 1,
+    "maxBackupImages": 6,
+    "maxSearchTextChars": 8000
+  },
+  "enrichment": {
+    "provider": "deterministic",
+    "model": "vintora-wine-accessories-rules-v1",
+    "notice": "SEO, bundle and cross-sell suggestions are rule-based and explicitly labelled derived. No live model or live accuracy claim is made."
+  }
+}

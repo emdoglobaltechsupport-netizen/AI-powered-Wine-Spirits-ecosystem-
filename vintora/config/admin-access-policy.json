@@ -1,0 +1,73 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-deny-by-default",
+  "sharedSuperAdminIdentitiesAllowed": false,
+  "individualAccountsRequired": true,
+  "phishingResistantMfaRequired": true,
+  "hardwareBackedMfaRequired": true,
+  "primaryRolePerTenant": true,
+  "adminIsCommerceRole": false,
+  "workspaceLeastPrivilege": {
+    "workspaceCount": 19,
+    "workspaceScopedRolesRequired": true,
+    "allWorkspaceAccessRequiresExplicitScope": true,
+    "techOpsWorkspace": "ADM-19"
+  },
+  "sessionControls": {
+    "sessionSecretMinLength": 32,
+    "defaultTtlHours": 12,
+    "cookieSecureRequiredOutsideLocal": true,
+    "httpOnlyRequired": true,
+    "sameSite": "strict",
+    "serverSideRevocationRequired": true,
+    "tokenHashStorageOnly": true,
+    "clientSuppliedIdentityTrusted": false
+  },
+  "jitElevation": {
+    "required": true,
+    "maxMinutes": 30,
+    "distinctApproverRequired": true,
+    "reasonMinLength": 8,
+    "workspaceScopedRequired": true,
+    "selfApprovalDenied": true,
+    "expiryEnforced": true
+  },
+  "breakGlass": {
+    "allowed": true,
+    "maxMinutes": 60,
+    "distinctApproverRequired": true,
+    "reasonRequired": true,
+    "timeBoxed": true,
+    "postIncidentReviewRequired": true,
+    "automaticReset": false
+  },
+  "fourEyes": {
+    "highImpactActionRequiresSecondApproval": true,
+    "approverMustBeDistinctHuman": true,
+    "reasonAndExpiryRequired": true,
+    "productionIdpBackedApprovalRequired": true
+  },
+  "audit": {
+    "localAppendOnly": true,
+    "immutableExternalSinkRequired": true,
+    "externalSinkConfigured": false,
+    "wormOrEquivalentRequired": true,
+    "retentionScheduleRef": null,
+    "loginAlertingRequired": true,
+    "mutationAlertingRequired": true,
+    "alertingConfigured": false
+  },
+  "codeBoundaryRefs": [
+    "config/identity-access-policy.json",
+    "services/api/src/middleware/auth.ts",
+    "services/api/src/modules/admin/admin.routes.ts",
+    "services/api/src/modules/admin/admin.repo.ts",
+    "services/api/src/config.ts"
+  ],
+  "evidenceGaps": [
+    "No production IdP or phishing-resistant MFA enrolment record is attached.",
+    "No external immutable audit sink, WORM retention schedule or alert routing is configured.",
+    "No break-glass drill or post-incident review is attached.",
+    "Local seeded admin identity is generated, local-only and not a production account."
+  ]
+}

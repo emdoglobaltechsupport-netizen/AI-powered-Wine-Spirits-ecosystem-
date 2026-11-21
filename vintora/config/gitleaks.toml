@@ -1,0 +1,35 @@
+title = "Vintora Phase 1 prototype credential rules"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "vintora-legacy-demo-password"
+description = "Fixed legacy demo/admin passwords must never be committed"
+regex = '''Vintora(?:Admin|Demo)![A-Za-z0-9]{4,}'''
+keywords = ["VintoraAdmin", "VintoraDemo"]
+
+[[rules]]
+id = "vintora-fixed-local-database-password"
+description = "The fixed local database password must never be committed"
+regex = '''postgres(?:ql)?://[^:/@\s]+:vintora@'''
+keywords = ["postgres://", "postgresql://"]
+
+[[rules]]
+id = "vintora-fixed-session-secret-placeholder"
+description = "Fixed development session-secret placeholders must never be committed"
+regex = '''local-dev-session-secret-[A-Za-z0-9-]{8,}'''
+keywords = ["local-dev-session-secret"]
+
+[[rules]]
+id = "vintora-generated-demo-password-literal"
+description = "Generated demo password literals belong only in gitignored .env or throwaway CI setup"
+regex = '''LocalDev-[A-Za-z0-9_-]{8,}'''
+keywords = ["LocalDev-"]
+
+[allowlist]
+description = "Generated values are produced at runtime; allow the generator and CI recipe only"
+paths = [
+  '''scripts/lib/local-env\.mjs''',
+  '''\.github/workflows/ci-migrations\.yml''',
+]

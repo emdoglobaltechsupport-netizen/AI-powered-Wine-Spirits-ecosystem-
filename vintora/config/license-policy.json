@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "policy": {
+    "scope": "All npm packages recorded in package-lock.json, including dev and optional dependencies. Workspace packages are excluded because they are first-party code.",
+    "sourceOfTruth": "package-lock.json; the generated CycloneDX SBOM retains the same license values",
+    "requireLicense": true,
+    "unknownLicenseRequiresApproval": true,
+    "reviewDecisionOwner": "Platform Security",
+    "reviewCadence": "Every dependency PR and at least quarterly",
+    "note": "Allowed licences are permissive or public-domain equivalents. Review-required licences are not forbidden, but each package family needs a named owner, reason, review date and conditions. Denied licences block the build; critical policy changes require a documented architecture decision."
+  },
+  "allowedLicenses": [
+    "0BSD",
+    "Apache-2.0",
+    "BSD",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BlueOak-1.0.0",
+    "CC0-1.0",
+    "ISC",
+    "MIT",
+    "Python-2.0",
+    "Unlicense"
+  ],
+  "reviewRequiredLicenses": [
+    "CC-BY-4.0",
+    "GPL-2.0",
+    "LGPL-3.0-or-later",
+    "MPL-2.0",
+    "NOASSERTION"
+  ],
+  "deniedLicenses": [
+    "AGPL-1.0",
+    "AGPL-3.0",
+    "AGPL-3.0-only",
+    "AGPL-3.0-or-later",
+    "BUSL-1.1",
+    "CC-BY-NC-1.0",
+    "CC-BY-NC-2.0",
+    "CC-BY-NC-3.0",
+    "CC-BY-NC-4.0",
+    "CC-BY-NC-ND-1.0",
+    "CC-BY-NC-ND-2.0",
+    "CC-BY-NC-ND-3.0",
+    "CC-BY-NC-ND-4.0",
+    "CC-BY-NC-SA-1.0",
+    "CC-BY-NC-SA-2.0",
+    "CC-BY-NC-SA-3.0",
+    "CC-BY-NC-SA-4.0",
+    "CC-BY-SA-1.0",
+    "CC-BY-SA-2.0",
+    "CC-BY-SA-3.0",
+    "CC-BY-SA-4.0",
+    "GPL-2.0-only",
+    "GPL-2.0-or-later",
+    "GPL-3.0-only",
+    "GPL-3.0-or-later",
+    "SSPL-1.0",
+    "UNLICENSED"
+  ],
+  "approvals": [
+    {
+      "id": "LIC-2026-LGPL-NATIVE-IMAGE",
+      "licenses": ["LGPL-3.0-or-later"],
+      "packages": ["@img/sharp-libvips-*", "@img/sharp-wasm32", "@img/sharp-win32-*"],
+      "owner": "Platform Engineering",
+      "reviewed": "2026-11-20",
+      "reason": "Optional native image codecs shipped only as separate platform packages for the non-production web shell.",
+      "conditions": "Keep these packages optional; do not statically link or redistribute modified codecs without counsel review."
+    },
+    {
+      "id": "LIC-2026-MPL-LIGHTNINGCSS",
+      "licenses": ["MPL-2.0"],
+      "packages": ["lightningcss", "lightningcss-*"],
+      "owner": "Platform Engineering",
+      "reviewed": "2026-11-20",
+      "reason": "CSS transformer used only by the non-production web shell; source-availability obligations are documented in the SBOM.",
+      "conditions": "Do not promote the web shell to production without a redistribute/modification review."
+    },
+    {
+      "id": "LIC-2026-CCBY-CANIUSE",
+      "licenses": ["CC-BY-4.0"],
+      "packages": ["caniuse-lite"],
+      "owner": "Frontend Platform",
+      "reviewed": "2026-11-20",
+      "reason": "Browser compatibility data; no Vintora content is derived from it.",
+      "conditions": "Retain attribution in dependency metadata; do not republish the dataset as first-party content."
+    },
+    {
+      "id": "LIC-2026-NOASSERTION-LEGACY",
+      "licenses": ["NOASSERTION"],
+      "packages": ["@segment/loosely-validate-event", "qrcode-terminal", "requireg"],
+      "owner": "Platform Security",
+      "reviewed": "2026-11-20",
+      "reason": "Legacy transitive packages whose manifests omit a machine-readable SPDX licence; upstream sources were reviewed during Phase 1.",
+      "conditions": "Replace or remove before promoting the dependent surface to production; re-review on every version change."
+    },
+    {
+      "id": "LIC-2026-DUAL-GPL-ALTERNATIVE",
+      "licenses": ["GPL-2.0"],
+      "packages": ["node-forge"],
+      "owner": "Platform Security",
+      "reviewed": "2026-11-20",
+      "reason": "The package declares BSD-3-Clause OR GPL-2.0; the permissive BSD alternative is selected for use.",
+      "conditions": "Do not change the selected licence alternative; re-review if the SPDX expression changes."
+    }
+  ]
+}

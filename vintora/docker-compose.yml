@@ -1,0 +1,122 @@
+name: vintora
+
+# Platform-neutral local stack. `npm run setup` generates the required .env
+# values, starts these services, applies migrations and runs verification.
+# Third-party images are digest-pinned in config/artifact-policy.json.
+services:
+  db:
+    image: pgvector/pgvector:pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
+    container_name: vintora-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-vintora}
+      POSTGRES_DB: ${POSTGRES_DB:-vintora}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required; run npm run setup}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - vintora-internal
+    volumes:
+      - vintora-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vintora} -d ${POSTGRES_DB:-vintora}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine@sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe
+    container_name: vintora-redis
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    networks:
+      - vintora-internal
+    volumes:
+      - vintora-redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: .
+    container_name: vintora-api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      RUNTIME_PROFILE: ${RUNTIME_PROFILE:-local}
+      PORT: 4000
+      WEB_ORIGIN: http://localhost:${PROTOTYPE_PORT:-8123}
+      DATABASE_URL: postgres://${POSTGRES_USER:-vintora}:${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is required; run npm run setup}@db:5432/${POSTGRES_DB:-vintora}
+      REDIS_URL: redis://redis:6379
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required; run npm run setup}
+      SESSION_TTL_HOURS: ${SESSION_TTL_HOURS:-12}
+      COOKIE_SECURE: ${COOKIE_SECURE:-false}
+      ALLOW_DEMO_SEED: ${ALLOW_DEMO_SEED:-false}
+      CATALOGUE_SOURCE: ${CATALOGUE_SOURCE:-demo}
+      # Local/test-only demo identities. Never set these in a deployed stack.
+      SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@vintora.local}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:?SEED_ADMIN_PASSWORD is required; run npm run setup}
+      SEED_USER_EMAIL: ${SEED_USER_EMAIL:-demo@vintora.local}
+      SEED_USER_PASSWORD: ${SEED_USER_PASSWORD:?SEED_USER_PASSWORD is required; run npm run setup}
+      AGE_VERIFICATION_PROVIDER: ${AGE_VERIFICATION_PROVIDER:-local}
+      KYC_PROVIDER: ${KYC_PROVIDER:-local}
+      PAYMENT_PROVIDER: ${PAYMENT_PROVIDER:-simulated}
+      MARKETING_PROVIDER: ${MARKETING_PROVIDER:-simulated}
+      CUSTODY_PROVIDER: ${CUSTODY_PROVIDER:-simulated}
+      AI_PROVIDER: ${AI_PROVIDER:-deterministic}
+      REAL_PROVIDER_OPT_IN: ${REAL_PROVIDER_OPT_IN:-false}
+      ALLOW_SIMULATED_PROVIDERS: ${ALLOW_SIMULATED_PROVIDERS:-true}
+      REAL_AGE_PROVIDER_OPT_IN: ${REAL_AGE_PROVIDER_OPT_IN:-false}
+      REAL_KYC_PROVIDER_OPT_IN: ${REAL_KYC_PROVIDER_OPT_IN:-false}
+      REAL_PAYMENT_PROVIDER_OPT_IN: ${REAL_PAYMENT_PROVIDER_OPT_IN:-false}
+      REAL_MARKETING_PROVIDER_OPT_IN: ${REAL_MARKETING_PROVIDER_OPT_IN:-false}
+      REAL_CUSTODY_PROVIDER_OPT_IN: ${REAL_CUSTODY_PROVIDER_OPT_IN:-false}
+      REAL_AI_PROVIDER_OPT_IN: ${REAL_AI_PROVIDER_OPT_IN:-false}
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-1000}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "127.0.0.1:${API_PORT:-4000}:4000"
+    networks:
+      - vintora-internal
+      - vintora-edge
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:4000/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  prototype:
+    build: .
+    container_name: vintora-prototype
+    restart: unless-stopped
+    command: ["node", "scripts/serve-prototype.mjs"]
+    environment:
+      HOST: 0.0.0.0
+      PROTOTYPE_PORT: 8123
+    ports:
+      - "127.0.0.1:${PROTOTYPE_PORT:-8123}:8123"
+    networks:
+      - vintora-edge
+    depends_on:
+      api:
+        condition: service_healthy
+
+networks:
+  vintora-internal:
+    internal: true
+  vintora-edge:
+    driver: bridge
+
+volumes:
+  vintora-pgdata:
+  vintora-redisdata:

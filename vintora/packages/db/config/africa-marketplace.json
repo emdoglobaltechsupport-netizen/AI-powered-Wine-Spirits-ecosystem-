@@ -1,0 +1,138 @@
+{
+  "version": "1.0.0",
+  "domain": "Africa Marketplace",
+  "marketModule": "Vintora Market",
+  "notice": "Design configuration only. Market data, regulations, payment availability, prices and product facts require local legal, tax and supplier verification before launch. No live integration or real product record is asserted.",
+  "scope": {
+    "scopeStatus": "design_target",
+    "phaseAssignment": "unassigned",
+    "activationStatus": "blocked",
+    "registryState": "prototype",
+    "countryActivationGate": "africa-country-activation",
+    "jurisdictionRegistryRef": "config/jurisdiction-compliance.json",
+    "canonicalRelationship": "Catalogue/expansion domain inside Vintora Market; not an eleventh product module and not a canonical launch phase.",
+    "scopeClassCounts": { "phase1": 0, "planned": 0, "target": 14 },
+    "countSemantics": {
+      "targetMarketRecords": 14,
+      "marketCurrencies": 14,
+      "configuredCurrencyCodesIncludingUsdReference": 15,
+      "registryLanguages": 5,
+      "longTermCountryScaleTarget": 54
+    },
+    "activeLanguagesByEnvironment": {
+      "local": ["en", "fr", "ar", "pt", "sw"],
+      "test": ["en", "fr", "ar", "pt", "sw"],
+      "staging": [],
+      "production": []
+    },
+    "activeCurrenciesByEnvironment": {
+      "local": [],
+      "test": [],
+      "staging": [],
+      "production": []
+    }
+  },
+  "targetMarkets": [
+    { "code": "ZA", "name": "South Africa", "currency": "ZAR", "languages": ["en"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "NG", "name": "Nigeria", "currency": "NGN", "languages": ["en"], "region": "West Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "KE", "name": "Kenya", "currency": "KES", "languages": ["en", "sw"], "region": "East Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "GH", "name": "Ghana", "currency": "GHS", "languages": ["en"], "region": "West Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "TZ", "name": "Tanzania", "currency": "TZS", "languages": ["en", "sw"], "region": "East Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "UG", "name": "Uganda", "currency": "UGX", "languages": ["en", "sw"], "region": "East Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "RW", "name": "Rwanda", "currency": "RWF", "languages": ["en", "fr", "sw"], "region": "East Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "MA", "name": "Morocco", "currency": "MAD", "languages": ["ar", "fr"], "region": "North Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "EG", "name": "Egypt", "currency": "EGP", "languages": ["ar"], "region": "North Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "AO", "name": "Angola", "currency": "AOA", "languages": ["pt"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "BW", "name": "Botswana", "currency": "BWP", "languages": ["en"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "NA", "name": "Namibia", "currency": "NAD", "languages": ["en"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "ZM", "name": "Zambia", "currency": "ZMW", "languages": ["en"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null },
+    { "code": "MZ", "name": "Mozambique", "currency": "MZN", "languages": ["pt"], "region": "Southern Africa", "ageGateRequired": true, "regulatoryProfile": "local_counsel_review_required", "regulatorReference": null, "scopeClass": "target", "activationState": "blocked", "licensingOwner": null, "effectiveDate": null, "counselReviewRef": null }
+  ],
+  "currencies": [
+    { "code": "ZAR", "name": "South African Rand", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "NGN", "name": "Nigerian Naira", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "KES", "name": "Kenyan Shilling", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "GHS", "name": "Ghanaian Cedi", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "TZS", "name": "Tanzanian Shilling", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "UGX", "name": "Ugandan Shilling", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "RWF", "name": "Rwandan Franc", "minorUnits": 0, "fxSource": "configured_rate_provider" },
+    { "code": "MAD", "name": "Moroccan Dirham", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "EGP", "name": "Egyptian Pound", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "AOA", "name": "Angolan Kwanza", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "BWP", "name": "Botswana Pula", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "NAD", "name": "Namibian Dollar", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "ZMW", "name": "Zambian Kwacha", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "MZN", "name": "Mozambican Metical", "minorUnits": 2, "fxSource": "configured_rate_provider" },
+    { "code": "USD", "name": "United States Dollar", "minorUnits": 2, "fxSource": "configured_rate_provider" }
+  ],
+  "languages": [
+    { "code": "en", "name": "English", "locale": "en", "rtl": false },
+    { "code": "fr", "name": "French", "locale": "fr", "rtl": false },
+    { "code": "ar", "name": "Arabic", "locale": "ar", "rtl": true },
+    { "code": "pt", "name": "Portuguese", "locale": "pt", "rtl": false },
+    { "code": "sw", "name": "Swahili", "locale": "sw", "rtl": false }
+  ],
+  "paymentGatewayCandidates": [
+    { "code": "MPESA", "name": "M-Pesa-style mobile money adapter", "countries": ["KE", "TZ", "UG"], "currencies": ["KES", "TZS", "UGX"], "integrationStatus": "candidate_not_integrated", "credentialEnv": null },
+    { "code": "PAYSTACK_STYLE", "name": "Nigeria/Ghana card-and-transfer adapter", "countries": ["NG", "GH"], "currencies": ["NGN", "GHS"], "integrationStatus": "candidate_not_integrated", "credentialEnv": null },
+    { "code": "CARD_GLOBAL", "name": "Global card adapter", "countries": ["ZA", "BW", "NA", "ZM", "MZ", "MA", "EG", "AO", "RW"], "currencies": ["ZAR", "BWP", "NAD", "ZMW", "MZN", "MAD", "EGP", "AOA", "RWF"], "integrationStatus": "candidate_not_integrated", "credentialEnv": null },
+    { "code": "BANK_TRANSFER", "name": "Local bank transfer adapter", "countries": ["ZA", "NG", "KE", "GH", "TZ", "UG", "RW", "MA", "EG", "AO", "BW", "NA", "ZM", "MZ"], "currencies": ["ZAR", "NGN", "KES", "GHS", "TZS", "UGX", "RWF", "MAD", "EGP", "AOA", "BWP", "NAD", "ZMW", "MZN"], "integrationStatus": "candidate_not_integrated", "credentialEnv": null }
+  ],
+  "complianceChecklist": [
+    "Age verification before checkout",
+    "KYC where required by jurisdiction or order value",
+    "Import licence and permit evidence",
+    "Product label and packaging review",
+    "Excise and VAT registration review",
+    "Advertising and promotion compliance review",
+    "Distributor authorization evidence",
+    "Country-specific tax rule verification",
+    "Local payment gateway due diligence",
+    "Logistics and customs document validation"
+  ],
+  "features": [
+    "Multi-country listings",
+    "Multi-currency pricing",
+    "Regional tax calculations",
+    "Distributor management",
+    "Import/export compliance",
+    "Country-specific regulations",
+    "Local payment gateways",
+    "Delivery management",
+    "AI product recommendations"
+  ],
+  "workflows": [
+    { "workflowId": "COUNTRY_ONBOARDING", "name": "Country onboarding", "states": ["draft", "legal_review", "tax_review", "payment_review", "approved", "active"], "guards": ["local_counsel_approval", "tax_profile_verified", "age_gate_enabled"] },
+    { "workflowId": "BRAND_ONBOARDING", "name": "Brand onboarding", "states": ["candidate", "identity_verified", "rights_verified", "asset_review", "approved"], "guards": ["brand_identity_evidence", "trademark_or_authorisation_evidence", "distinct_approver"] },
+    { "workflowId": "DISTRIBUTOR_ONBOARDING", "name": "Distributor onboarding", "states": ["candidate", "kyc", "licence_review", "territory_review", "approved"], "guards": ["business_kyc", "licence_evidence", "brand_authorisation", "distinct_approver"] },
+    { "workflowId": "PRODUCT_APPROVAL", "name": "Product approval", "states": ["template", "source_attached", "data_validation", "compliance_review", "asset_moderation", "approved", "published"], "guards": ["verified_source", "field_provenance", "licensed_assets", "approved_moderation", "human_publisher"] },
+    { "workflowId": "PRICING_APPROVAL", "name": "Pricing management", "states": ["draft", "fx_quote", "tax_review", "margin_review", "approved", "active"], "guards": ["fx_lock_15_minutes", "tax_rule_reference", "human_approver"] },
+    { "workflowId": "INVENTORY_SYNC", "name": "Inventory synchronisation", "states": ["scheduled", "fetching", "reconciling", "done", "failed"], "guards": ["distributor_feed_credentials", "idempotent_cursor", "exception_review"] },
+    { "workflowId": "LOGISTICS_SHIPMENT", "name": "Logistics integration", "states": ["created", "pickup_scheduled", "in_transit", "customs_review", "out_for_delivery", "delivered"], "guards": ["age_assured_delivery", "customs_documents", "destination_regulation_check"] },
+    { "workflowId": "COMPLIANCE_REVIEW", "name": "Country-specific compliance", "states": ["pending", "evidence_required", "reviewing", "approved", "rejected"], "guards": ["country_rule_reference", "distinct_reviewer", "expiry_tracking"] },
+    { "workflowId": "LOCALIZATION_REVIEW", "name": "Localisation review", "states": ["draft", "translating", "reviewing", "approved"], "guards": ["native_speaker_review", "rtl_layout_check_for_arabic", "legal_copy_review"] },
+    { "workflowId": "ASSET_MODERATION", "name": "Asset moderation", "states": ["submitted", "licence_check", "moderation", "approved", "rejected"], "guards": ["licence_or_authorisation", "rights_holder_reference", "moderator_approval"] }
+  ],
+  "validationRules": [
+    { "id": "AM-001", "severity": "error", "description": "Country must have an ISO alpha-2 code, currency and at least one configured language." },
+    { "id": "AM-002", "severity": "error", "description": "Every product template must expose all requested listing fields." },
+    { "id": "AM-003", "severity": "error", "description": "Candidate brand names are not verified brands until identity and rights evidence is attached." },
+    { "id": "AM-004", "severity": "error", "description": "Prices, barcodes, awards, ABV, bottle size and official URLs must come from a verified source." },
+    { "id": "AM-005", "severity": "error", "description": "Official and lifestyle images require a licensed or authorised asset record." },
+    { "id": "AM-006", "severity": "error", "description": "Availability must be evaluated per target market; absence of evidence is unverified, not available." },
+    { "id": "AM-007", "severity": "error", "description": "Regional tax calculations must reference a reviewed tax rule and currency." },
+    { "id": "AM-008", "severity": "error", "description": "Distributor records require KYC, licence evidence and brand authorisation before activation." },
+    { "id": "AM-009", "severity": "error", "description": "Payment gateways are candidate adapters until credentials and legal review are recorded." },
+    { "id": "AM-010", "severity": "error", "description": "Product publication requires human approval after compliance and asset moderation." },
+    { "id": "AM-011", "severity": "warning", "description": "AI recommendation and SEO fields must be labelled derived when generated by rules." },
+    { "id": "AM-012", "severity": "error", "description": "Audit records are append-only for brands, products, prices and approvals." }
+  ],
+  "scaleTargets": {
+    "brands": 10000,
+    "products": 500000,
+    "africanCountries": 54,
+    "launchMarkets": 14,
+    "customers": "millions",
+    "languages": 5
+  }
+}

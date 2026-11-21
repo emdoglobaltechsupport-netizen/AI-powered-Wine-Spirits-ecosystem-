@@ -1,0 +1,44 @@
+{
+  "policyVersion": "v1",
+  "status": "non_live_blueprint",
+  "prototypeLiveOrdersAllowed": false,
+  "realUsdcSettlementAllowed": false,
+  "userFundsOrAssetsHeld": false,
+  "notice": "Vault is a Design-state blueprint only. No securities/commodities advice, title opinion, custody licence, wallet, settlement rail, KYC/AML provider, suitability process or reconciliation evidence is attached. No order, trade, wallet funding, USDC transfer, custody movement or performance claim is permitted.",
+  "separation": {
+    "ownership": "Unmodelled legal title;.title holder and beneficial-interest rules require jurisdiction-specific advice.",
+    "custody": "Independent licensed custodian required; no Vintora custody or omnibus wallet in the prototype.",
+    "trading": "Order book/matching is a design artefact; no matching engine is live.",
+    "settlement": "USDC is a canonical future design target only; prototype environments must display simulated or blueprint status.",
+    "investmentAdvice": "No advice, recommendation, suitability approval, return forecast or performance guarantee is provided."
+  },
+  "legalReviews": [
+    { "id": "securities_commodities_advice", "status": "not_obtained", "evidenceRef": null, "owner": null, "jurisdiction": null },
+    { "id": "title_and_fractional_interest_opinion", "status": "not_obtained", "evidenceRef": null, "owner": null, "jurisdiction": null },
+    { "id": "custody_licence_review", "status": "not_obtained", "evidenceRef": null, "owner": null, "jurisdiction": null },
+    { "id": "aml_sanctions_tax_review", "status": "not_obtained", "evidenceRef": null, "owner": null, "jurisdiction": null },
+    { "id": "consumer_protection_and_marketing_review", "status": "not_obtained", "evidenceRef": null, "owner": null, "jurisdiction": null }
+  ],
+  "requiredControls": [
+    "licensed_custodian",
+    "segregated_title_and_assets",
+    "independent_reconciliation",
+    "kyc_aml_sanctions",
+    "suitability_and_risk_disclosure",
+    "non_performance_disclaimer",
+    "no_real_usdc_in_prototype",
+    "dual_approval_and_append_only_audit"
+  ],
+  "disclosures": [
+    "Capital at risk; no return, yield, performance fee outcome, liquidity or target price is guaranteed.",
+    "Forecasts are ranges with confidence metadata, never promises or investment advice.",
+    "Fractional-interest classification and tax treatment are unresolved legal questions.",
+    "Prototype mode — no real orders are placed."
+  ],
+  "codeRefs": [
+    "apps/prototype/src/views/membership.js",
+    "apps/prototype/app.js",
+    "services/api/src/trade.ts",
+    "20-wine-investment-marketplace.md"
+  ]
+}

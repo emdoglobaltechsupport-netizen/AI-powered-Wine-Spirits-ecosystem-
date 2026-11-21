@@ -1,0 +1,118 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-security-controls-design",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "This is a concise threat model and control specification for a Phase 1 prototype. It records required boundaries and explicit evidence gaps. It is not a penetration test, audit result, SOC 2 / ISO 27001 / PCI DSS attestation or launch approval.",
+  "assets": [
+    { "id": "customer_identity", "description": "Customer account and session identifiers", "classification": "restricted", "owner": "Identity lead" },
+    { "id": "age_kyc_evidence", "description": "Age, KYC and eligibility evidence references", "classification": "restricted", "owner": "Compliance lead" },
+    { "id": "payment_tokens", "description": "Payment method tokens and ledger records", "classification": "restricted", "owner": "Payments lead" },
+    { "id": "catalogue_provenance", "description": "SKU, producer and provenance chain records", "classification": "confidential", "owner": "Catalogue lead" },
+    { "id": "admin_sessions", "description": "Admin elevation, approval and audit records", "classification": "restricted", "owner": "Platform security lead" },
+    { "id": "ai_prompts_and_logs", "description": "Prompts, retrieval packets, approvals and model metadata", "classification": "confidential", "owner": "Chief AI Officer" },
+    { "id": "audit_events", "description": "Append-only privileged action and safeguard decisions", "classification": "restricted", "owner": "Platform security lead" },
+    { "id": "vault_blueprint", "description": "Non-live custody, ownership and investment-advice design records", "classification": "restricted", "owner": "Vault product lead" }
+  ],
+  "trustBoundaries": [
+    { "id": "user", "actor": "Customer", "crosses": "Public storefront → API", "controls": ["age gate", "server-issued session cookie", "SameSite strict", "server-derived cart and quote"] },
+    { "id": "seller", "actor": "Merchant / distributor", "crosses": "Seller console → API", "controls": ["business verification", "tenant membership", "listing ownership check", "licence evidence for trade"] },
+    { "id": "admin", "actor": "Internal staff", "crosses": "Admin console → internal workspaces", "controls": ["individual MFA account", "workspace-scoped RBAC", "JIT elevation", "distinct four-eyes approval"] },
+    { "id": "api", "actor": "API service", "crosses": "HTTP → domain services", "controls": ["version negotiation", "input validation", "in-memory prototype rate limit", "fail-closed policy evaluators"] },
+    { "id": "service", "actor": "Database and internal services", "crosses": "Service → PostgreSQL", "controls": ["tenant-scoped queries", "row-level security policies", "parameterised statements", "local append-only audit"] },
+    { "id": "external", "actor": "External providers", "crosses": "Prototype → payment / age / KYC / custody / AI", "controls": ["mock-only adapters", "runtime profile guard", "two independent live opt-ins", "no external effects in local/test/staging"] }
+  ],
+  "threats": [
+    { "id": "T-01", "category": "Spoofing", "description": "Stolen or shared admin identity alters infrastructure, users, payments or incident response.", "controls": ["individual accounts", "phishing-resistant hardware MFA", "hashed server-side sessions"], "evidenceRef": null },
+    { "id": "T-02", "category": "Tampering", "description": "Cross-tenant read or write modifies another tenant's order, listing or ledger record.", "controls": ["tenant-scoped queries", "RLS policies", "cross-tenant deny tests"], "evidenceRef": null },
+    { "id": "T-03", "category": "Repudiation", "description": "Privileged mutation cannot be attributed to a named human approver.", "controls": ["distinct approver", "append-only audit", "external immutable sink required"], "evidenceRef": null },
+    { "id": "T-04", "category": "Information disclosure", "description": "Session secrets, database passwords or provider keys leak through logs or client bundles.", "controls": ["secret scanning", "env-only secrets", "mode-only startup logs"], "evidenceRef": null },
+    { "id": "T-05", "category": "Denial of service", "description": "Abusive request volume exhausts the prototype API or database.", "controls": ["in-memory rate limit", "request size and timeout limits required in production"], "evidenceRef": null },
+    { "id": "T-06", "category": "Elevation of privilege", "description": "Demo seeding or a header value grants production admin or commerce bypass.", "controls": ["profile-scoped demo guard", "server-derived identity", "admin:bypass:commerce denied"], "evidenceRef": null },
+    { "id": "T-07", "category": "Supply chain", "description": "Malicious or outdated dependency or base image enters the build.", "controls": ["locked install", "licence and secret scans", "SBOM", "digest-pinned images"], "evidenceRef": null },
+    { "id": "T-08", "category": "Unsafe AI output", "description": "Uncited health, return or intoxication guidance reaches a customer or triggers an external effect.", "controls": ["cite-or-abstain", "prohibited-pattern screen", "recommendation-only tier", "no execution"], "evidenceRef": null }
+  ],
+  "controls": {
+    "authentication": {
+      "individualAccountsRequired": true,
+      "phishingResistantMfaRequired": true,
+      "hardwareBackedMfaRequired": true,
+      "serverDerivedIdentityOnly": true,
+      "headerSuppliedRoleTrusted": false
+    },
+    "sessionHandling": {
+      "httpOnlyCookie": true,
+      "sameSite": "strict",
+      "secureOutsideLocal": true,
+      "tokenHashStorageOnly": true,
+      "serverSideRevocation": true,
+      "defaultTtlHours": 12
+    },
+    "tenantIsolation": {
+      "tenantScopedQueriesRequired": true,
+      "rlsPoliciesRequired": true,
+      "crossTenantReadWriteTestsRequired": true,
+      "rlsEvidenceRef": null
+    },
+    "encryption": {
+      "inTransit": "TLS 1.2+ required outside local development",
+      "atRest": "Managed encryption with separately held keys required before launch",
+      "kmsKeyCustodyDefined": false,
+      "evidenceRef": null
+    },
+    "ddosAndRateLimiting": {
+      "prototype": "in-memory per-process limiter",
+      "distributedLimiterRequired": true,
+      "distributedLimiterImplemented": false,
+      "alertThresholdsDefined": false
+    },
+    "secrets": {
+      "envOnly": true,
+      "minimumSessionSecretLength": 32,
+      "secretScanInCi": true,
+      "mockCredentialsBlockedOutsideLocal": true
+    },
+    "supplyChain": {
+      "lockedInstall": true,
+      "secretLicenceSbomScans": true,
+      "digestPinnedImages": true,
+      "containerScanningDefined": true,
+      "localTrivyEvidenceAttached": false
+    },
+    "incidentResponse": {
+      "humanLedPlaybookRequired": true,
+      "playbookRef": "SECURITY_ARCHITECTURE.md#incident-response-and-data-breach-playbooks",
+      "breakGlassReviewRequired": true,
+      "drillEvidenceRef": null
+    },
+    "dataBreachPlaybook": {
+      "steps": ["contain", "preserve evidence", "identify affected tenants and records", "notify legal and regulator per jurisdiction", "remediate", "post-incident review"],
+      "ownerRole": "Platform security lead",
+      "notificationClockDefined": false,
+      "evidenceRef": null
+    }
+  },
+  "requiredVerification": [
+    "npm run secrets:scan",
+    "npm run sbom:check",
+    "npm run artifacts:check",
+    "npm run identity:check",
+    "npm run boundaries:check",
+    "npm run ci:verify"
+  ],
+  "evidenceGaps": [
+    "No penetration test, threat-model review or security audit result is attached.",
+    "No KMS key custody, at-rest encryption or TLS configuration evidence is attached.",
+    "No cross-tenant RLS test run is attached to a staging or production database.",
+    "No incident-response or data-breach drill is attached; notification clocks are undefined.",
+    "Distributed rate limiting and an external immutable audit sink are specified but not implemented."
+  ],
+  "codeBoundaryRefs": [
+    "config/admin-access-policy.json",
+    "config/identity-access-policy.json",
+    "services/api/src/config.ts",
+    "services/api/src/middleware/auth.ts",
+    "packages/db/migrations/0003_seller_dashboard.sql",
+    "SECURITY_ARCHITECTURE.md"
+  ]
+}

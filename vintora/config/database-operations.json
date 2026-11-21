@@ -1,0 +1,89 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-database-operations-design",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "allowedProfiles": ["local", "test"],
+  "stagingRequiresManualEvidence": true,
+  "productionMigrationsAllowed": false,
+  "commands": {
+    "db:migrate": {
+      "appliesMigrations": true,
+      "appliesReferenceSeed": false,
+      "createsDemoIdentities": false,
+      "description": "Schema migrations and migration metadata only."
+    },
+    "db:setup": {
+      "appliesMigrations": true,
+      "appliesReferenceSeed": true,
+      "createsDemoIdentities": false,
+      "description": "Migrations plus labelled reference/demo catalogue rows; never demo identities."
+    },
+    "db:seed:dev": {
+      "appliesMigrations": true,
+      "appliesReferenceSeed": true,
+      "createsDemoIdentities": true,
+      "description": "Local/test-only identity seed with generated credentials and explicit opt-in."
+    },
+    "db:reset": {
+      "implemented": false,
+      "description": "No destructive reset automation. Recreate a disposable database and rerun the explicit commands."
+    }
+  },
+  "migrationRunner": {
+    "trackingTable": "schema_migrations",
+    "checksumColumn": "content_sha256",
+    "checksumAlgorithm": "sha256",
+    "atomicMigrationAndTrackingInsert": true,
+    "checksumMismatchFailsClosed": true,
+    "legacyChecksumBackfill": true,
+    "embeddingModeHealthRequired": true,
+    "productionProfileBlocked": true,
+    "automaticDownMigrations": false
+  },
+  "backupAndRestore": {
+    "backupRequiredBeforeDestructiveOperation": true,
+    "preferredRecovery": "Recreate a throwaway local database from db:configure, then apply db:migrate and the explicit seed commands.",
+    "restoreDrillEvidenceRef": null
+  },
+  "roles": {
+    "dedicatedMigrationRoleRequired": true,
+    "applicationRoleMustNotOwnSchema": true,
+    "adminDsnTransientOnly": true,
+    "roleEvidenceRef": null
+  },
+  "representativeDataCheck": {
+    "required": true,
+    "command": "npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest",
+    "note": "Offline representative-data checks; they do not validate licensed supplier data."
+  },
+  "rollback": {
+    "automaticDownMigrations": false,
+    "failedMigrationTransactionRollbackTested": true,
+    "procedure": [
+      "Stop the API and record the current migration rows, embedding mode and database role.",
+      "Take a backup or discard the entire disposable database; never improvise a down migration.",
+      "For a failed forward migration, confirm schema_migrations has no row for that file and rerun db:migrate after a corrected forward file is reviewed.",
+      "For an embedding-mode mismatch, recreate the disposable database or align EMBEDDING_MODE with the recorded physical column type.",
+      "Re-run representative-data checks and npm run ci:verify before resuming local verification."
+    ]
+  },
+  "ci": {
+    "freshApply": true,
+    "secondPassIdempotency": true,
+    "failingUpgradeRollback": true,
+    "embeddingModeHealth": true
+  },
+  "evidenceGaps": [
+    "No dedicated production migration role or credential is configured.",
+    "No production backup, restore or point-in-time recovery drill has been executed.",
+    "No staging migration run or manual evidence is attached to this workspace.",
+    "No licensed or verified catalogue data is included in the representative-data checks."
+  ],
+  "references": [
+    "DATABASE_OPERATIONS.md",
+    "SETUP.md",
+    ".github/workflows/ci-migrations.yml",
+    "services/api/src/db/migrate.ts"
+  ]
+}

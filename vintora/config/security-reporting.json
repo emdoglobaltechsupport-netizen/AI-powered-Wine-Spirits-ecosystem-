@@ -1,0 +1,42 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-security-reporting-process",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "publicIssuesForVulnerabilities": false,
+  "privateChannels": [
+    "GitHub Security Advisories private vulnerability reporting",
+    "security@vintora.invalid (reserved placeholder; replace before public release)"
+  ],
+  "requiredDisclosureFields": [
+    "affected component and version",
+    "reproduction steps or proof of concept",
+    "impact and affected environments",
+    "suggested remediation, if known"
+  ],
+  "acknowledgementSlaBusinessDays": 5,
+  "triageSlaBusinessDays": 5,
+  "coordinatedDisclosureDefaultDays": 90,
+  "scans": [
+    "npm run secrets:scan",
+    "npm run licenses:check",
+    "npm run artifacts:check",
+    "npm run sbom:check",
+    "CodeQL",
+    "Trivy container and IaC scans"
+  ],
+  "dependencyPolicy": {
+    "lockfileAuthoritative": true,
+    "npmRegistryOrApprovedMirrorOnly": true,
+    "weeklyDependabotProposed": true,
+    "sbomRegeneratedWithDependencyChanges": true,
+    "exceptionsRequireOwnerReasonAndExpiry": true,
+    "criticalExceptionsNeverAllowed": true
+  },
+  "signedReleaseCaveat": "Digest pinning, cosign signing and release promotion are configured but not executed in this local workspace; no release artifact is signed.",
+  "evidenceGaps": [
+    "No live private-reporting mailbox, hosted advisory inbox or on-call rota is attached.",
+    "No incident drill, coordinated-disclosure record or published advisory is attached.",
+    "No hosted CI, Trivy, CodeQL or signed release result is attached."
+  ]
+}

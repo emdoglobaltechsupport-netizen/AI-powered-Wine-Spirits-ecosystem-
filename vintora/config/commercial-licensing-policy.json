@@ -1,0 +1,56 @@
+{
+  "policyVersion": "v1",
+  "scope": "Commercial licences required before public launch; this is not the npm package SPDX policy.",
+  "publicLaunch": false,
+  "requiredSignoffRoles": ["Legal", "Compliance"],
+  "domains": [
+    {
+      "id": "alcohol-retail",
+      "description": "Retail sale of wine and spirits in each activated jurisdiction.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    },
+    {
+      "id": "alcohol-fulfilment",
+      "description": "Carrier, age-at-delivery and warehouse authority for alcohol shipments.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    },
+    {
+      "id": "tax-registration",
+      "description": "Jurisdiction tax registration and tested rate tables.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    },
+    {
+      "id": "payment-processing",
+      "description": "PSP agreement, PCI scope and settlement/reconciliation evidence.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    },
+    {
+      "id": "custody-investment",
+      "description": "Custodian licence, title opinion and investor-protection approvals for Vault.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    },
+    {
+      "id": "distribution",
+      "description": "Wholesale/distribution licences and authorised supplier agreements.",
+      "required": true,
+      "status": "not_obtained",
+      "evidenceRef": null
+    }
+  ],
+  "evidenceGaps": [
+    "No regulator or counsel opinion is attached.",
+    "No licensed supplier or distributor agreement is attached.",
+    "No PSP, PCI or custody licence evidence is attached.",
+    "No jurisdiction-specific tax registration is attached."
+  ]
+}

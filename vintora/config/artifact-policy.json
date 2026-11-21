@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "policy": {
+    "owner": "Platform Security",
+    "promotion": "digest-only",
+    "requireImageDigests": true,
+    "requirePinnedActions": true,
+    "requireSignatures": true,
+    "requireChecksums": true,
+    "retainEvidenceDays": 365,
+    "note": "Local development and release builds use the same digest-pinned base images. Build once, promote the resulting digest, and never rebuild per environment. GitHub Actions are pinned to commit SHAs with version comments so Dependabot can update them safely."
+  },
+  "images": {
+    "node:20-bookworm-slim": "sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0",
+    "pgvector/pgvector:pg16": "sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f",
+    "redis:7-alpine": "sha256:7f7d30b7fdd09467bac58198a1f166dd69789d348d4fe859cccb20e0cf287fbe"
+  },
+  "evidence": [
+    "sbom/vintora.cdx.json",
+    "audit-full.json",
+    "audit-scoped.json",
+    "trivy-iac.sarif",
+    "trivy-image.sarif",
+    "dist/SHA256SUMS",
+    "dist/SHA256SUMS.sig",
+    "dist/SHA256SUMS.pem",
+    "dist/sbom.sig",
+    "dist/sbom.pem"
+  ]
+}

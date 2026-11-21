@@ -1,0 +1,62 @@
+{
+  "version": "v1",
+  "status": "prototype-draft-only-deny-by-default",
+  "releaseEnabled": false,
+  "humanApprovalRequired": true,
+  "distinctApproverRequired": true,
+  "reasonMinLength": 8,
+  "defaultOutcome": "draft",
+  "audienceRestrictions": {
+    "allowedGeographies": [],
+    "deniedGeographies": ["UNVERIFIED", "SANCTIONED", "BLOCKED_BY_COUNSEL"],
+    "deniedAudienceSegments": ["underage", "age_unknown", "health_adjacent", "recovery_seeking", "sensitive_category"],
+    "noRetargetingWithoutSeparateOptIn": true,
+    "noMinorTargeting": true
+  },
+  "claimControls": {
+    "deniedClaimPatterns": [
+      "health",
+      "medical",
+      "safe drinking",
+      "guaranteed",
+      "investment return",
+      "cure",
+      "unverified award",
+      "unverified price"
+    ],
+    "requireEvidenceFor": ["price", "award", "provenance", "comparative claim"],
+    "alcoholAdvertisingValidationRequired": true,
+    "localCounselApprovalRequired": true
+  },
+  "budgetControls": {
+    "maxIncreasePercent": 0,
+    "increaseRequiresDistinctApproval": true,
+    "revenueCap": 0.08,
+    "revenueCapEnforcedOutsideModel": true,
+    "noAutonomousSpend": true
+  },
+  "provenance": {
+    "requiredFields": ["campaignId", "createdBy", "promptHash", "evidenceRefs", "modelOrAdapter", "reviewedAt", "version"],
+    "immutable": true
+  },
+  "releaseControls": {
+    "pauseAllowed": true,
+    "rollbackAllowed": true,
+    "pauseRequiresReason": true,
+    "rollbackRequiresDistinctApprover": true,
+    "alertOnUnusualSpend": true,
+    "spendVarianceThresholdPct": 20,
+    "performanceShiftThresholdPct": 30
+  },
+  "audit": {
+    "appendOnly": true,
+    "recordDenials": true,
+    "requiredFields": ["correlationId", "tenantId", "actorUserId", "campaignId", "action", "decision", "reasonCode", "reason", "occurredAt"]
+  },
+  "evidenceGaps": [
+    "No live ad platform, budget API, targeting feed or real audience data is connected.",
+    "No legal alcohol-advertising validation service or jurisdiction-specific counsel approval exists.",
+    "No production immutable audit store, alerting pipeline or rollback execution is implemented.",
+    "All campaign metrics, budgets and approvals in the prototype are deterministic demo values."
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-canonical-metadata",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Single machine-readable index for modules, regions, currencies, languages and counts. Values are derived from the named authoritative sources; they do not certify targets, launch readiness or active localisation.",
+  "sources": {
+    "modules": "packages/shared/src/index.ts#CANON.modules",
+    "internalLayers": "config/docs-governance.json#schemas.internalLayers",
+    "regions": "config/jurisdiction-compliance.json#scopeClasses",
+    "currencies": "packages/shared/src/index.ts#CurrencyCode and config/jurisdiction-compliance.json#globalScope.currencies",
+    "languages": "packages/shared/src/index.ts#LocaleCode and config/jurisdiction-compliance.json#globalScope.languages",
+    "counts": "config/docs-governance.json#schemas.numbers and config/test-counts.json#totals"
+  },
+  "modules": {
+    "count": 10,
+    "names": [
+      "Vintora Market",
+      "Vintora Trade",
+      "Vintora Sommelier",
+      "Vintora Assist",
+      "Vintora Studio",
+      "Vintora Seller",
+      "Vintora Flow",
+      "Vintora Club",
+      "Vintora Vault",
+      "Vintora Rewards"
+    ],
+    "internalLayers": ["Admin", "Global Payments", "AI Marketing Automation", "Ultimate AI TechOps"]
+  },
+  "regions": {
+    "phase1Codes": ["US", "UK", "SG"],
+    "africaTargetCodes": ["ZA", "NG", "KE", "GH", "TZ", "UG", "RW", "MA", "EG", "AO", "BW", "NA", "ZM", "MZ"],
+    "africaScopeStatus": "design_target",
+    "africaActivationState": "blocked",
+    "activeCountryCount": 0,
+    "countryScaleTargetLabel": "unmeasured design target: 200+ countries"
+  },
+  "currencies": {
+    "prototypeCodes": ["USD", "EUR", "GBP", "SGD", "JPY", "AUD", "AED", "BRL"],
+    "targetCountLabel": "unmeasured design target: 135+ currencies",
+    "targetCount": 135,
+    "stagingActiveCodes": [],
+    "productionActiveCodes": []
+  },
+  "languages": {
+    "prototypeLocaleCodes": ["en", "fr", "es"],
+    "africaRegistryCodes": ["en", "fr", "ar", "pt", "sw"],
+    "targetCodes": [
+      "en", "fr", "es", "ar", "pt", "sw", "am", "ha",
+      "yo", "ig", "zu", "xh", "af", "so", "rw", "mg",
+      "ny", "st", "tn", "ts", "ve", "nso", "ff", "bm"
+    ],
+    "targetCount": 24,
+    "longTermTargetLabel": "unmeasured design target: 60+ languages by 2030",
+    "stagingActiveCodes": [],
+    "productionActiveCodes": [],
+    "rtlCodes": ["ar"]
+  },
+  "counts": {
+    "modules": 10,
+    "internalLayers": 4,
+    "adminWorkspaces": 19,
+    "techopsAgents": 24,
+    "deliverables": 27,
+    "demoSkuRows": 12,
+    "licensedFeeds": 0,
+    "verifiedRows": 0,
+    "skuAcquisitionTarget": 1850,
+    "browserChecks": 65,
+    "browserStaticCheckSites": 56,
+    "offlineAssertions": 108,
+    "independentPhase1Checks": 173
+  },
+  "validation": {
+    "deriveModulesFromSharedCanon": true,
+    "deriveRegionsFromJurisdictionRegister": true,
+    "deriveCurrencyAndLocaleCodesFromSharedTypes": true,
+    "deriveCountValuesFromRegisters": true,
+    "failOnDrift": true
+  },
+  "evidenceGaps": [
+    "The 24-language and 135-currency lists are unmeasured design targets; no locale inventory, translator review or FX provider evidence is attached.",
+    "No language or currency is active in staging or production; local demo locale codes do not imply launch availability.",
+    "Region, currency and language mappings are registry-level and are not a jurisdictional launch approval."
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "policy": {
+    "criticalExceptionsAllowed": false,
+    "productionWorkspaces": [
+      "@vintora/api",
+      "@vintora/shared",
+      "@vintora/prototype",
+      "@vintora/db"
+    ],
+    "reportedOnlyWorkspaces": [
+      "@vintora/web",
+      "@vintora/mobile"
+    ],
+    "note": "Phase 1 release gate only. apps/web and apps/mobile are non-production shells; their advisories appear in the full audit report and are remediated before those surfaces are promoted. Green CI does not imply production security (SECURITY.md section 7)."
+  },
+  "exceptions": [
+    {
+      "id": "SEC-2026-ZOD-VALIDATION",
+      "package": "zod",
+      "advisory": "GHSA-mrhx-c7xc-m3w5",
+      "severity": "high",
+      "installedVersion": "3.25.76",
+      "owner": "Platform Security",
+      "reason": "The patched Zod 4 major release requires a validation-layer migration across API request schemas; a rushed bump would change runtime validation behaviour in the Phase 1 release.",
+      "remediationPlan": "Migrate the API validation layer to Zod 4 (or an approved patched 3.x release), rerun typechecks, shared tests and the full API smoke suite, then remove this exception in the same PR.",
+      "expires": "2026-12-31",
+      "tracking": "SECURITY.md section 3.5"
+    }
+  ]
+}

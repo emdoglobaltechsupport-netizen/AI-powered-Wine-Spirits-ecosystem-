@@ -1,0 +1,64 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-mock-only-deny-by-default",
+  "prototypeMode": true,
+  "productionStartupAllowed": false,
+  "adapterModes": ["disabled", "mock", "sandbox", "live"],
+  "defaultMode": "mock",
+  "externalEffectModes": ["sandbox", "live"],
+  "failClosed": true,
+  "notice": "Every external provider is mock by default in local/test and mock or disabled in staging. No live-capable adapter path exists in this repository. Mode labels are startup diagnostics, not evidence of licensed integration.",
+  "liveModeChecks": {
+    "twoIndependentEnvironmentChecksRequired": true,
+    "globalOptInEnv": "REAL_PROVIDER_OPT_IN",
+    "perProviderOptInPattern": "REAL_{PROVIDER}_PROVIDER_OPT_IN",
+    "credentialPattern": "REAL_{PROVIDER}_KEY_{PROFILE}",
+    "profileMustAllowLive": true,
+    "launchClearanceRequired": true,
+    "commercialLicenceEvidenceRequired": true,
+    "productionProfileBlocked": true
+  },
+  "profiles": {
+    "local": { "defaultMode": "mock", "allowedModes": ["disabled", "mock"], "externalEffectsAllowed": false },
+    "test": { "defaultMode": "mock", "allowedModes": ["disabled", "mock"], "externalEffectsAllowed": false },
+    "staging": { "defaultMode": "mock", "allowedModes": ["disabled", "mock"], "externalEffectsAllowed": false },
+    "production": { "defaultMode": "disabled", "allowedModes": [], "externalEffectsAllowed": false, "blockReason": "Prototype production startup is disabled." }
+  },
+  "providers": [
+    { "id": "age", "env": "AGE_VERIFICATION_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false },
+    { "id": "kyc", "env": "KYC_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false },
+    { "id": "payment", "env": "PAYMENT_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false },
+    { "id": "marketing", "env": "MARKETING_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false },
+    { "id": "custody", "env": "CUSTODY_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false },
+    { "id": "ai", "env": "AI_PROVIDER", "defaultMode": "mock", "localMode": "mock", "sandboxAvailable": false }
+  ],
+  "credentialGuards": {
+    "mockCredentialPrefixes": ["local", "simulated", "deterministic", "mock", "test"],
+    "productionMockCredentialsBlocked": true,
+    "secretsNeverLogged": true,
+    "profileScopedCredentialRequiredForLive": true
+  },
+  "startupLog": {
+    "event": "vintora.runtime.adapters",
+    "fields": ["event", "profile", "policyVersion", "adapterModes", "externalEffectsAllowed", "credentialsLogged"],
+    "credentialsLogged": false,
+    "neverLogEnvValues": true
+  },
+  "testRequirements": {
+    "localLiveCapableCodeBlocked": true,
+    "unknownAdapterValueDenied": true,
+    "startupLogContainsNoSecrets": true,
+    "evidenceRef": null
+  },
+  "codeBoundaryRefs": [
+    "packages/shared/src/runtime-boundaries.ts",
+    "services/api/src/config.ts",
+    "scripts/check-runtime-boundaries.mjs",
+    "ADAPTER_CAPABILITIES.md"
+  ],
+  "evidenceGaps": [
+    "No licensed live adapter implementation exists.",
+    "No sandbox provider account or credential exists.",
+    "No external effect has been executed from this repository."
+  ]
+}

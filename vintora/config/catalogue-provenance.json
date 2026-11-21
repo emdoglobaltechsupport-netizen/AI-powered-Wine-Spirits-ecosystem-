@@ -1,0 +1,39 @@
+{
+  "policyVersion": "v1",
+  "servedSource": "demo",
+  "recordClasses": ["seed", "licensed", "verified", "live"],
+  "servedRecordClass": "seed",
+  "staticFallbackRecordClass": "seed",
+  "purchasableClasses": [],
+  "externalCheckoutBlocked": true,
+  "simulationOnly": true,
+  "demoSourceRef": "packages/db/seed/001_seed.sql",
+  "verifiedSourceRef": "catalogue_import_verified",
+  "demoLabel": "Demo catalogue — not verified inventory or licensed supplier stock.",
+  "requireLicenceEvidence": true,
+  "fixturesExcludedFromVerified": true,
+  "minConfidence": 0.7,
+  "publicLaunchRequiresVerified": true,
+  "currentCountLabel": "current demo data",
+  "currentRecordCount": 12,
+  "licensedSourceCount": 0,
+  "verifiedRecordCount": 0,
+  "countSourceRef": "packages/db/seed/001_seed.sql",
+  "countAsOf": "prototype snapshot — uncommitted working tree",
+  "acquisitionTargetCount": 1850,
+  "catalogueScaleTarget": "10M+ SKU target by 2034; unmeasured and not bundled",
+  "freshnessNote": "Counts are derived from committed seed/fixture sources; no live supplier feed is connected.",
+  "staticFallback": {
+    "sourceRef": "apps/prototype/data.js",
+    "sourceLabel": "Seed demo record — illustrative prototype data; not licensed or verified.",
+    "freshnessAsOf": "prototype snapshot — 2026-11-21; no live feed",
+    "purchasable": false,
+    "verified": false
+  },
+  "checkoutEligibility": {
+    "allowedWhenPaymentProvider": "simulated",
+    "requireRecordClass": "live",
+    "blockedMessage": "Live checkout is disabled for unverified catalogue rows",
+    "simulationResponseLabel": "simulation_only"
+  }
+}

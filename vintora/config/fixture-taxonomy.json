@@ -1,0 +1,66 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-fixture-taxonomy",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "classes": ["demo", "mock", "synthetic", "live"],
+  "requiredFields": ["fixtureClass", "sourceRef", "sourceLabel", "freshnessAsOf", "purchasable", "externalEffectAllowed"],
+  "definitions": {
+    "demo": {
+      "meaning": "Bundled illustrative product or UI row shown in the local prototype.",
+      "present": true,
+      "purchasable": false,
+      "externalEffectAllowed": false,
+      "importAllowed": false,
+      "exampleRefs": ["apps/prototype/data.js", "packages/db/seed/001_seed.sql"]
+    },
+    "mock": {
+      "meaning": "Deterministic adapter response used to exercise an interface without an external provider.",
+      "present": true,
+      "purchasable": false,
+      "externalEffectAllowed": false,
+      "importAllowed": false,
+      "exampleRefs": ["config/adapter-capability-policy.json", "services/api/src/adapters"]
+    },
+    "synthetic": {
+      "meaning": "Generated test-only record with reserved example.invalid references; never licensed inventory or real identity data.",
+      "present": true,
+      "purchasable": false,
+      "externalEffectAllowed": false,
+      "importAllowed": false,
+      "exampleRefs": ["packages/db/examples/openfoodfacts.fixture.json", "packages/db/examples/wine-accessories.fixture.json"]
+    },
+    "live": {
+      "meaning": "Real orderable inventory or real provider response with licence, verification and regulated-provider evidence.",
+      "present": false,
+      "purchasable": false,
+      "externalEffectAllowed": false,
+      "importAllowed": false,
+      "exampleRefs": []
+    }
+  },
+  "servedFixtureClass": "demo",
+  "staticFallbackFixtureClass": "demo",
+  "liveFixturesPresent": false,
+  "checkoutEligibility": {
+    "allowedFixtureClasses": [],
+    "simulationOnlyWhen": ["CATALOGUE_SOURCE=demo", "PAYMENT_PROVIDER=simulated"],
+    "blockedMessage": "Live checkout is disabled for unverified catalogue rows"
+  },
+  "fixtureFiles": [
+    {
+      "path": "packages/db/examples/openfoodfacts.fixture.json",
+      "fixtureClass": "synthetic",
+      "noticeMarkers": ["TEST FIXTURE ONLY", "example.invalid"]
+    },
+    {
+      "path": "packages/db/examples/wine-accessories.fixture.json",
+      "fixtureClass": "synthetic",
+      "noticeMarkers": ["TEST FIXTURE ONLY", "example.invalid"]
+    }
+  ],
+  "evidenceGaps": [
+    "No live fixture, licensed feed record, real provider response or external-effect fixture exists in this repository.",
+    "Mock adapter responses are deterministic and do not evidence provider certification or sandbox connectivity."
+  ]
+}

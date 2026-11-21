@@ -1,0 +1,53 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-data-retention-architecture",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Architecture-level retention and deletion behaviour for each data class. Schedules are Design targets; no retention job, legal-hold engine or production erasure execution is implemented.",
+  "architectureRefs": ["03-technical-architecture.md", "04-database-design.md", "DATA_GOVERNANCE.md", "DATA_RETENTION_ARCHITECTURE.md"],
+  "sourceOfTruth": "config/data-governance-policy.json#dataInventory",
+  "principles": [
+    "Personal and regulated data has an owner, purpose, retention period and deletion behaviour before collection.",
+    "Regulated identity, analytics identity and audit records are separated; cross-domain joins fail closed.",
+    "Retention expiry is a deny signal; a record past its period is not used for recommendations, marketing or model evaluation.",
+    "Legal hold pauses deletion but does not extend ordinary processing purposes.",
+    "Data that is not collected has a zero-day period and a not-collected system of record."
+  ],
+  "classes": [
+    { "id": "taste_profile", "retentionDays": 90, "deletionBehaviour": "crypto-shred profile keys and remove derived segments", "enforcement": "design_only" },
+    { "id": "catalogue_interactions", "retentionDays": 30, "deletionBehaviour": "expire event rows and derived cohorts", "enforcement": "design_only" },
+    { "id": "purchase_history", "retentionDays": 365, "deletionBehaviour": "retain redacted financial proof; remove personal linkage", "enforcement": "design_only" },
+    { "id": "consumption_events", "retentionDays": 0, "deletionBehaviour": "not collected", "enforcement": "not_collected" },
+    { "id": "email_engagement", "retentionDays": 180, "deletionBehaviour": "expire engagement events and suppress re-import", "enforcement": "design_only" },
+    { "id": "experiment_exposure", "retentionDays": 30, "deletionBehaviour": "expire pseudonymous exposure records", "enforcement": "design_only" },
+    { "id": "analytics_identity", "retentionDays": 30, "deletionBehaviour": "destroy pseudonymous identifier mapping", "enforcement": "design_only" },
+    { "id": "age_verified_region", "retentionDays": 365, "deletionBehaviour": "expire age-region token; never store raw age document", "enforcement": "design_only" },
+    { "id": "age_documents", "retentionDays": 2190, "deletionBehaviour": "human-reviewed regulated vault destruction after hold check", "enforcement": "design_only" },
+    { "id": "regulated_identity", "retentionDays": 2190, "deletionBehaviour": "regulated vault destruction after hold and legal review", "enforcement": "design_only" },
+    { "id": "kyc_log", "retentionDays": 2190, "deletionBehaviour": "append-only decision evidence retained under hold rules", "enforcement": "design_only" },
+    { "id": "custody_record", "retentionDays": 3650, "deletionBehaviour": "retain non-live blueprint evidence only; no real custody record exists", "enforcement": "design_only" },
+    { "id": "transaction_record", "retentionDays": 2555, "deletionBehaviour": "retain reversing ledger entries; remove PII via vault destruction", "enforcement": "design_only" },
+    { "id": "ai_interaction_log", "retentionDays": 90, "deletionBehaviour": "expire prompt/model/retrieval metadata after safety review window", "enforcement": "design_only" },
+    { "id": "marketing_audience", "retentionDays": 180, "deletionBehaviour": "remove audience draft and downstream opt-out suppression", "enforcement": "design_only" },
+    { "id": "health_adjacent", "retentionDays": 0, "deletionBehaviour": "not collected", "enforcement": "not_collected" },
+    { "id": "precise_location", "retentionDays": 0, "deletionBehaviour": "not collected", "enforcement": "not_collected" },
+    { "id": "biometric", "retentionDays": 0, "deletionBehaviour": "not collected", "enforcement": "not_collected" }
+  ],
+  "workflows": {
+    "export": { "endpoint": "POST /v1/privacy/export", "implemented": "simulated-only", "slaDays": 30 },
+    "deletion": { "endpoint": "POST /v1/privacy/deletion-request", "implemented": "human-reviewed-request-only", "slaDays": 30 },
+    "optOut": { "endpoint": "POST /v1/privacy/consents", "implemented": "prototype-decision-only" },
+    "revocation": { "endpoint": "POST /v1/privacy/consents", "propagationWindowHours": 24, "implemented": "required-not-executed" }
+  },
+  "enforcement": {
+    "retentionJobImplemented": false,
+    "cryptoShreddingImplemented": false,
+    "legalHoldModel": "required-not-implemented",
+    "externalAuditSink": null
+  },
+  "evidenceGaps": [
+    "No scheduled retention job, deletion worker, crypto-shredding integration or legal-hold model is implemented.",
+    "No production export, erasure or downstream withdrawal propagation has been executed or evidenced.",
+    "No approved retention schedule, DPIA or signed processing record is attached."
+  ]
+}

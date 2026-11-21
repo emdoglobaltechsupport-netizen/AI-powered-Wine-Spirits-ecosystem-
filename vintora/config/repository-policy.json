@@ -1,0 +1,66 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-repository-policy",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "licence": {
+    "spdx": "Apache-2.0",
+    "noticeFileRequired": true,
+    "trademarkGrant": false,
+    "patentGrant": true,
+    "firstPartyData": "Fictional demo rows, illustrative figures and Design-state documents only; no licensed catalogue, personal data or supplier rights are granted."
+  },
+  "contribution": {
+    "dcoSignOffRequired": true,
+    "distinctReviewerRequired": true,
+    "noSelfApproval": true,
+    "requiredChecks": [
+      "npm run ci:verify",
+      "npm run ci:build",
+      "npm run test-counts:check",
+      "npm run claims:check"
+    ],
+    "secretFreeRequired": true,
+    "generatedCountsRequired": true,
+    "canonicalClaimsReviewRequired": true,
+    "externalCallsRequireDesignReview": true
+  },
+  "rejectionRules": [
+    "Any change that adds fixed, reused or real credentials to source, fixtures, workflows or documentation.",
+    "Any change that calls a real age, KYC, sanctions, payment, marketing, custody, model or supplier provider from this prototype.",
+    "Any change that removes or weakens a fail-closed prototype, profile, adapter, launch or evidence gate.",
+    "Any unlabelled forecast, unverified catalogue assertion, jurisdiction activation or readiness overclaim.",
+    "Any stale generated test count, documentation inventory or canonical number duplicate.",
+    "Any asset, dataset or code submission without licence, provenance and permitted-use evidence.",
+    "Any regulated claim without a named legal/compliance reviewer and review date."
+  ],
+  "assetSubmission": {
+    "provenanceRecordRequired": true,
+    "authorOrRightsHolderRequired": true,
+    "licenceOrPermissionRequired": true,
+    "aiGeneratedAssetsAllowed": true,
+    "aiGeneratedAssetsMustBeReviewed": true,
+    "thirdPartyTrademarksProhibitedWithoutWrittenPermission": true,
+    "personalDataProhibited": true,
+    "licensedCatalogueDataProhibitedInPrototype": true
+  },
+  "review": {
+    "ownerRole": "Open Source / Legal Lead",
+    "cadence": "Every repository-policy change and at least quarterly",
+    "lastReviewed": "2026-11-21",
+    "distinctApproverRole": "Platform Security Lead"
+  },
+  "requiredFiles": [
+    "LICENSE",
+    "NOTICE",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "ASSET_PROVENANCE.md",
+    "SECURITY.md"
+  ],
+  "evidenceGaps": [
+    "No named individual holds the policy owner or approver role in this workspace.",
+    "No GitHub repository setting, branch protection rule or DCO enforcement has been evidenced locally.",
+    "No contributor signature, asset provenance record or third-party asset submission has been attached."
+  ]
+}

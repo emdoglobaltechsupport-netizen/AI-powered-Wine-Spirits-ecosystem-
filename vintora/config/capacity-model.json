@@ -1,0 +1,79 @@
+{
+  "policyVersion": "v1",
+  "status": "design-target-unmeasured",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "All figures below are design targets and derived planning estimates, not measured results or committed capacity. No load, stress, soak, canary or chaos test result is attached. SLOs are policies for future measurement, not observed availability.",
+  "canonicalTargets": {
+    "users2034": 100000000,
+    "mau2034": 60000000,
+    "countriesServed": 200,
+    "skuTarget": "10M+ SKU target by 2034",
+    "peakOrdersPerDay": 1200000,
+    "edgeRequestsPerSecond": 50000,
+    "apiP95Ms": 200,
+    "availabilityPct": 99.99,
+    "source": "_canon.md#scale-targets-canonical"
+  },
+  "workloadModel": {
+    "peakWindowSeconds": 86400,
+    "averageOrdersPerSecond": 13.9,
+    "peakFactor": 10,
+    "peakOrderWriteRps": 139,
+    "readToWriteRatio": 100,
+    "peakReadRps": 13900,
+    "medianRequestBytes": 8192,
+    "p95ResponseBytes": 65536,
+    "orderWriteBytes": 2048,
+    "servicesFannedOutPerOrder": 6,
+    "estimatedPeakWriteMbps": 2.28,
+    "estimatedPeakReadGbps": 7.29,
+    "method": "Peak order writes = round(1,200,000 / 86,400 x 10). Reads = writes x 100. Bandwidth = RPS x bytes x 8 / 10^6 or 10^9. These are arithmetic derivations from unmeasured targets."
+  },
+  "slo": {
+    "platformAvailabilityPct": 99.99,
+    "annualErrorBudgetMinutes": 52.56,
+    "apiP95Ms": 200,
+    "apiP99Ms": 500,
+    "measurementWindow": "28-day rolling",
+    "errorBudgetPolicy": "Burn-rate alerts at 2x, 10x and 25x; freeze feature releases when 100% of the window budget is consumed; require an incident review before reset.",
+    "alertThresholdsDefined": false,
+    "measurementPipelineImplemented": false,
+    "measuredResultAttached": false
+  },
+  "thirdPartyAvailability": {
+    "includedInPlatformSlo": false,
+    "providers": ["payment_authorisation", "age_kyc", "custody_settlement"],
+    "separateBudgetsRequired": true,
+    "separateBudgetsDefined": false,
+    "note": "Platform availability is measured at the Vintora API boundary. Licensed third-party dependencies carry separate error budgets and are excluded from the platform SLO."
+  },
+  "routes": [
+    { "method": "GET", "route": "/v1/products", "p95TargetMs": 200, "p99TargetMs": 500, "measuredP95Ms": null, "measuredP99Ms": null },
+    { "method": "POST", "route": "/v1/cart/quote", "p95TargetMs": 200, "p99TargetMs": 500, "measuredP95Ms": null, "measuredP99Ms": null },
+    { "method": "POST", "route": "/v1/checkout", "p95TargetMs": 300, "p99TargetMs": 750, "measuredP95Ms": null, "measuredP99Ms": null },
+    { "method": "GET", "route": "/v1/sommelier/answer", "p95TargetMs": 400, "p99TargetMs": 900, "measuredP95Ms": null, "measuredP99Ms": null },
+    { "method": "GET", "route": "/v1/admin/coverage", "p95TargetMs": 250, "p99TargetMs": 600, "measuredP95Ms": null, "measuredP99Ms": null }
+  ],
+  "testPlans": [
+    { "id": "load", "status": "planned", "owner": "Platform SRE lead", "evidenceRef": null, "description": "Ramp to 139 peak order writes/s and 13,900 reads/s for 30 minutes; record p50/p95/p99 by route." },
+    { "id": "stress", "status": "planned", "owner": "Platform SRE lead", "evidenceRef": null, "description": "Increase beyond target until saturation; identify first failing dependency and error budget burn." },
+    { "id": "soak", "status": "planned", "owner": "Platform SRE lead", "evidenceRef": null, "description": "Hold 70% of target load for 8 hours; observe memory, connection pools and lag." },
+    { "id": "failure_injection", "status": "planned", "owner": "Platform SRE lead", "evidenceRef": null, "description": "Fail one DB replica, cache node and third-party adapter in turn; verify fail-closed behaviour." },
+    { "id": "canary", "status": "planned", "owner": "Release Manager", "evidenceRef": null, "description": "1% → 5% → 25% staged rollout with SLO comparison against the previous version." },
+    { "id": "chaos", "status": "planned", "owner": "Platform SRE lead", "evidenceRef": null, "description": "Game-day terminating a pod and a zone; verify recovery within the error budget." }
+  ],
+  "evidenceGaps": [
+    "No load, stress, soak, canary or chaos test result is attached.",
+    "No p95/p99 result is attached for any route; all measured fields are null.",
+    "No SLO measurement pipeline, alert routing or error-budget report is attached.",
+    "No separate third-party error budget is defined.",
+    "Capacity figures are arithmetic derivations from unmeasured design targets."
+  ],
+  "codeBoundaryRefs": [
+    "packages/shared/src/index.ts",
+    "_canon.md",
+    "CAPACITY_AND_RELIABILITY.md",
+    "README.md"
+  ]
+}

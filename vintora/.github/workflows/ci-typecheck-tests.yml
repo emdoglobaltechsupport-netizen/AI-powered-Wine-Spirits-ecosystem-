@@ -1,0 +1,70 @@
+name: CI - typecheck & tests
+
+# Phase 1 gates only. A green run does not imply production security (SECURITY.md section 7).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  typecheck-tests:
+    name: Typecheck, shared tests and domain selftests (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [24, 26]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      - name: Check internal agent autonomy policy
+        run: npm run agents:check
+
+      - name: Check governance registers and documentation consistency
+        run: |
+          npm run policy:check
+          npm run adr:check
+          npm run canonical:check
+          npm run evidence:check
+          npm run fixtures:check
+          npm run claims-change:check
+          npm run status:check
+          npm run retention:check
+          npm run network:check
+          npm run markdown:check
+          npm run schemas:check
+
+      - name: Check privacy and marketing release policies
+        run: npm run privacy:check && npm run marketing:check
+
+      - name: Check runtime, adapter and age-assurance boundaries
+        run: npm run boundaries:check
+
+      # Generated counts are also checked inside ci:verify; this step keeps the
+      # source/docs count contract visible in the workflow result.
+      - name: Verify generated test counts and documentation
+        run: npm run test-counts:check
+
+      - name: Verify financial assumptions and jurisdiction boundaries
+        run: npm run financial:check && npm run jurisdiction:check
+
+      # ci:verify includes verify plus catalogue/accessories/Africa selftests.
+      - name: Verify API typecheck, shared tests and selftests
+        run: npm run ci:verify
+
+      - name: Re-run aggregate verify explicitly
+        run: npm run verify

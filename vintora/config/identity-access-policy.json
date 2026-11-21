@@ -1,0 +1,67 @@
+{
+  "version": "v1",
+  "status": "prototype-deny-by-default",
+  "primaryRolePerTenant": true,
+  "adminIsCommerceRole": false,
+  "roles": {
+    "customer": {
+      "domain": "consumer",
+      "description": "Consumer marketplace and Club participant; requires age verification for commerce.",
+      "permissions": ["market:browse:tenant", "market:checkout:tenant", "vault:holding:read:tenant"],
+      "requires": ["age.verified"]
+    },
+    "merchant": {
+      "domain": "seller-and-wholesale",
+      "description": "Seller account that may also act as a verified wholesale buyer.",
+      "permissions": ["seller:listing:write:tenant", "trade:supplier:read:tenant", "trade:rfq:read:tenant", "trade:rfq:write:tenant", "trade:quote:read:tenant", "trade:credit:read:tenant", "trade:order:write:tenant", "vault:holding:read:tenant"],
+      "requires": ["business.verified", "tenant.member"]
+    },
+    "distributor": {
+      "domain": "wholesale",
+      "description": "Licensed wholesale buyer; cannot use consumer checkout or another distributor's credit.",
+      "permissions": ["trade:supplier:read:tenant", "trade:rfq:read:tenant", "trade:rfq:write:tenant", "trade:quote:read:tenant", "trade:credit:read:tenant", "trade:order:write:tenant"],
+      "requires": ["business.verified", "tenant.member"]
+    },
+    "admin": {
+      "domain": "internal",
+      "description": "Internal staff role; never a commerce role and never an override of commerce controls.",
+      "permissions": ["admin:*:internal"],
+      "requires": ["staff.active", "elevation.valid", "approver.distinct"]
+    }
+  },
+  "deniedPermissions": ["vault:trade:write:tenant", "admin:bypass:commerce"],
+  "businessTrading": {
+    "separateVerificationRequired": true,
+    "requiredStatus": "verified",
+    "acceptedKycTiers": ["verified", "enhanced"],
+    "requiresActiveContract": true,
+    "requiresLicenceEvidenceForJurisdiction": true,
+    "requiresNamedAuthorisedBuyer": true,
+    "creditSource": "server",
+    "creditFormula": "credit_limit - credit_used - reserved_credit",
+    "creditPerTenantAndCurrency": true,
+    "unverifiedStatuses": ["pending", "unverified", "rejected", "expired"]
+  },
+  "transactionControls": {
+    "wholesaleOrderApprovalUsd": 25000,
+    "creditIncreaseRequiresDistinctApprover": true,
+    "consumerAgeOverrideAllowed": false,
+    "vaultTradingAllowed": false,
+    "aiMayApprove": false
+  },
+  "isolation": {
+    "tenantScoped": true,
+    "jurisdictionScoped": true,
+    "crossTenantReads": "deny",
+    "crossTenantWrites": "deny",
+    "unknownRole": "deny",
+    "unknownPermission": "deny",
+    "missingVerification": "deny",
+    "resourceEnumeration": "hide"
+  },
+  "evidence": {
+    "appendOnlyAudit": true,
+    "denyDecisionsAudited": true,
+    "requiredFields": ["requestId", "actor", "domain", "permission", "result", "reason"]
+  }
+}

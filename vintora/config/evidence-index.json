@@ -1,0 +1,70 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-evidence-index",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "notice": "Links to repository registers and workflow definitions, not proof that an external run, measurement or review occurred. A null resultRef is an explicit evidence gap.",
+  "categories": ["tests", "performance", "threatModels", "complianceReviews"],
+  "entries": [
+    {
+      "id": "EV-T01",
+      "category": "tests",
+      "title": "Phase 1 test and validation register",
+      "registerRef": "VALIDATION_STATUS.md",
+      "definitionRefs": ["config/test-counts.json", "services/api/scripts/smoke.mjs", "apps/prototype/selftest.js"],
+      "resultRef": null,
+      "status": "source-register-only",
+      "ownerRole": "Release Manager"
+    },
+    {
+      "id": "EV-T02",
+      "category": "tests",
+      "title": "Migration fresh-apply, idempotency and rollback contract",
+      "registerRef": "DATABASE_OPERATIONS.md",
+      "definitionRefs": ["services/api/scripts/migration-mode-check.ts", ".github/workflows/ci-migrations.yml"],
+      "resultRef": null,
+      "status": "workflow-definition-only",
+      "ownerRole": "Staff Data Engineer"
+    },
+    {
+      "id": "EV-P01",
+      "category": "performance",
+      "title": "Capacity model and SLO targets",
+      "registerRef": "CAPACITY_AND_RELIABILITY.md",
+      "definitionRefs": ["config/capacity-model.json", "config/status-dashboard.json"],
+      "resultRef": null,
+      "status": "targets-not-measurements",
+      "ownerRole": "Platform SRE Lead"
+    },
+    {
+      "id": "EV-S01",
+      "category": "threatModels",
+      "title": "Security threat model and trust boundaries",
+      "registerRef": "SECURITY_ARCHITECTURE.md",
+      "definitionRefs": ["config/security-architecture.json", "SECURITY.md", "config/security-reporting.json"],
+      "resultRef": null,
+      "status": "design-threat-model-only",
+      "ownerRole": "Platform Security Lead"
+    },
+    {
+      "id": "EV-C01",
+      "category": "complianceReviews",
+      "title": "High-risk feature and legal sign-off register",
+      "registerRef": "LEGAL_COMPLIANCE_SIGNOFF.md",
+      "definitionRefs": ["config/high-risk-features.json", "REGULATORY_DOCUMENTATION.md", "config/claims-change-management.json"],
+      "resultRef": null,
+      "status": "blocked-register-only",
+      "ownerRole": "Legal / Compliance Lead"
+    }
+  ],
+  "review": {
+    "ownerRole": "Release Manager / Legal / Compliance Lead",
+    "cadence": "each gate change and quarterly",
+    "lastReviewed": "2026-11-21"
+  },
+  "evidenceGaps": [
+    "No retained hosted CI result, SARIF report, load-test output or coverage artefact is attached.",
+    "No penetration test, security audit, DPIA, compliance certificate or signed counsel opinion is attached.",
+    "No external status-page history or p95/p99 measurement is attached; all performance figures remain targets."
+  ]
+}

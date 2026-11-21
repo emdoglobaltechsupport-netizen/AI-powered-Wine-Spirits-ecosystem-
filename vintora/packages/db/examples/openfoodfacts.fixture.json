@@ -1,0 +1,116 @@
+{
+  "_notice": "TEST FIXTURE ONLY — synthetic records for pipeline tests. Never import. All URLs use reserved example.invalid domain.",
+  "license": "TEST_FIXTURE_NOT_FOR_IMPORT",
+  "_fixture": {
+    "fixtureClass": "synthetic",
+    "sourceRef": "packages/db/examples/openfoodfacts.fixture.json",
+    "sourceLabel": "Synthetic pipeline fixture — never import.",
+    "freshnessAsOf": "2026-01-01T00:00:00Z",
+    "purchasable": false,
+    "externalEffectAllowed": false
+  },
+  "retrieved_at": "2026-01-01T00:00:00Z",
+  "records": [
+    {
+      "code": "0000000000001",
+      "product_name": "FIXTURE Cabernet Sauvignon",
+      "brands": "FIXTURE BRAND",
+      "categories": "Wines, Red wines",
+      "categories_tags": ["en:wines", "en:red-wines"],
+      "countries_tags": ["en:france"],
+      "quantity": "75 cl",
+      "alcohol_content": "13.5%",
+      "image_front_url": "https://example.invalid/fixture-red-wine.jpg"
+    },
+    {
+      "code": "0000000000002",
+      "product_name": "FIXTURE Sauvignon Blanc",
+      "brands": "FIXTURE BRAND",
+      "categories": "Wines, White wines",
+      "categories_tags": ["en:wines", "en:white-wines"],
+      "countries_tags": ["en:new-zealand"],
+      "quantity": "750 ml",
+      "alcohol_content": "12.5 %"
+    },
+    {
+      "code": "0000000000003",
+      "product_name": "FIXTURE Champagne Brut",
+      "brands": "FIXTURE BRAND",
+      "categories": "Sparkling wines, Champagne",
+      "categories_tags": ["en:champagne"],
+      "countries_tags": ["en:france"],
+      "quantity": "75cl",
+      "alcohol_content": "12%"
+    },
+    {
+      "code": "0000000000004",
+      "product_name": "FIXTURE Single Malt Scotch",
+      "brands": "FIXTURE BRAND",
+      "categories": "Whiskies, Single malt",
+      "categories_tags": ["en:scotch-whisky", "en:single-malt"],
+      "countries_tags": ["en:united-kingdom"],
+      "quantity": "70 cl",
+      "alcohol_content": "46%"
+    },
+    {
+      "code": "0000000000005",
+      "product_name": "FIXTURE Premium Vodka",
+      "brands": "FIXTURE BRAND",
+      "categories": "Vodkas",
+      "categories_tags": ["en:vodkas"],
+      "countries_tags": ["en:sweden"],
+      "quantity": "1 L",
+      "alcohol_content": "40%"
+    },
+    {
+      "code": "0000000000006",
+      "product_name": "FIXTURE London Dry Gin",
+      "brands": "FIXTURE BRAND",
+      "categories": "Gins, London dry",
+      "categories_tags": ["en:gins", "en:london-dry-gin"],
+      "countries_tags": ["en:united-kingdom"],
+      "quantity": "70cl",
+      "alcohol_content": "43%"
+    },
+    {
+      "code": "0000000000007",
+      "product_name": "FIXTURE Spiced Rum",
+      "brands": "FIXTURE BRAND",
+      "categories": "Rums, Spiced rum",
+      "categories_tags": ["en:rums", "en:spiced-rum"],
+      "countries_tags": ["en:barbados"],
+      "quantity": "70 cl",
+      "alcohol_content": "35%"
+    },
+    {
+      "code": "0000000000008",
+      "product_name": "FIXTURE Tequila Reposado",
+      "brands": "FIXTURE BRAND",
+      "categories": "Tequila, Reposado",
+      "categories_tags": ["en:tequila", "en:reposado"],
+      "countries_tags": ["en:mexico"],
+      "quantity": "75 cl",
+      "alcohol_content": "38%"
+    },
+    {
+      "code": "0000000000009",
+      "product_name": "FIXTURE Cognac VSOP",
+      "brands": "FIXTURE BRAND",
+      "categories": "Cognac",
+      "categories_tags": ["en:cognacs"],
+      "countries_tags": ["en:france"],
+      "quantity": "70 cl",
+      "alcohol_content": "40%"
+    },
+    {
+      "code": "0000000000010",
+      "product_name": "FIXTURE IPA",
+      "brands": "FIXTURE BRAND",
+      "categories": "Beers, IPA",
+      "categories_tags": ["en:beers", "en:ipa"],
+      "countries_tags": ["en:united-states"],
+      "quantity": "33 cl",
+      "alcohol_content": "6.5%"
+    }
+  ]
+}

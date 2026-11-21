@@ -1,0 +1,41 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-status-dashboard",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "scope": "Phase 1 gates only",
+  "lastReviewed": "2026-11-21",
+  "sources": [
+    "config/implementation-status.json",
+    "config/high-risk-features.json",
+    "config/test-counts.json",
+    "VALIDATION_STATUS.md"
+  ],
+  "health": {
+    "databaseCommand": "npm run db:health",
+    "apiCommand": "npm run api:health",
+    "endpoint": "GET /health",
+    "contractDoc": "STATUS_DASHBOARD.md",
+    "externalStatusPage": null
+  },
+  "checks": [
+    { "id": "verify", "label": "API typecheck and shared tests", "command": "npm run verify", "evidenceRef": null },
+    { "id": "migrations", "label": "Migration contract", "command": "npm run db:migrations:test", "evidenceRef": null },
+    { "id": "domain", "label": "Offline domain selftests", "command": "npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest", "evidenceRef": null },
+    { "id": "api", "label": "API smoke suite (requires live API)", "command": "npm run test:smoke", "evidenceRef": null },
+    { "id": "aggregate", "label": "Aggregate Phase 1 verification", "command": "npm run ci:verify", "evidenceRef": null },
+    { "id": "build", "label": "Build and SBOM parity", "command": "npm run ci:build", "evidenceRef": null }
+  ],
+  "measurement": {
+    "sloPipelineImplemented": false,
+    "errorBudgetMeasured": false,
+    "hostedCiResultAttached": false,
+    "p95P99ByRouteAttached": false
+  },
+  "evidenceGaps": [
+    "This is a static repository dashboard, not a running status page or metrics endpoint.",
+    "No hosted CI result, deployment history, uptime measurement or SLO error-budget burn is attached.",
+    "A green check proves Phase 1 gate parity only and does not change the NO-GO verdict."
+  ]
+}

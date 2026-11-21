@@ -1,0 +1,178 @@
+{
+  "_notice": "TEST FIXTURE ONLY — synthetic fixtures for pipeline tests. Never import into production. All URLs use reserved example.invalid domains and all authorisations are test-only.",
+  "license": "TEST_FIXTURE_NOT_FOR_IMPORT",
+  "_fixture": {
+    "fixtureClass": "synthetic",
+    "sourceRef": "packages/db/examples/wine-accessories.fixture.json",
+    "sourceLabel": "Synthetic pipeline fixture — never import.",
+    "freshnessAsOf": "2026-01-01T00:00:00Z",
+    "purchasable": false,
+    "externalEffectAllowed": false
+  },
+  "retrieved_at": "2026-01-01T00:00:00Z",
+  "records": [
+    {
+      "sku": "FIXTURE-GLASS-001",
+      "source_url": "https://supplier.example.invalid/feed/glass-001",
+      "category": "Glassware",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Crystal Wine Glass Set",
+      "materials": ["Lead-free crystal"],
+      "dimensions": { "height": 22, "width": 8, "linear_unit": "cm", "weight": 180, "weight_unit": "g" },
+      "care_instructions": ["Hand wash only", "Dry with a lint-free cloth"],
+      "tags": ["stemware", "set of 2"],
+      "compliance_notes": [{ "text": "Fixture only — food-contact evidence not supplied.", "origin": "verified", "reference": null }],
+      "msrp_usd": 49,
+      "regional_prices": [{ "region": "US", "currency": "USD", "amount": 49, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/glass-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/glass-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/glass-001-detail.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-DECANTER-001",
+      "source_url": "https://supplier.example.invalid/feed/decanter-001",
+      "category": "Decanters",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Hand-Blown Decanter",
+      "materials": ["Borosilicate glass"],
+      "dimensions": { "height": 24, "width": 14, "linear_unit": "cm", "weight": 720, "weight_unit": "g" },
+      "care_instructions": ["Hand wash only", "Air dry upside down"],
+      "tags": ["hand-blown", "750 ml"],
+      "compliance_notes": [{ "text": "Fixture only — capacity claim not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 89,
+      "regional_prices": [{ "region": "EU", "currency": "EUR", "amount": 82, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/decanter-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/decanter-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/decanter-001-back.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-CORKSCREW-001",
+      "source_url": "https://supplier.example.invalid/feed/corkscrew-001",
+      "category": "Corkscrews",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Waiter's Friend Corkscrew",
+      "materials": ["Stainless steel", "ABS handle"],
+      "dimensions": { "length": 11, "linear_unit": "cm", "weight": 45, "weight_unit": "g" },
+      "care_instructions": ["Wipe clean with a damp cloth"],
+      "tags": ["waiter's friend", "foldable"],
+      "compliance_notes": [{ "text": "Fixture only — material grade not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 24,
+      "regional_prices": [{ "region": "UK", "currency": "GBP", "amount": 19, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/corkscrew-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/corkscrew-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/corkscrew-001-open.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-AERATOR-001",
+      "source_url": "https://supplier.example.invalid/feed/aerator-001",
+      "category": "Aerators",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Bottle Aerator Pourer",
+      "materials": ["Stainless steel", "Silicone"],
+      "dimensions": { "height": 12, "linear_unit": "cm", "weight": 60, "weight_unit": "g" },
+      "care_instructions": ["Rinse after each use", "Dishwasher safe on top rack"],
+      "tags": ["pourer", "single bottle"],
+      "compliance_notes": [{ "text": "Fixture only — dishwasher claim not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 35,
+      "regional_prices": [{ "region": "US", "currency": "USD", "amount": 35, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/aerator-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/aerator-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/aerator-001-use.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-CHILLER-001",
+      "source_url": "https://supplier.example.invalid/feed/chiller-001",
+      "category": "Chillers",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Gel Wine Chiller Sleeve",
+      "materials": ["Nylon", "Gel insert"],
+      "dimensions": { "height": 18, "width": 12, "linear_unit": "cm", "weight": 320, "weight_unit": "g" },
+      "care_instructions": ["Freeze before use", "Wipe clean with a damp cloth"],
+      "tags": ["gel sleeve", "reusable"],
+      "compliance_notes": [{ "text": "Fixture only — gel composition not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 29,
+      "regional_prices": [{ "region": "AU", "currency": "AUD", "amount": 44, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/chiller-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/chiller-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/chiller-001-use.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-RACK-001",
+      "source_url": "https://supplier.example.invalid/feed/rack-001",
+      "category": "Storage Racks",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE 12-Bottle Modular Rack",
+      "materials": ["Pine wood"],
+      "dimensions": { "height": 32, "width": 30, "length": 24, "linear_unit": "cm", "weight": 2400, "weight_unit": "g" },
+      "care_instructions": ["Dust with a dry cloth", "Keep away from direct heat"],
+      "tags": ["12 bottle", "modular"],
+      "compliance_notes": [{ "text": "Fixture only — capacity and finish claims not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 119,
+      "regional_prices": [{ "region": "US", "currency": "USD", "amount": 119, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/rack-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/rack-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/rack-001-loaded.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-PRESERVATION-001",
+      "source_url": "https://supplier.example.invalid/feed/preservation-001",
+      "category": "Preservation Systems",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Vacuum Wine Preserver Kit",
+      "materials": ["Stainless steel", "ABS plastic", "Rubber"],
+      "dimensions": { "height": 15, "width": 6, "linear_unit": "cm", "weight": 280, "weight_unit": "g" },
+      "care_instructions": ["Wash stoppers before first use", "Do not immerse the pump"],
+      "tags": ["vacuum pump", "stoppers"],
+      "compliance_notes": [{ "text": "Fixture only — preservation efficacy not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 59,
+      "regional_prices": [{ "region": "CA", "currency": "CAD", "amount": 78, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/preservation-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/preservation-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/preservation-001-kit.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-GIFT-001",
+      "source_url": "https://supplier.example.invalid/feed/gift-001",
+      "category": "Gift Sets",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Wine Enthusiast Gift Set",
+      "materials": ["Glass", "Stainless steel", "Wood"],
+      "dimensions": { "height": 28, "width": 24, "length": 18, "linear_unit": "cm", "weight": 1800, "weight_unit": "g" },
+      "care_instructions": ["Hand wash glass components", "Wipe wooden box with a dry cloth"],
+      "tags": ["gift set", "boxed"],
+      "compliance_notes": [{ "text": "Fixture only — gift-set contents not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 149,
+      "regional_prices": [{ "region": "US", "currency": "USD", "amount": 149, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/gift-001" }],
+      "bundles": [{ "bundle_id": "FIXTURE-BUNDLE-001", "name": "FIXTURE Gift Set + Decanter", "skus": ["FIXTURE-DECANTER-001"] }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/gift-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/gift-001-contents.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    },
+    {
+      "sku": "FIXTURE-CLEANING-001",
+      "source_url": "https://supplier.example.invalid/feed/cleaning-001",
+      "category": "Cleaning Tools",
+      "brand": "FIXTURE BRAND",
+      "product_name": "FIXTURE Decanter Cleaning Brush Set",
+      "materials": ["Microfiber", "Stainless steel"],
+      "dimensions": { "length": 26, "linear_unit": "cm", "weight": 90, "weight_unit": "g" },
+      "care_instructions": ["Rinse after use", "Air dry fully"],
+      "tags": ["brush set", "decanter"],
+      "compliance_notes": [{ "text": "Fixture only — cleaning efficacy not verified.", "origin": "verified", "reference": null }],
+      "msrp_usd": 19,
+      "regional_prices": [{ "region": "US", "currency": "USD", "amount": 19, "price_type": "msrp", "effective_date": "2026-01-01", "source_url": "https://supplier.example.invalid/pricing/cleaning-001" }],
+      "assets": [
+        { "role": "official", "url": "https://assets.example.invalid/fixture/cleaning-001-front.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } },
+        { "role": "backup", "url": "https://assets.example.invalid/fixture/cleaning-001-use.jpg", "licence": "SUPPLIER_AUTHORIZED", "authorizing_party": "FIXTURE SUPPLIER", "authorization_reference": "TEST-ONLY-DO-NOT-IMPORT", "authorized": true, "moderation": { "status": "approved", "checked_at": "2026-01-01T00:00:00Z", "checked_by": "fixture-reviewer", "reasons": [] } }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-adr-process",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "index": "adr/README.md",
+  "template": "adr/TEMPLATE.md",
+  "processDoc": "ADR_PROCESS.md",
+  "statuses": ["Accepted for prototype scope", "Proposed", "Blocked", "Superseded", "Rejected"],
+  "requiredSections": [
+    "## Status",
+    "## Context",
+    "## Decision",
+    "## Consequences",
+    "## Alternatives considered",
+    "## Compliance/guardrail implications",
+    "## Verification/evidence",
+    "## Review triggers"
+  ],
+  "registry": [
+    { "id": "ADR-0001", "file": "adr/ADR-0001-database.md", "status": "Accepted for prototype scope" },
+    { "id": "ADR-0002", "file": "adr/ADR-0002-payments.md", "status": "Accepted for prototype scope" },
+    { "id": "ADR-0003", "file": "adr/ADR-0003-ai.md", "status": "Accepted for prototype scope" },
+    { "id": "ADR-0004", "file": "adr/ADR-0004-custody.md", "status": "Accepted for prototype scope" },
+    { "id": "ADR-0005", "file": "adr/ADR-0005-agent-boundaries.md", "status": "Accepted for prototype scope" },
+    { "id": "ADR-0006", "file": "adr/ADR-0006-repository-governance.md", "status": "Accepted for prototype scope" }
+  ],
+  "review": {
+    "ownerRole": "Principal Architect",
+    "distinctApproverRequired": true,
+    "cadence": "per architecture change and at least quarterly",
+    "lastReviewed": "2026-11-21"
+  },
+  "rules": [
+    "Every architecture change requires an ADR or an explicit referenced amendment.",
+    "An ADR must state prototype scope and must not override NO-GO, FEATURE_STATUS.md or DISCLAIMER.md.",
+    "Production claims in an ADR are Proposed or Blocked until independent evidence is attached.",
+    "Superseding an ADR keeps the old record, records the replacement and never rewrites history.",
+    "Verification/evidence must name a runnable check or an explicit null evidence gap."
+  ],
+  "requiredFileRefs": [
+    "ADR_PROCESS.md",
+    "adr/README.md",
+    "adr/TEMPLATE.md",
+    "CANON_GOVERNANCE.md",
+    "FEATURE_STATUS.md",
+    "DISCLAIMER.md"
+  ],
+  "evidenceGaps": [
+    "No named individual holds the Principal Architect or approver role in this workspace.",
+    "No hosted Architecture Review Board approval record is attached.",
+    "No ADR has production evidence; all accepted decisions are prototype-scope only."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-deterministic-deny-by-default",
+  "executionEnabled": false,
+  "externalEffectsEnabled": false,
+  "failClosed": true,
+  "notice": "Phase 1 uses deterministic adapters only. The four action tiers classify behaviour; no AI surface may publish, spend, send, trade, change a price or place an order. Evaluation gates are requirements, not completed evidence.",
+  "actionTiers": ["read_only", "recommendation", "draft", "execution"],
+  "tierSemantics": {
+    "read_only": "Returns information with no persisted or external side effect.",
+    "recommendation": "Suggests products or actions; the user or a named human decides.",
+    "draft": "Creates a reviewable artefact that is not externally visible until a distinct human approves it.",
+    "execution": "An external or state-changing effect such as publish, spend, send, price change or order. Always blocked in the prototype."
+  },
+  "surfaceTiers": {
+    "sommelier": "recommendation",
+    "assist": "recommendation",
+    "studio": "draft",
+    "pricing": "recommendation",
+    "marketing": "draft",
+    "techops": "draft"
+  },
+  "confirmationGates": {
+    "purchase": "Explicit user confirmation and a deterministic service; the AI may never place an order.",
+    "marketingSpend": "Named human approval and marketing release gate; autonomous spend is disabled.",
+    "pricing": "Named seller or Finance approval; no automated listing or personalized price change.",
+    "campaign": "Named human approval of the rendered variant, prompt and model version.",
+    "escalation": "Distinct approver, reason and expiry; self-approval is denied."
+  },
+  "grounding": {
+    "citeOrAbstain": true,
+    "minimumCitationsPerAnswer": 1,
+    "requireRetrievalSourceIds": true,
+    "requireFactPacketHashForDrafts": true,
+    "allowUncitedHealthOrPriceClaims": false
+  },
+  "prohibitedRecommendationPatterns": [
+    "\\b(?:(?:improves?|boosts?|enhances?)\\s+(?:your\\s+)?health|healthier|medical|cures?|treats?|prevents? disease|safe drinking)\\b",
+    "\\b(?:guaranteed|risk-free|no risk|certain return|will (?:rise|appreciate|outperform))\\b",
+    "\\b(?:drunk|intoxicated|binge|get high|hangover cure)\\b",
+    "\\b(?:for kids|for children|target teenagers|underage drinkers)\\b",
+    "\\b(?:investment advice|suitability approval|performance guarantee)\\b"
+  ],
+  "responsibleDrinkingNotice": "Please enjoy responsibly. Vintora does not sell to minors. Answers are guidance, not health claims.",
+  "provenance": {
+    "requiredFields": ["promptId", "promptVersion", "modelKey", "modelVersion", "retrievalSourceIds", "factPacketHash", "approvalId"],
+    "appendOnly": true,
+    "redactPersonalData": true
+  },
+  "evaluationGates": {
+    "offlineEvaluationRequired": true,
+    "humanReviewRequired": true,
+    "promptInjectionSuiteRequired": true,
+    "groundednessThreshold": 0.95,
+    "factAdherenceThreshold": 0.98,
+    "confirmationComplianceThreshold": 1,
+    "maxSafetyViolations": 0,
+    "evidenceRef": null,
+    "reviewer": null,
+    "reviewedAt": null,
+    "releaseBlocked": true
+  },
+  "codeBoundaryRefs": [
+    "packages/shared/src/ai-safety.ts",
+    "services/api/src/sommelier.ts",
+    "apps/prototype/src/ai-safety.js",
+    "apps/prototype/src/views/sommelier.js",
+    "apps/prototype/src/views/assistant.js"
+  ],
+  "evidenceGaps": [
+    "No offline evaluation set or result is attached.",
+    "No human-reviewed model or prompt promotion record is attached.",
+    "No production retrieval, prompt or model-version log sink exists.",
+    "No licensed safety classifier or health-claim verifier is integrated."
+  ]
+}

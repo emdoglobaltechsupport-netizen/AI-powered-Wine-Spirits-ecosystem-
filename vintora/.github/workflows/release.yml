@@ -1,0 +1,197 @@
+name: Release - verified artifacts
+
+# Build once, scan, sign and verify. Promotion is digest-only; see
+# DEPENDENCY_MANAGEMENT.md and config/artifact-policy.json.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag to build and verify
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  verified-release:
+    name: Build, scan, sign and verify release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      security-events: write
+    env:
+      REGISTRY: ghcr.io
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+
+      - name: Resolve release coordinates
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "TAG=${{ github.event.release.tag_name || inputs.tag }}" >> "$GITHUB_ENV"
+          echo "IMAGE_NAME=${GITHUB_REPOSITORY,,}/vintora" >> "$GITHUB_ENV"
+          echo "COSIGN_CERT_OIDC_ISSUER=https://token.actions.githubusercontent.com" >> "$GITHUB_ENV"
+          echo "COSIGN_CERT_IDENTITY_REGEXP=^(https://github.com/${GITHUB_REPOSITORY}/.github/workflows/release.yml@refs/(tags|heads)/.+|repo:${GITHUB_REPOSITORY}:ref:refs/(tags|heads)/.+)$" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 26.13.1
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      - name: Check internal agent autonomy policy
+        run: npm run agents:check
+
+      - name: Check runtime, adapter and age-assurance boundaries
+        run: npm run boundaries:check
+
+      - name: Check governance, retention and documentation registers
+        run: |
+          npm run policy:check
+          npm run adr:check
+          npm run canonical:check
+          npm run evidence:check
+          npm run fixtures:check
+          npm run claims-change:check
+          npm run status:check
+          npm run retention:check
+          npm run network:check
+          npm run markdown:check
+          npm run schemas:check
+
+      - name: Run release verification
+        run: |
+          npm run ci:verify
+          npm run ci:build
+          npm run licenses:check
+          npm run artifacts:check
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image by digest
+        id: build
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          provenance: true
+          sbom: false
+
+      - name: Record immutable image reference
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "IMAGE_REF=${REGISTRY}/${IMAGE_NAME}@${{ steps.build.outputs.digest }}" >> "$GITHUB_ENV"
+          echo "IMAGE_DIGEST=${{ steps.build.outputs.digest }}" >> "$GITHUB_ENV"
+
+      - name: Block release on High/Critical image findings
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: ${{ env.IMAGE_REF }}
+          severity: HIGH,CRITICAL
+          format: sarif
+          output: trivy-release.sarif
+          exit-code: '1'
+          ignore-unfixed: true
+          hide-progress: true
+
+      - name: Upload release Trivy report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: trivy-release
+          path: trivy-release.sarif
+          if-no-files-found: warn
+          retention-days: 365
+
+      - name: Upload release findings to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@9418214df1f2c4b8128c770156c409013b07d6b9 # v3
+        with:
+          sarif_file: trivy-release.sarif
+          category: trivy-release
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@398d4b0eeef1380460a10c8013a76f728fb906ac # v3
+
+      - name: Generate SHA-256 checksums
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          sha256sum package-lock.json sbom/vintora.cdx.json > dist/SHA256SUMS
+
+      - name: Sign image and release artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          cosign sign --yes "$IMAGE_REF"
+          cosign sign-blob --yes sbom/vintora.cdx.json \
+            --output-signature dist/sbom.sig --output-certificate dist/sbom.pem
+          cosign sign-blob --yes dist/SHA256SUMS \
+            --output-signature dist/SHA256SUMS.sig --output-certificate dist/SHA256SUMS.pem
+
+      - name: Verify image and artifact signatures
+        shell: bash
+        run: |
+          set -euo pipefail
+          cosign verify \
+            --certificate-identity-regexp "$COSIGN_CERT_IDENTITY_REGEXP" \
+            --certificate-oidc-issuer "$COSIGN_CERT_OIDC_ISSUER" \
+            "$IMAGE_REF"
+          cosign verify-blob sbom/vintora.cdx.json \
+            --certificate dist/sbom.pem --signature dist/sbom.sig \
+            --certificate-identity-regexp "$COSIGN_CERT_IDENTITY_REGEXP" \
+            --certificate-oidc-issuer "$COSIGN_CERT_OIDC_ISSUER"
+          cosign verify-blob dist/SHA256SUMS \
+            --certificate dist/SHA256SUMS.pem --signature dist/SHA256SUMS.sig \
+            --certificate-identity-regexp "$COSIGN_CERT_IDENTITY_REGEXP" \
+            --certificate-oidc-issuer "$COSIGN_CERT_OIDC_ISSUER"
+
+      - name: Upload signed evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-evidence-${{ env.TAG }}
+          path: |
+            sbom/vintora.cdx.json
+            dist/SHA256SUMS
+            dist/SHA256SUMS.sig
+            dist/SHA256SUMS.pem
+            dist/sbom.sig
+            dist/sbom.pem
+          if-no-files-found: warn
+          retention-days: 365
+
+      - name: Publish digest and verification summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          {
+            echo "### Verified release ${TAG}"
+            echo
+            echo "- Image: \`${REGISTRY}/${IMAGE_NAME}@${IMAGE_DIGEST}\`"
+            echo "- SBOM: \`sbom/vintora.cdx.json\`"
+            echo "- Checksums: \`dist/SHA256SUMS\`"
+            echo "- Signatures: cosign keyless (OIDC issuer \`${COSIGN_CERT_OIDC_ISSUER}\`)"
+          } >> "$GITHUB_STEP_SUMMARY"

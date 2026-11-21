@@ -1,0 +1,153 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-canonical-governance",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "canonRef": "_canon.md",
+  "governanceRef": "CANON_GOVERNANCE.md",
+  "notice": "Canonical schemas below mirror _canon.md and machine registers. The README inventory block is generated from this file. A green docs check proves consistency, not correctness of the underlying targets or launch approval.",
+  "schemas": {
+    "modules": {
+      "count": 10,
+      "names": [
+        "Vintora Market",
+        "Vintora Trade",
+        "Vintora Sommelier",
+        "Vintora Assist",
+        "Vintora Studio",
+        "Vintora Seller",
+        "Vintora Flow",
+        "Vintora Club",
+        "Vintora Vault",
+        "Vintora Rewards"
+      ],
+      "source": "packages/shared/src/index.ts#CANON.modules"
+    },
+    "internalLayers": {
+      "count": 4,
+      "names": ["Admin", "Global Payments", "AI Marketing Automation", "Ultimate AI TechOps"],
+      "source": "CANON_GOVERNANCE.md"
+    },
+    "markets": {
+      "phase1": ["US", "UK", "SG"],
+      "africaTargetCount": 14,
+      "africaScopeStatus": "design_target",
+      "africaActivationState": "blocked",
+      "africaPhaseAssignment": "unassigned",
+      "source": "config/jurisdiction-compliance.json"
+    },
+    "numbers": {
+      "adminWorkspaces": 19,
+      "techopsAgents": 24,
+      "deliverables": 27,
+      "demoSkuRows": 12,
+      "licensedFeeds": 0,
+      "verifiedRows": 0,
+      "skuAcquisitionTarget": 1850,
+      "skuScaleTarget": "10M+ SKU target by 2034",
+      "users2034": 100000000,
+      "peakOrdersPerDay": 1200000,
+      "edgeRequestsPerSecond": 50000,
+      "apiP95Ms": 200,
+      "availabilityPct": 99.99,
+      "source": "config/catalogue-provenance.json, config/capacity-model.json, packages/shared/src/index.ts"
+    },
+    "status": {
+      "values": ["Design", "Prototype", "Pilot", "Production"],
+      "currentVerdict": "NO-GO",
+      "reservedTerm": "production-ready",
+      "reservedTermRequiresEvidence": true,
+      "source": "config/implementation-status.json"
+    }
+  },
+  "review": {
+    "fourEyesRequired": true,
+    "canonStewardRole": "Founder / product lead",
+    "distinctApproverRequired": true,
+    "architectureReviewBoardRequired": true,
+    "legalReviewerRequiredForRegulatedClaims": true,
+    "releaseManagerRunsChecks": true,
+    "versionDateRequired": true,
+    "ownerRoleRequired": true
+  },
+  "readmeReview": {
+    "purpose": "README is the onboarding entry point; investor and regulatory detail lives in separate documents.",
+    "onboardingOwnerRole": "Developer Experience / Platform Lead",
+    "investorDocsOwnerRole": "Founder / Finance Lead",
+    "regulatoryDocsOwnerRole": "Legal / Compliance Lead",
+    "implementationReviewCadence": "monthly",
+    "externalReviewCadence": "quarterly",
+    "lastReviewed": "2026-11-21",
+    "canonicalVersions": {
+      "canon": "1.0",
+      "policies": "v1",
+      "api": "v1"
+    },
+    "prApproval": {
+      "distinctApproverRequired": true,
+      "requiredChecks": ["docs:check", "test-counts:check", "claims:check", "policy:check"],
+      "linkRequired": true
+    }
+  },
+  "validation": {
+    "markdownLinks": true,
+    "canonicalNumbers": true,
+    "generatedReadmeInventory": true,
+    "failOnConflict": true,
+    "scannedDocs": [
+      "README.md",
+      "CANON_GOVERNANCE.md",
+      "DOCS_GOVERNANCE.md",
+      "_canon.md",
+      "DATA_GOVERNANCE.md",
+      "MARKETING_EXTERNAL_ACTIONS.md",
+      "RESPONSIBLE_DRINKING_CONTROLS.md",
+      "DATABASE_OPERATIONS.md",
+      "CATALOGUE_PROVENANCE.md",
+      "CONTRIBUTING.md",
+      "ASSET_PROVENANCE.md",
+      "SECURITY.md",
+      "INVESTOR_DOCUMENTATION.md",
+      "REGULATORY_DOCUMENTATION.md"
+    ]
+  },
+  "generatedInventory": {
+    "startMarker": "<!-- docs-governance:start -->",
+    "endMarker": "<!-- docs-governance:end -->",
+    "file": "README.md"
+  },
+  "owners": [
+    { "id": "01", "document": "01-business-plan.md", "ownerRole": "Founder / COO", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "02", "document": "02-revenue-model.md", "ownerRole": "CFO", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "03", "document": "03-technical-architecture.md", "ownerRole": "CTO / Principal Architect", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "04", "document": "04-database-design.md", "ownerRole": "Staff Data Engineer", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "05", "document": "05-ui-ux-wireframes.md", "ownerRole": "Design Director", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "06", "document": "06-ai-features.md", "ownerRole": "Chief AI Officer", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "07", "document": "07-marketing-strategy.md", "ownerRole": "CMO", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "08", "document": "08-launch-roadmap.md", "ownerRole": "COO", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "09", "document": "09-growth-strategy.md", "ownerRole": "Growth Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "10", "document": "10-investor-pitch-deck.md", "ownerRole": "Founder / Storyteller", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "11", "document": "11-b2b-wholesale-module.md", "ownerRole": "Trade / Product Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "12", "document": "12-ai-sommelier-module.md", "ownerRole": "Chief AI Officer / Product Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "13", "document": "13-ai-shopping-assistant-module.md", "ownerRole": "Chief AI Officer / Growth Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "14", "document": "14-ai-content-generator-module.md", "ownerRole": "Chief AI Officer / Brand Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "15", "document": "15-seller-dashboard-module.md", "ownerRole": "Seller / Product Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "16", "document": "16-logistics-delivery-module.md", "ownerRole": "Supply Chain / CTO", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "17", "document": "17-membership-subscription-module.md", "ownerRole": "Club / Product Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "18", "document": "18-loyalty-rewards-module.md", "ownerRole": "Rewards / Growth Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "19", "document": "19-ai-pricing-engine.md", "ownerRole": "Chief AI Officer / Pricing Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "20", "document": "20-wine-investment-marketplace.md", "ownerRole": "Vault / Investment Product Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "21", "document": "21-admin-panel-module.md", "ownerRole": "Platform / Security Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "22", "document": "22-global-payments-module.md", "ownerRole": "Payments Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "23", "document": "23-ai-marketing-automation-module.md", "ownerRole": "Growth / AI Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "24", "document": "24-ai-techops-team-module.md", "ownerRole": "CTO / Platform SRE Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "25", "document": "25-catalogue-data-pipeline.md", "ownerRole": "Beverage Data / Catalog Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "26", "document": "26-wine-accessories-module.md", "ownerRole": "Catalog / Ecommerce Architecture Lead", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true },
+    { "id": "27", "document": "27-africa-marketplace.md", "ownerRole": "Global Beverage Marketplace Strategist / Ecommerce Architect", "version": "1.0", "versionDate": "2026-11-21", "reviewRequired": true }
+  ],
+  "evidenceGaps": [
+    "No named individual holds a role; approvals are role plus named person at the time of review.",
+    "No review signature record is attached to any deliverable version.",
+    "Generated counts prove metadata parity only; they do not validate target realism."
+  ]
+}

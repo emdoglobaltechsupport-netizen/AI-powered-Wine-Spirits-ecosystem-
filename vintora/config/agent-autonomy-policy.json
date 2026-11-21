@@ -1,0 +1,133 @@
+{
+  "version": "v1",
+  "status": "prototype-advisory-deny-by-default",
+  "workspace": "ADM-19",
+  "description": "Internal TechOps agents only. Runtime execution is disabled; every agent is advisory by default and may only propose drafts for human review.",
+  "defaultMode": "advisory",
+  "executionEnabled": false,
+  "autonomousModeAllowed": false,
+  "failClosed": true,
+  "modes": ["advisory", "assist", "guarded_auto"],
+  "agents": [
+    { "id": "CTO-01", "uiMode": "Assist", "maxTier": "T4", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "safe_playbook.propose"] },
+    { "id": "DEV-01", "uiMode": "Guarded auto", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "ticket.create", "safe_playbook.propose"] },
+    { "id": "SRE-01", "uiMode": "Guarded auto", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "incident.draft", "safe_playbook.propose"] },
+    { "id": "QA-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] },
+    { "id": "SEC-01", "uiMode": "Guarded auto", "maxTier": "T4", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "incident.draft", "compliance.alert"] },
+    { "id": "DBA-01", "uiMode": "Guarded auto", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "ticket.create", "safe_playbook.propose"] },
+    { "id": "API-01", "uiMode": "Guarded auto", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "ticket.create"] },
+    { "id": "MOB-01", "uiMode": "Observe", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] },
+    { "id": "WEB-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] },
+    { "id": "CLD-01", "uiMode": "Guarded auto", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "safe_playbook.propose"] },
+    { "id": "SUP-01", "uiMode": "Assist", "maxTier": "T1", "runtimeDefaultMode": "advisory", "tools": ["incident.draft", "ticket.create"] },
+    { "id": "COST-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["metrics.read"] },
+    { "id": "REL-01", "uiMode": "Assist", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "ticket.create", "safe_playbook.propose"] },
+    { "id": "MDL-01", "uiMode": "Guarded auto", "maxTier": "T4", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "compliance.alert"] },
+    { "id": "CMP-01", "uiMode": "Assist", "maxTier": "T4", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "compliance.alert"] },
+    { "id": "PM-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] },
+    { "id": "SCRUM-01", "uiMode": "Assist", "maxTier": "T1", "runtimeDefaultMode": "advisory", "tools": ["ticket.create"] },
+    { "id": "BA-01", "uiMode": "Observe", "maxTier": "T1", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read"] },
+    { "id": "DA-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "metrics.read"] },
+    { "id": "REV-01", "uiMode": "Assist", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read"] },
+    { "id": "FRD-01", "uiMode": "Guarded auto", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["metrics.read", "compliance.alert"] },
+    { "id": "LIC-01", "uiMode": "Assist", "maxTier": "T3", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "compliance.alert"] },
+    { "id": "VEN-01", "uiMode": "Observe", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] },
+    { "id": "MQC-01", "uiMode": "Assist", "maxTier": "T2", "runtimeDefaultMode": "advisory", "tools": ["catalogue.read", "ticket.create"] }
+  ],
+  "leastPrivilege": {
+    "unknownTool": "deny",
+    "unknownAgent": "deny",
+    "unknownMode": "deny",
+    "tools": [
+      { "id": "catalogue.read", "tier": "T1", "irreversible": false, "highImpact": false, "credentialProfile": "tenant-readonly", "networkEgress": "none", "description": "Read tenant catalogue and provenance evidence for advisory output." },
+      { "id": "metrics.read", "tier": "T1", "irreversible": false, "highImpact": false, "credentialProfile": "tenant-readonly", "networkEgress": "none", "description": "Read tenant-scoped operational metrics for advisory output." },
+      { "id": "incident.draft", "tier": "T2", "irreversible": false, "highImpact": false, "credentialProfile": "tenant-readonly", "networkEgress": "none", "description": "Create an internal incident draft only; never page or message anyone." },
+      { "id": "ticket.create", "tier": "T2", "irreversible": false, "highImpact": false, "credentialProfile": "tenant-readonly", "networkEgress": "none", "description": "Create an internal ticket draft for human triage." },
+      { "id": "safe_playbook.propose", "tier": "T3", "irreversible": false, "highImpact": true, "credentialProfile": "tenant-scoped-limited", "networkEgress": "none", "description": "Propose a reversible playbook; execution requires distinct human approval." },
+      { "id": "compliance.alert", "tier": "T3", "irreversible": false, "highImpact": true, "credentialProfile": "tenant-scoped-limited", "networkEgress": "none", "description": "Draft an internal compliance alert; no external delivery is permitted." }
+    ],
+    "deniedTools": [
+      "content.publish",
+      "campaign.spend",
+      "email.send",
+      "ledger.write",
+      "refund.approve",
+      "payout.submit",
+      "trade.order.write",
+      "vault.offer.publish",
+      "model.promote",
+      "role.change",
+      "secret.read",
+      "shell.exec",
+      "network.fetch"
+    ]
+  },
+  "humanApproval": {
+    "requiredForIrreversible": true,
+    "requiredForHighImpact": true,
+    "distinctApprover": true,
+    "selfApprovalDenied": true,
+    "reasonMinLength": 8,
+    "maxMinutes": 120
+  },
+  "credentialIsolation": {
+    "sharedCredentials": false,
+    "productionSecretsAvailable": false,
+    "networkEgressDefault": "deny",
+    "allowedEgress": [],
+    "shortLivedOnly": true,
+    "credentialsInPrompts": false
+  },
+  "untrustedOutput": {
+    "treatAsDataOnly": true,
+    "instructionExecutionDenied": true,
+    "schemaValidationRequired": true,
+    "quarantineOnViolation": true
+  },
+  "audit": {
+    "appendOnly": true,
+    "recordDenials": true,
+    "correlationIdRequired": true,
+    "requiredFields": [
+      "correlationId",
+      "tenantId",
+      "actorUserId",
+      "agentId",
+      "toolId",
+      "intent",
+      "mode",
+      "tier",
+      "decision",
+      "reasonCode",
+      "reason",
+      "occurredAt"
+    ]
+  },
+  "killControls": {
+    "agentKillSwitchIndependentOfModelKillSwitch": true,
+    "defaultEngaged": true,
+    "safeStopOnEngage": true,
+    "stopNewRuns": true,
+    "drainInFlight": true,
+    "sloSeconds": 60,
+    "drillCompleted": false,
+    "resetAllowedInPrototype": false
+  },
+  "testing": {
+    "sandboxRequired": true,
+    "canaryRequired": true,
+    "replayRequired": true,
+    "promptInjectionSuiteRequired": true,
+    "executionBlockedUntilEvidence": true
+  },
+  "review": {
+    "highImpactToolActionsRequireReview": true,
+    "reviewers": ["AI Ops", "Security", "Compliance"]
+  },
+  "evidenceGaps": [
+    "No live agent workers or external tools exist; execution is disabled.",
+    "No timed agent kill-switch drill has been run; the < 1 minute SLO is unproven.",
+    "Sandbox, canary and replay runs are not available for agent actions.",
+    "Production identity provider, short-lived credentials and network policy are not implemented."
+  ]
+}

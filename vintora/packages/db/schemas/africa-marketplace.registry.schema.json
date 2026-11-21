@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vintora.local/schemas/africa-marketplace.registry.schema.json",
+  "title": "Vintora Africa Marketplace registry",
+  "description": "Source-gated marketplace configuration and draft listing templates. Nulls mean no verified source supplied a value.",
+  "type": "object",
+  "required": [
+    "meta", "scaleTargets", "features", "complianceChecklist", "currencies",
+    "languages", "countries", "paymentGatewayCandidates", "workflows",
+    "validationRules", "brands", "productTemplates"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["domain", "marketModule", "generatedAt", "notice", "productDataPolicy", "scope"],
+      "properties": {
+        "scope": {
+          "type": "object",
+          "required": ["scopeStatus", "phaseAssignment", "activationStatus", "registryState", "countryActivationGate", "scopeClassCounts", "countSemantics", "activeLanguagesByEnvironment", "activeCurrenciesByEnvironment"],
+          "properties": {
+            "scopeStatus": { "const": "design_target" },
+            "phaseAssignment": { "const": "unassigned" },
+            "activationStatus": { "const": "blocked" },
+            "registryState": { "const": "prototype" },
+            "countryActivationGate": { "const": "africa-country-activation" }
+          }
+        }
+      }
+    },
+    "scaleTargets": {
+      "type": "object",
+      "required": ["brands", "products", "africanCountries", "launchMarkets", "languages"],
+      "properties": {
+        "brands": { "const": 10000 },
+        "products": { "const": 500000 },
+        "africanCountries": { "const": 54 },
+        "launchMarkets": { "const": 14 },
+        "languages": { "const": 5 }
+      }
+    },
+    "features": { "type": "array", "items": { "type": "string" }, "minItems": 9 },
+    "complianceChecklist": { "type": "array", "items": { "type": "string" }, "minItems": 10 },
+    "currencies": { "type": "array", "items": { "type": "object" }, "minItems": 15 },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "name", "locale", "rtl"]
+      },
+      "minItems": 5
+    },
+    "countries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["country_code", "name", "currency_code", "default_language_code", "age_gate_required", "regulatory_profile", "scope_class", "activation_state", "licensing_owner", "effective_date", "counsel_review_ref", "languages"],
+        "properties": {
+          "scope_class": { "const": "target" },
+          "activation_state": { "const": "blocked" },
+          "licensing_owner": { "type": "null" },
+          "effective_date": { "type": "null" },
+          "counsel_review_ref": { "type": "null" }
+        }
+      },
+      "minItems": 14
+    },
+    "paymentGatewayCandidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["code", "name", "countries", "currencies", "integrationStatus"]
+      }
+    },
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["workflowId", "name", "states", "guards"]
+      },
+      "minItems": 10
+    },
+    "validationRules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "severity", "description"]
+      }
+    },
+    "brands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["brand_id", "brand_name", "category_hint", "source_group", "verification_status", "is_brand"]
+      }
+    },
+    "productTemplates": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/productTemplate" }
+    }
+  },
+  "$defs": {
+    "productTemplate": {
+      "type": "object",
+      "required": [
+        "template_id", "brand_id", "brand_name", "product_name", "category",
+        "subcategory", "country_of_origin", "region", "abv_pct", "bottle_size",
+        "product_description", "tasting_notes", "food_pairings", "awards", "sku",
+        "barcode", "wholesale_price", "retail_price", "distributor_price",
+        "african_market_price", "product_availability_by_country",
+        "official_website", "official_product_url", "official_product_images",
+        "lifestyle_images", "seo_metadata", "ai_recommendation_tags",
+        "listing_status", "provenance", "validation", "audit_log"
+      ],
+      "properties": {
+        "template_id": { "type": "string", "pattern": "^TPL-[a-f0-9]{12}$" },
+        "brand_id": { "type": "string", "pattern": "^BR-[a-f0-9]{12}$" },
+        "brand_name": { "type": "string" },
+        "product_name": { "type": ["string", "null"] },
+        "category": { "type": ["string", "null"] },
+        "subcategory": { "type": ["string", "null"] },
+        "country_of_origin": { "type": ["string", "null"] },
+        "country_of_origin_hint": { "type": ["string", "null"] },
+        "region": { "type": ["string", "null"] },
+        "abv_pct": { "type": ["number", "null"] },
+        "bottle_size": { "type": ["string", "null"] },
+        "product_description": { "type": ["string", "null"] },
+        "tasting_notes": { "type": ["string", "null"] },
+        "food_pairings": { "type": "array" },
+        "awards": { "type": "array" },
+        "sku": { "type": ["string", "null"] },
+        "barcode": { "type": ["string", "null"] },
+        "wholesale_price": { "type": "object" },
+        "retail_price": { "type": "object" },
+        "distributor_price": { "type": "object" },
+        "african_market_price": { "type": "object" },
+        "product_availability_by_country": { "type": "array", "minItems": 14 },
+        "official_website": { "type": ["string", "null"] },
+        "official_product_url": { "type": ["string", "null"] },
+        "official_product_images": { "type": "array", "maxItems": 0 },
+        "lifestyle_images": { "type": "array", "maxItems": 0 },
+        "seo_metadata": { "type": "object" },
+        "ai_recommendation_tags": { "type": "array", "items": { "type": "string" } },
+        "assets_policy": { "type": "object" },
+        "listing_status": { "const": "draft_template" },
+        "provenance": { "type": "object", "required": ["source", "captured_at", "identity_verified", "rights_verified"] },
+        "validation": { "type": "object", "required": ["valid", "errors", "warnings", "rules_version"] },
+        "audit_log": { "type": "array", "items": { "type": "object" } }
+      }
+    }
+  }
+}

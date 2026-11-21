@@ -1,0 +1,124 @@
+name: CI - migrations
+
+# Phase 1 gates only. A green run does not imply production security (SECURITY.md section 7).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  migrations:
+    name: PostgreSQL 16 + ${{ matrix.embedding_mode }} (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - node: 24
+            embedding_mode: jsonb
+            postgres_image: postgres:16
+          - node: 26
+            embedding_mode: jsonb
+            postgres_image: postgres:16
+          - node: 24
+            embedding_mode: pgvector
+            postgres_image: pgvector/pgvector:pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
+          - node: 26
+            embedding_mode: pgvector
+            postgres_image: pgvector/pgvector:pg16@sha256:484e838076e04939d27d3e176e91c86eea96236126023be8d3059761122e579f
+    env:
+      DATABASE_URL: postgres://vintora:${{ secrets.CI_POSTGRES_PASSWORD || 'ci-only-local-db' }}@localhost:5432/vintora
+      RUNTIME_PROFILE: local
+      EMBEDDING_MODE: auto
+      EXPECTED_EMBEDDING_MODE: ${{ matrix.embedding_mode }}
+    services:
+      postgres:
+        image: ${{ matrix.postgres_image }}
+        env:
+          POSTGRES_USER: vintora
+          POSTGRES_PASSWORD: ${{ secrets.CI_POSTGRES_PASSWORD || 'ci-only-local-db' }}
+          POSTGRES_DB: vintora
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U vintora -d vintora"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      - name: Generate throwaway local test secrets
+        run: |
+          {
+            echo "NODE_ENV=development"
+            echo "RUNTIME_PROFILE=local"
+            echo "ALLOW_DEMO_SEED=true"
+            echo "POSTGRES_PASSWORD=${{ secrets.CI_POSTGRES_PASSWORD || 'ci-only-local-db' }}"
+            echo "SESSION_SECRET=$(openssl rand -hex 32)"
+            echo "SEED_ADMIN_EMAIL=admin@vintora.local"
+            echo "SEED_ADMIN_PASSWORD=LocalDev-$(openssl rand -hex 16)"
+            echo "SEED_USER_EMAIL=demo@vintora.local"
+            echo "SEED_USER_PASSWORD=LocalDev-$(openssl rand -hex 16)"
+          } >> "$GITHUB_ENV"
+
+      - name: Check runtime, adapter and age-assurance boundaries
+        run: npm run boundaries:check
+
+      - name: Check database command separation and rollback contract
+        run: npm run db:ops:check
+
+      - name: Wait for PostgreSQL
+        run: |
+          for attempt in $(seq 1 30); do
+            if pg_isready -h localhost -p 5432 -U vintora -d vintora; then
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "PostgreSQL did not become ready in time" >&2
+          exit 1
+
+      - name: Ensure required extensions
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS citext;'
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS pgcrypto;'
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS pg_trgm;'
+          if [ "${{ matrix.embedding_mode }}" = "pgvector" ]; then
+            psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE EXTENSION IF NOT EXISTS vector;'
+          fi
+
+      - name: Apply migrations and catalogue seed (fresh pass)
+        run: npm run db:setup
+
+      - name: Re-apply migrations and catalogue seed (idempotency proof)
+        run: npm run db:setup
+
+      - name: Verify both embedding modes with fresh, upgrade, rollback and idempotency checks
+        env:
+          VINTORA_MIGRATION_TEST: '1'
+        run: npm run db:migrations:test
+
+      - name: Run environment setup doctor against the provisioned database
+        run: npm run setup:doctor -- --ci
+
+      # test:smoke needs a running API, so it is not part of this database-only job.
+      - name: Offline domain selftests
+        run: |
+          npm run catalogue:selftest
+          npm run accessories:selftest
+          npm run africa:selftest
