@@ -14,7 +14,7 @@
     "@vintora/shared": "file:../../packages/shared",
     "expo": "~52.0.0",
     "react": "^19.0.0",
-    "react-native": "~0.76.0"
+    "react-native": "~0.88.1"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
