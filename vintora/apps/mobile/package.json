@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "@vintora/mobile",
   "version": "0.1.0",
   "private": true,
@@ -11,7 +11,7 @@
     "lint": "echo 'mobile: lint pending'"
   },
   "dependencies": {
-    "@vintora/shared": "workspace:*",
+    "@vintora/shared": "file:../../packages/shared",
     "expo": "~52.0.0",
     "react": "^19.0.0",
     "react-native": "~0.76.0"
@@ -21,3 +21,4 @@
     "typescript": "^5.6.3"
   }
 }
+

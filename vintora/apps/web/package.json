@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "@vintora/web",
   "version": "0.1.0",
   "private": true,
@@ -10,7 +10,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@vintora/shared": "workspace:*",
+    "@vintora/shared": "file:../../packages/shared",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -22,3 +22,4 @@
     "typescript": "^5.6.3"
   }
 }
+
