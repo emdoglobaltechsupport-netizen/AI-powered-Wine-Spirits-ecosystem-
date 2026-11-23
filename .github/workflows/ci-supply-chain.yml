@@ -1,0 +1,118 @@
+﻿name: CI - supply chain
+
+# Dependency, licence, container and IaC controls for Phase 1.
+# A green run does not imply production security (SECURITY.md section 7).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: vintora
+
+jobs:
+  policy:
+    name: Dependency, licence and artifact policy (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [24, 26]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: vintora/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      - name: Scan dependency licences
+        run: npm run licenses:check
+
+      - name: Verify immutable artifact pins
+        run: npm run artifacts:check
+
+      - name: Verify SBOM freshness
+        run: npm run sbom:check
+
+  scans:
+    name: Trivy container and IaC scans
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Build local image for scanning
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: ./vintora
+          file: ./vintora/Dockerfile
+          load: true
+          tags: vintora:ci-${{ github.sha }}
+
+      # PR scans are reported to GitHub Security and retained as artifacts.
+      # Release promotion blocks on untriaged High/Critical findings.
+      - name: Trivy IaC and configuration scan
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          scan-type: config
+          scan-ref: ./vintora
+          skip-dirs: node_modules,.git
+          severity: HIGH,CRITICAL
+          format: sarif
+          output: trivy-iac.sarif
+          exit-code: '0'
+          hide-progress: true
+
+      - name: Trivy container image scan
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          image-ref: vintora:ci-${{ github.sha }}
+          severity: HIGH,CRITICAL
+          format: sarif
+          output: trivy-image.sarif
+          exit-code: '0'
+          ignore-unfixed: true
+          hide-progress: true
+
+      - name: Upload Trivy reports
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: trivy-reports
+          path: |
+            trivy-iac.sarif
+            trivy-image.sarif
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Upload IaC findings to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@9418214df1f2c4b8128c770156c409013b07d6b9 # v3
+        with:
+          sarif_file: trivy-iac.sarif
+          category: trivy-iac
+
+      - name: Upload image findings to code scanning
+        if: always()
+        uses: github/codeql-action/upload-sarif@9418214df1f2c4b8128c770156c409013b07d6b9 # v3
+        with:
+          sarif_file: trivy-image.sarif
+          category: trivy-image

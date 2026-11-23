@@ -1,0 +1,157 @@
+﻿name: CI - security
+
+# Phase 1 gates only. A green run does not imply production security (SECURITY.md section 7).
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+defaults:
+  run:
+    working-directory: vintora
+
+jobs:
+  security:
+    name: Audit, SBOM, secret, licence and pin policy with CodeQL (Node ${{ matrix.node }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [24, 26]
+    env:
+      # When no license is configured, gitleaks is advisory and the
+      # deterministic `npm run secrets:scan` check remains the blocking gate.
+      GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Secret scan (deterministic repository check)
+        run: npm run secrets:scan
+
+      - name: Secret scan (gitleaks)
+        uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2
+        continue-on-error: ${{ env.GITLEAKS_LICENSE == '' }}
+        with:
+          args: --config vintora/config/gitleaks.toml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@9418214df1f2c4b8128c770156c409013b07d6b9 # v3
+        with:
+          languages: javascript-typescript
+          build-mode: none
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+          cache-dependency-path: vintora/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps --no-audit --no-fund
+
+      # Full report is informational: it includes the non-production web/mobile shells.
+      - name: Full dependency audit (non-gating report)
+        run: |
+          npm audit --json > audit-full.json || true
+          echo "Full audit report written to audit-full.json (not a release gate)."
+
+      - name: Upload full audit report
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: npm-audit-full-${{ matrix.node }}
+          path: vintora/audit-full.json
+          if-no-files-found: warn
+
+      # Scoped gate: production workspaces only. zod remains under the documented,
+      # time-boxed Platform Security exception in security/audit-exceptions.json.
+      - name: Scoped release audit (production workspaces)
+        run: |
+          npm audit \
+            --workspace @vintora/api \
+            --workspace @vintora/shared \
+            --workspace @vintora/prototype \
+            --workspace @vintora/db \
+            --audit-level=high \
+            --json > audit-scoped.json || true
+          node --input-type=module <<'NODE'
+          import { readFileSync } from 'node:fs';
+
+          const audit = JSON.parse(readFileSync('audit-scoped.json', 'utf8'));
+          const exceptionsDoc = JSON.parse(readFileSync('security/audit-exceptions.json', 'utf8'));
+          const today = new Date().toISOString().slice(0, 10);
+          const blockers = [];
+
+          if (exceptionsDoc.policy?.criticalExceptionsAllowed !== false) {
+            blockers.push('policy.criticalExceptionsAllowed must be false');
+          }
+          for (const entry of exceptionsDoc.exceptions || []) {
+            if (entry.severity === 'critical') {
+              blockers.push(`critical exception is never allowed: ${entry.id}`);
+            }
+            if (!entry.expires || entry.expires < today) {
+              blockers.push(`expired exception: ${entry.id} (expiry ${entry.expires || 'missing'})`);
+            }
+            if (!entry.owner || !entry.reason || !entry.remediationPlan || !entry.tracking) {
+              blockers.push(`incomplete exception record (owner/reason/remediationPlan/tracking): ${entry.id}`);
+            }
+          }
+
+          const exceptions = new Map((exceptionsDoc.exceptions || []).map((entry) => [entry.package, entry]));
+          let applied = 0;
+          for (const [name, finding] of Object.entries(audit.vulnerabilities || {})) {
+            const severity = finding.severity || 'unknown';
+            if (severity === 'critical') {
+              blockers.push(`${name}: critical advisory (never excepted)`);
+              continue;
+            }
+            if (severity !== 'high' && severity !== 'moderate') continue;
+
+            const entry = exceptions.get(name);
+            const advisoryText = (finding.via || [])
+              .map((via) => (typeof via === 'string' ? via : [via.url, via.source, via.title].filter(Boolean).join(' ')))
+              .join(' ');
+            const advisoryMatches = !entry || !entry.advisory || advisoryText.includes(entry.advisory);
+            const severityMatches = !entry || entry.severity === severity;
+            if (!entry || !advisoryMatches || !severityMatches) {
+              blockers.push(`${name}: ${severity} advisory not covered by a matching exception${entry ? ` (${entry.id} advisory/severity mismatch)` : ''}`);
+              continue;
+            }
+
+            applied += 1;
+            console.log(`Allowed exception ${entry.id}: ${name} ${severity} (${entry.advisory}) - ${entry.reason}`);
+            console.log(`  Owner: ${entry.owner}; expires: ${entry.expires}; tracking: ${entry.tracking}`);
+            console.log(`  Remediation: ${entry.remediationPlan}`);
+          }
+
+          if (blockers.length) {
+            for (const blocker of blockers) console.error(`BLOCKER: ${blocker}`);
+            process.exit(1);
+          }
+          const count = Object.keys(audit.vulnerabilities || {}).length;
+          console.log(`Scoped release audit passed (${count} vulnerability record(s), ${applied} documented exception(s) applied).`);
+          NODE
+
+      - name: Verify SBOM freshness
+        run: npm run sbom:check
+
+      - name: Scan dependency licences
+        run: npm run licenses:check
+
+      - name: Verify immutable artifact pins
+        run: npm run artifacts:check
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@9418214df1f2c4b8128c770156c409013b07d6b9 # v3
+        with:
+          category: /language:javascript-typescript
