@@ -115,8 +115,14 @@ function componentFor(lockPath, entry) {
     purl,
   };
 
-  const license = normalizeLicense(entry.license || entry.licenses)
-    || normalizeLicense(manifest && (manifest.license || manifest.licenses));
+  // Deterministic: lockfile is the source of truth. For node_modules packages,
+  // do not fall back to installed manifests (CI clean installs may differ from
+  // partial local installs). Workspace manifests are repo files - stable.
+  const lockLicense = normalizeLicense(entry.license || entry.licenses);
+  const manifestLicense = isWorkspace(lockPath, entry)
+    ? normalizeLicense(manifest && (manifest.license || manifest.licenses))
+    : null;
+  const license = lockLicense || manifestLicense;
   component.licenses = [{ license: license ? { id: license } : { name: 'NOASSERTION' } }];
 
   const hashes = integrityHashes(entry.integrity);
