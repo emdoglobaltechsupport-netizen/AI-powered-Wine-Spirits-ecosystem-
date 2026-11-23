@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+﻿#!/usr/bin/env node
 /**
  * Vintora SBOM generator (CycloneDX 1.5 JSON).
  *
@@ -115,8 +115,8 @@ function componentFor(lockPath, entry) {
     purl,
   };
 
-  const license = normalizeLicense(manifest && (manifest.license || manifest.licenses))
-    || normalizeLicense(entry.license || entry.licenses);
+  const license = normalizeLicense(entry.license || entry.licenses)
+    || normalizeLicense(manifest && (manifest.license || manifest.licenses));
   component.licenses = [{ license: license ? { id: license } : { name: 'NOASSERTION' } }];
 
   const hashes = integrityHashes(entry.integrity);
@@ -234,3 +234,4 @@ if (CHECK_ONLY) {
 mkdirSync(dirname(OUTPUT_FILE), { recursive: true });
 writeFileSync(OUTPUT_FILE, `${JSON.stringify(bom, null, 2)}\n`, 'utf8');
 console.log(`Generated sbom/vintora.cdx.json (CycloneDX ${bom.specVersion}, ${bom.components.length} components).`);
+
