@@ -1,4 +1,4 @@
-﻿name: CI - supply chain
+name: CI - supply chain
 
 # Dependency, licence, container and IaC controls for Phase 1.
 # A green run does not imply production security (SECURITY.md section 7).

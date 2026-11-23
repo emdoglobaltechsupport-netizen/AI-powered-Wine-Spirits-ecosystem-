@@ -1,4 +1,4 @@
-﻿name: Release - verified artifacts
+name: Release - verified artifacts
 
 # Build once, scan, sign and verify. Promotion is digest-only; see
 # DEPENDENCY_MANAGEMENT.md and config/artifact-policy.json.

@@ -1,4 +1,4 @@
-﻿name: CI - typecheck & tests
+name: CI - typecheck & tests
 
 # Phase 1 gates only. A green run does not imply production security (SECURITY.md section 7).
 on:

@@ -1,4 +1,4 @@
-﻿name: CI - governance and documentation
+name: CI - governance and documentation
 
 # Phase 1 gates only. Green checks prove metadata parity and local controls;
 # they are not legal, security, reliability or launch approval.
