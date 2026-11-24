@@ -12,8 +12,8 @@
       "title": "Phase 1 test and validation register",
       "registerRef": "VALIDATION_STATUS.md",
       "definitionRefs": ["config/test-counts.json", "services/api/scripts/smoke.mjs", "apps/prototype/selftest.js"],
-      "resultRef": null,
-      "status": "source-register-only",
+      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337",
+      "status": "hosted-ci-pass-phase1-only",
       "ownerRole": "Release Manager"
     },
     {
@@ -22,8 +22,8 @@
       "title": "Migration fresh-apply, idempotency and rollback contract",
       "registerRef": "DATABASE_OPERATIONS.md",
       "definitionRefs": ["services/api/scripts/migration-mode-check.ts", ".github/workflows/ci-migrations.yml"],
-      "resultRef": null,
-      "status": "workflow-definition-only",
+      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083",
+      "status": "hosted-ci-pass-phase1-only",
       "ownerRole": "Staff Data Engineer"
     },
     {
@@ -63,7 +63,7 @@
     "lastReviewed": "2026-11-21"
   },
   "evidenceGaps": [
-    "No retained hosted CI result, SARIF report, load-test output or coverage artefact is attached.",
+    "Hosted Phase 1 CI run URLs are attached for test/migration evidence only; they are not penetration tests, security audits, load tests, coverage artefacts, or launch approval.",
     "No penetration test, security audit, DPIA, compliance certificate or signed counsel opinion is attached.",
     "No external status-page history or p95/p99 measurement is attached; all performance figures remain targets."
   ]

@@ -17,12 +17,12 @@
 
 | ID | Gate | Command | Result evidence |
 |---|---|---|---|
-| verify | API typecheck and shared tests | `npm run verify` | `null` locally attached; command defined |
-| migrations | Migration contract | `npm run db:migrations:test` | `null` locally attached; command defined |
-| domain | Offline domain selftests | `npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest` | `null` locally attached; command defined |
-| api | API smoke suite (requires live API) | `npm run test:smoke` | `null` locally attached; command defined |
-| aggregate | Aggregate Phase 1 verification | `npm run ci:verify` | `null` locally attached; command defined |
-| build | Build and SBOM parity | `npm run ci:build` | `null` locally attached; command defined |
+| verify | API typecheck and shared tests | `npm run verify` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
+| migrations | Migration contract | `npm run db:migrations:test` | [45225866083](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083) |
+| domain | Offline domain selftests | `npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
+| api | API smoke suite (requires live API) | `npm run test:smoke` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
+| aggregate | Aggregate Phase 1 verification | `npm run ci:verify` | [45225866172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866172) |
+| build | Build and SBOM parity | `npm run ci:build` | [45225866102](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866102) |
 
 ## 3. Health checks
 
@@ -34,7 +34,7 @@
 
 ## 4. Measurement boundary
 
-SLO pipeline, error-budget measurement, hosted CI results and p95/p99 by route are not implemented or attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. Release stages and their null evidence are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
+Hosted Phase 1 CI run URLs are attached for commit `005f823` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
 
 ## 5. Review
 

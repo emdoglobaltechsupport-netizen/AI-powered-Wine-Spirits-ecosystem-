@@ -6,11 +6,11 @@
 
 | Stage | Required evidence | Hosted evidence |
 |---|---|---|
-| `local-verify` | `npm run ci:verify`, `npm run verify` | `null` |
-| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | `null` |
-| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | `null` |
-| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | `null` |
-| `hosted-ci` | Six workflow definitions in `.github/workflows/` | `null` |
+| `local-verify` | `npm run ci:verify`, `npm run verify` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
+| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | [45225866083](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083) |
+| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | [45225866172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866172) |
+| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | [45225866056](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866056) |
+| `hosted-ci` | Six workflow definitions in `.github/workflows/` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
 | `launch-approval` | `npm run launch:check`, `npm run jurisdiction:check`, `npm run gates:check` | `null` |
 
 ## 2. Blocking rules
@@ -27,4 +27,4 @@ Workflows exist for typecheck/tests, governance, migrations, security, supply ch
 
 ## 4. Evidence gaps
 
-No hosted CI result, signed release, load test, penetration test, DPIA or counsel approval is attached. No promotion decision record exists.
+Hosted Phase 1 CI run URLs are attached for commit `005f823` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. `promotionAllowed` remains false and verdict remains NO-GO.

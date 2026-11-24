@@ -43,11 +43,19 @@ if (!pkg.scripts?.['health:check']) fail('package.json must expose health:check'
 if (!Array.isArray(dashboard.checks) || dashboard.checks.length < 6) fail('status dashboard must register at least six checks');
 for (const check of dashboard.checks ?? []) {
   if (!check.id || !check.label || !check.command) fail('status check id, label and command are required');
-  if (check.evidenceRef !== null) fail(`${check.id}: evidenceRef must be null until a hosted result is attached`);
+  if (check.evidenceRef !== null && typeof check.evidenceRef !== 'string') fail(`${check.id}: evidenceRef must be null or a string evidence reference`);
+  if (typeof check.evidenceRef === 'string' && !/^https?:\/\/\S+/.test(check.evidenceRef)) fail(`${check.id}: evidenceRef must be an absolute http(s) URL`);
   checkScripts(check.command, check.id);
 }
 for (const field of ['sloPipelineImplemented', 'errorBudgetMeasured', 'hostedCiResultAttached', 'p95P99ByRouteAttached']) {
-  if (dashboard.measurement?.[field] !== false) fail(`measurement field must remain false: ${field}`);
+  if (typeof dashboard.measurement?.[field] !== 'boolean') fail(`measurement field must be boolean: ${field}`);
+}
+if (dashboard.measurement.sloPipelineImplemented !== false || dashboard.measurement.errorBudgetMeasured !== false || dashboard.measurement.p95P99ByRouteAttached !== false) {
+  fail('SLO/error-budget/p95p99 measurements must remain false until externally evidenced');
+}
+const attachedDashboardRefs = (dashboard.checks ?? []).filter((check) => check.evidenceRef !== null).length;
+if (dashboard.measurement.hostedCiResultAttached !== (attachedDashboardRefs > 0)) {
+  fail('hostedCiResultAttached must reflect whether hosted CI evidence refs are attached');
 }
 if (!Array.isArray(dashboard.evidenceGaps) || dashboard.evidenceGaps.length < 3) fail('status dashboard evidence gaps are required');
 for (const source of dashboard.sources ?? []) {
@@ -65,7 +73,8 @@ for (const stage of gates.stages ?? []) {
   for (const ref of stage.workflowRefs ?? []) {
     if (!existsSync(join(ROOT, ref))) fail(`${stage.id}: missing workflow ${ref}`);
   }
-  if (stage.hostedEvidenceRef !== null) fail(`${stage.id}: hostedEvidenceRef must remain null`);
+  if (stage.hostedEvidenceRef !== null && typeof stage.hostedEvidenceRef !== 'string') fail(`${stage.id}: hostedEvidenceRef must be null or a string evidence reference`);
+  if (typeof stage.hostedEvidenceRef === 'string' && !/^https?:\/\/\S+/.test(stage.hostedEvidenceRef)) fail(`${stage.id}: hostedEvidenceRef must be an absolute http(s) URL`);
 }
 if (!Array.isArray(gates.blockingRules) || gates.blockingRules.length < 3) fail('release blocking rules are incomplete');
 if (!Array.isArray(gates.evidenceGaps) || gates.evidenceGaps.length < 2) fail('release evidence gaps are required');
@@ -76,8 +85,11 @@ for (const heading of ['## 1. Overall status', '## 2. Check register', '## 3. He
   requireText(statusDoc, heading, 'STATUS_DASHBOARD.md');
 }
 for (const marker of ['config/status-dashboard.json', 'npm run status:check', 'not a running status page',
-  'NO-GO', '`null`', 'npm run health:check', 'p95/p99']) {
+  'NO-GO', 'npm run health:check', 'p95/p99']) {
   requireText(statusDoc, marker, 'STATUS_DASHBOARD.md');
+}
+for (const check of dashboard.checks ?? []) {
+  if (check.evidenceRef && !statusDoc.includes(check.evidenceRef)) fail(`STATUS_DASHBOARD.md must reference ${check.id} evidence`);
 }
 for (const check of dashboard.checks ?? []) requireText(statusDoc, check.id, 'STATUS_DASHBOARD.md');
 
@@ -86,8 +98,11 @@ for (const heading of ['## 1. Gate stages', '## 2. Blocking rules', '## 3. Workf
   requireText(releaseDoc, heading, 'RELEASE_GATES.md');
 }
 for (const marker of ['config/release-gates.json', 'npm run status:check', '`promotionAllowed` remains false',
-  'documentation-only change', 'ci-governance.yml', 'No hosted CI result']) {
+  'documentation-only change', 'ci-governance.yml']) {
   requireText(releaseDoc, marker, 'RELEASE_GATES.md');
+}
+for (const stage of gates.stages ?? []) {
+  if (stage.hostedEvidenceRef && !releaseDoc.includes(stage.hostedEvidenceRef)) fail(`RELEASE_GATES.md must reference ${stage.id} hosted evidence`);
 }
 for (const stage of gates.stages ?? []) requireText(releaseDoc, `\`${stage.id}\``, 'RELEASE_GATES.md');
 for (const workflow of (gates.stages ?? []).flatMap((stage) => stage.workflowRefs ?? [])) {
@@ -100,4 +115,5 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(`Status and release-gate check passed: ${dashboard.checks.length} dashboard checks, ${gates.stages.length} release stages.`);
-console.log('All external evidence references are null; the verdict remains NO-GO for Phase 1 gates only.');
+const attachedStageRefs = (gates.stages ?? []).filter((stage) => stage.hostedEvidenceRef !== null).length;
+console.log(`Hosted evidence refs attached: ${attachedStageRefs}/${gates.stages.length} stages; promotionAllowed remains false and verdict remains NO-GO.`);

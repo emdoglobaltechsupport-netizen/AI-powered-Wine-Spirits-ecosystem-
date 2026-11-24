@@ -79,15 +79,20 @@ if (mode === 'markdown') {
       meta.counts?.techopsAgents !== docs.schemas?.numbers?.techopsAgents) {
     fail('canonical metadata counts differ from docs governance counts');
   }
-  if ((evidence.entries ?? []).some((entry) => entry.resultRef !== null)) {
-    fail('evidence index result refs must remain null until external evidence is attached');
+  for (const entry of evidence.entries ?? []) {
+    if (entry.resultRef !== null && (typeof entry.resultRef !== 'string' || !/^https?:\/\/\S+/.test(entry.resultRef))) {
+      fail(`evidence index ${entry.id} resultRef must be null or an absolute http(s) URL`);
+    }
   }
   if (fixtures.definitions?.live?.present !== false || fixtures.liveFixturesPresent !== false ||
       fixtures.definitions?.live?.purchasable !== false) {
     fail('fixture taxonomy must keep live fixtures absent and non-purchasable');
   }
-  if (gates.promotionAllowed !== false || (gates.stages ?? []).some((stage) => stage.hostedEvidenceRef !== null)) {
-    fail('release gates must keep promotion disabled and hosted evidence null');
+  if (gates.promotionAllowed !== false) fail('release gates must keep promotion disabled');
+  for (const stage of gates.stages ?? []) {
+    if (stage.hostedEvidenceRef !== null && (typeof stage.hostedEvidenceRef !== 'string' || !/^https?:\/\/\S+/.test(stage.hostedEvidenceRef))) {
+      fail(`release stage ${stage.id} hostedEvidenceRef must be null or an absolute http(s) URL`);
+    }
   }
 
   if (errors.length) {

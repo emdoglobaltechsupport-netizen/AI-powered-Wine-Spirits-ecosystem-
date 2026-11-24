@@ -1,15 +1,15 @@
 # Vintora Evidence Index
 
-> **Prototype mode — no real orders are placed. NO-GO for public launch.** Machine authority: [`config/evidence-index.json`](./config/evidence-index.json); checked by `npm run evidence:check`. This index links repository registers and workflow definitions. It does **not** claim that an external run, measurement or review occurred; the register is not externally audited.
+> **Prototype mode — no real orders are placed. NO-GO for public launch.** Machine authority: [`config/evidence-index.json`](./config/evidence-index.json); checked by `npm run evidence:check`. This index links repository registers, workflow definitions, and where available hosted Phase 1 CI run URLs. Attached CI run URLs are **Phase 1 gate parity only**; they are not launch approval, security audit evidence, load/performance evidence, or compliance sign-off. The register is not externally audited.
 
 ## 1. Tests
 
 | ID | Register | Definitions | Result | Status |
 |---|---|---|---|---|
-| EV-T01 | [`VALIDATION_STATUS.md`](./VALIDATION_STATUS.md) | [`config/test-counts.json`](./config/test-counts.json), [`smoke.mjs`](./services/api/scripts/smoke.mjs), [`selftest.js`](./apps/prototype/selftest.js) | `null` | Source register only |
-| EV-T02 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`migration-mode-check.ts`](./services/api/scripts/migration-mode-check.ts), [`ci-migrations.yml`](./.github/workflows/ci-migrations.yml) | `null` | Workflow definition only |
+| EV-T01 | [`VALIDATION_STATUS.md`](./VALIDATION_STATUS.md) | [`config/test-counts.json`](./config/test-counts.json), [`smoke.mjs`](./services/api/scripts/smoke.mjs), [`selftest.js`](./apps/prototype/selftest.js) | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) | Hosted CI pass (Phase 1 gate parity only) |
+| EV-T02 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`migration-mode-check.ts`](./services/api/scripts/migration-mode-check.ts), [`ci-migrations.yml`](./.github/workflows/ci-migrations.yml) | [45225866083](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083) | Hosted CI pass (Phase 1 gate parity only) |
 
-Local commands exist; no hosted result artefact is retained in this workspace.
+Hosted run URLs are attached for Phase 1 CI parity on commit `005f823`. They do not constitute coverage artefacts, load/performance evidence, security audit evidence, or launch approval.
 
 ## 2. Performance
 

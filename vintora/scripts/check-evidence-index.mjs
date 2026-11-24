@@ -36,7 +36,8 @@ for (const entry of policy.entries ?? []) {
   for (const ref of entry.definitionRefs ?? []) {
     if (!existsSync(join(ROOT, ref))) fail(`${entry.id}: missing definition ${ref}`);
   }
-  if (entry.resultRef !== null) fail(`${entry.id}: resultRef must be null until external evidence is attached`);
+  if (entry.resultRef !== null && typeof entry.resultRef !== 'string') fail(`${entry.id}: resultRef must be null or a string evidence reference`);
+  if (typeof entry.resultRef === 'string' && !/^https?:\/\/\S+/.test(entry.resultRef)) fail(`${entry.id}: resultRef must be an absolute http(s) URL`);
   if (!entry.status || !entry.ownerRole) fail(`${entry.id}: status and owner role are required`);
 }
 for (const category of policy.categories) {
@@ -48,11 +49,15 @@ for (const heading of ['## 1. Tests', '## 2. Performance', '## 3. Threat models'
   requireText(doc, heading, 'EVIDENCE_INDEX.md');
 }
 requireText(doc, 'config/evidence-index.json', 'EVIDENCE_INDEX.md');
-for (const marker of ['`null`', 'not externally audited', 'Targets, not measurements', 'Design threat model only', 'Blocked register only']) {
+for (const marker of ['not externally audited', 'Targets, not measurements', 'Design threat model only', 'Blocked register only', 'Phase 1 gate parity only']) {
   requireText(doc, marker, 'EVIDENCE_INDEX.md');
 }
+for (const entry of policy.entries ?? []) {
+  if (entry.resultRef === null) continue;
+  if (!doc.includes(entry.resultRef)) fail(`EVIDENCE_INDEX.md must reference attached result for ${entry.id}`);
+}
 for (const gap of policy.evidenceGaps ?? []) {
-  if (!doc.includes('penetration test') && gap.includes('penetration test')) fail('EVIDENCE_INDEX.md must state the penetration-test gap');
+  if (gap.includes('penetration test') && !doc.includes('penetration test')) fail('EVIDENCE_INDEX.md must state the penetration-test gap');
 }
 
 if (errors.length) {
@@ -61,4 +66,5 @@ if (errors.length) {
   process.exit(1);
 }
 console.log(`Evidence index check passed: ${policy.entries.length} entries across ${policy.categories.length} categories.`);
-console.log('All definition links resolve and every external result reference is an explicit null evidence gap.');
+const attached = (policy.entries ?? []).filter((entry) => entry.resultRef !== null).length;
+console.log(`External result references: ${attached} attached, ${policy.entries.length - attached} explicit null evidence gaps.`);
