@@ -154,7 +154,7 @@ import { render } from '../app.js';
       '<p class="muted">Your age verification, payment authorisation and bondedwarehouse reservation all passed.</p>' +
       '<div class="stack" style="text-align:left;max-width:380px;margin:24px auto">' +
         '<div class="spread"><span>Order</span><strong>VNT-2026-' + Math.floor(100000 + Math.random() * 900000) + '</strong></div>' +
-        '<div class="spread"><span>Items</span><strong>' + Object.keys(state.cart).reduce(function (a, id) { return a + state.cart[id]; }, 0) + '</strong></div>' +
+        '<div class="spread"><span>Items</span><strong>' + esc(Object.keys(state.cart).reduce(function (a, id) { return a + state.cart[id]; }, 0)) + '</strong></div>' +
         '<div class="spread"><span>Delivery</span><strong>Temperature-controlled · insured</strong></div>' +
         '<div class="spread"><span>FX</span><strong>Locked at ' + esc(state.currency) + '</strong></div>' +
       '</div>' +

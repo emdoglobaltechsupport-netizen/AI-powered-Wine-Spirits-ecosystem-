@@ -90,7 +90,7 @@
       },
       {
         "file": "apps/prototype/app.js",
-        "change": "Zero-build render output now escapes cart identifiers, quantities, provenance and confirmation currency."
+        "change": "Zero-build render output now escapes cart identifiers, quantities, provenance, confirmation item counts and currency."
       },
       {
         "file": "apps/prototype/src/views/checkout.js",
@@ -98,7 +98,7 @@
       },
       {
         "file": "apps/prototype/src/views/assistant.js",
-        "change": "Modular confirmation view now escapes the currency label before HTML assembly."
+        "change": "Modular confirmation view now escapes the item count and currency label before HTML assembly."
       },
       {
         "file": "services/api/src/app.ts",
@@ -155,7 +155,7 @@
         "count": 2,
         "decision": "remediated",
         "owner": "Prototype UI owner",
-        "rationale": "Both render() sinks are fed by deterministic view builders; cart identifiers, quantities, provenance and confirmation currency are now escaped with esc() and the prototype has no live user-generated production surface.",
+        "rationale": "Both render() sinks are fed by deterministic view builders; cart identifiers, quantities, provenance, confirmation item counts and currency are now escaped with esc() and the prototype has no live user-generated production surface.",
         "followUp": "Confirm closure on the next hosted CodeQL analysis, then introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
       },
       {
