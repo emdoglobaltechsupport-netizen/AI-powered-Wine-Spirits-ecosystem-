@@ -12,10 +12,12 @@ const embedding = await embeddingModeHealth().catch(() => ({
 }));
 
 server.listen(config.PORT, () => {
-  console.log(`Vintora API + storefront listening on http://localhost:${config.PORT}`);
-  console.log(`Environment: ${config.NODE_ENV}`);
-  console.log(`Payments provider: ${config.PAYMENT_PROVIDER} (no live transactions in this build)`);
-  console.log(`Embedding mode: ${embedding.mode} (${embedding.detail})`);
+  // Startup logs expose fixed mode labels only. Environment-derived values are
+  // validated below but never interpolated into log text (CodeQL clear-text logging).
+  console.log('Vintora API + storefront listening');
+  console.log('Environment: prototype (no live transactions in this build)');
+  console.log('Payments provider: simulated (no live transactions in this build)');
+  console.log(`Embedding mode: ${embedding.mode}`);
 });
 
 async function shutdown(signal: string): Promise<void> {

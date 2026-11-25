@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /** Dependency-free static server for the zero-build prototype. */
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { createReadStream, existsSync, realpathSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('../apps/prototype/', import.meta.url)));
+const ROOT_REAL = realpathSync(ROOT);
 const HOST = process.env.HOST ?? '0.0.0.0';
 const PORT = Number(process.env.PROTOTYPE_PORT ?? 8123);
 
@@ -33,6 +34,17 @@ function safePath(urlPath) {
   return target;
 }
 
+// Lexical containment is not enough: a symlink inside the prototype tree could
+// still point outside it. Missing paths are allowed through to the SPA fallback.
+function contained(file) {
+  try {
+    const real = realpathSync(file);
+    return real === ROOT_REAL || real.startsWith(ROOT_REAL + sep);
+  } catch {
+    return !existsSync(file);
+  }
+}
+
 const server = createServer((req, res) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') {
     res.writeHead(405, { allow: 'GET, HEAD' }).end('Method not allowed');
@@ -40,7 +52,7 @@ const server = createServer((req, res) => {
   }
 
   const target = safePath(req.url ?? '/');
-  if (!target) {
+  if (!target || !contained(target)) {
     res.writeHead(403).end('Forbidden');
     return;
   }
@@ -54,7 +66,7 @@ const server = createServer((req, res) => {
     }
     file = join(ROOT, 'index.html');
   }
-  if (!existsSync(file)) {
+  if (!existsSync(file) || !contained(file)) {
     res.writeHead(404).end('Not found');
     return;
   }

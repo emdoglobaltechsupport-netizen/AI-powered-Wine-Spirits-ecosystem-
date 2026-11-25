@@ -24,7 +24,12 @@ if (!command) {
 
 // npm.cmd cannot be spawned directly on Windows; route it through cmd.exe.
 const windowsNpm = process.platform === 'win32' && (command === 'npm' || command === 'npm.cmd');
-const quote = (value) => (/\s/.test(value) ? `"${value.replace(/"/g, '\\"')}"` : value);
+// cmd.exe quoting must escape backslashes before quotes; otherwise a trailing
+// backslash would escape the closing quote and alter the spawned argument.
+const quote = (value) => {
+  const text = String(value);
+  return /\s|["\\]/.test(text) ? `"${text.replace(/\\/g, '\\\\').replace(/"/g, '\\"')}"` : text;
+};
 
 const result = windowsNpm
   ? spawnSync('cmd.exe', ['/d', '/s', '/c', ['npm.cmd', ...args.map(quote)].join(' ')], {

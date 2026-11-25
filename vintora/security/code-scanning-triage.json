@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "status": "prototype-code-scanning-triage",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "promotionAllowed": false,
+  "verdict": "NO-GO",
+  "triageDate": "2026-11-25",
+  "remediationDate": "2026-11-25",
+  "ownerRole": "Platform Security",
+  "criticalExceptionsAllowed": false,
+  "sources": {
+    "hostedCodeScanning": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
+    "localTrivy": "Trivy 0.76.2 offline image scan of digest-pinned base images; informational only",
+    "workflows": [
+      ".github/workflows/ci-security.yml",
+      ".github/workflows/ci-supply-chain.yml"
+    ]
+  },
+  "baseline": {
+    "hostedOpenAlerts": 143,
+    "byTool": {
+      "CodeQL": 38,
+      "Trivy": 105
+    },
+    "bySeverity": {
+      "critical": 5,
+      "high": 73,
+      "medium": 49,
+      "low": 11,
+      "unscored": 5
+    },
+    "byCategory": {
+      "/language:javascript-typescript": 38,
+      "trivy-image": 104,
+      "trivy-iac": 1
+    },
+    "criticalImageAdvisories": [
+      { "id": "CVE-2026-33845", "package": "libgnutls30" },
+      { "id": "CVE-2026-42010", "package": "libgnutls30" },
+      { "id": "CVE-2026-13221", "package": "perl-base" },
+      { "id": "CVE-2026-42496", "package": "perl-archive-tar" },
+      { "id": "CVE-2026-8376", "package": "perl-base" }
+    ],
+    "codeqlRules": {
+      "js/missing-rate-limiting": 22,
+      "js/clear-text-logging": 9,
+      "js/path-injection": 4,
+      "js/xss-through-dom": 2,
+      "js/incomplete-sanitization": 1
+    }
+  },
+  "remediation": {
+    "baseImage": {
+      "from": "node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0",
+      "to": "node:24-trixie-slim@sha256:4d00acb4bcc42c454c4eb801526f7ad7f772ea3bd4fd168c5cc2e384abcbb9d4",
+      "reason": "Node 20 is outside the repository's declared Node 24/26 support range; the Bookworm layer carried all five baseline critical image advisories."
+    },
+    "localTrivyScan": {
+      "toolVersion": "0.76.2",
+      "image": "node:24-trixie-slim@sha256:4d00acb4bcc42c454c4eb801526f7ad7f772ea3bd4fd168c5cc2e384abcbb9d4",
+      "totalFindings": 228,
+      "critical": 0,
+      "fixedHighCritical": 7,
+      "note": "Informational local scan only. Hosted Trivy SARIF from the pinned CI action is the authoritative gate evidence; a local Docker build is still unavailable."
+    },
+    "codeChanges": [
+      {
+        "file": "Dockerfile",
+        "change": "Moved to the supported digest-pinned Node 24 Trixie base and added a container HEALTHCHECK for the API health route."
+      },
+      {
+        "file": "services/api/src/index.ts",
+        "change": "Startup logs now emit fixed prototype/simulated mode labels instead of environment-derived values."
+      },
+      {
+        "file": "scripts/with-env.mjs",
+        "change": "Windows cmd.exe quoting now escapes backslashes before quotes."
+      },
+      {
+        "file": "scripts/serve-prototype.mjs",
+        "change": "Static prototype serving now verifies realpath containment in addition to lexical containment."
+      }
+    ],
+    "dispositions": [
+      {
+        "rule": "js/missing-rate-limiting",
+        "count": 22,
+        "decision": "accepted-prototype-control",
+        "owner": "Platform Engineering",
+        "rationale": "app.ts applies a baseline in-memory rate limiter to all /v1 traffic before routers mount; CodeQL does not infer custom Express middleware. Distributed rate limiting remains an explicit production gap.",
+        "followUp": "Implement and evidence a distributed limiter before any pilot or production promotion."
+      },
+      {
+        "rule": "js/clear-text-logging",
+        "count": 9,
+        "decision": "mitigated-prototype-risk",
+        "owner": "Platform Security",
+        "rationale": "Startup logs were changed to fixed labels. Remaining hits are diagnostic error/pass arrays in local CLI tooling; the deterministic secret scan blocks credentials in source and logs.",
+        "followUp": "Adopt structured log redaction and external audit sinks before pilot."
+      },
+      {
+        "rule": "js/path-injection",
+        "count": 4,
+        "decision": "false-positive-mitigated",
+        "owner": "Platform Engineering",
+        "rationale": "The static prototype server normalises the URL path, confines it to apps/prototype and now verifies realpath containment before streaming files.",
+        "followUp": "Replace the dependency-free static server with a production-reviewed asset pipeline before pilot."
+      },
+      {
+        "rule": "js/xss-through-dom",
+        "count": 2,
+        "decision": "accepted-prototype-control",
+        "owner": "Prototype UI owner",
+        "rationale": "Both render() sinks are fed by deterministic view builders that escape dynamic values with esc(); the prototype has no live user-generated production surface.",
+        "followUp": "Introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
+      },
+      {
+        "rule": "js/incomplete-sanitization",
+        "count": 1,
+        "decision": "remediated",
+        "owner": "Platform Engineering",
+        "rationale": "cmd.exe argument quoting now escapes backslashes before quotes, addressing the CodeQL finding in scripts/with-env.mjs.",
+        "followUp": "Confirm closure on the next hosted CodeQL analysis."
+      }
+    ],
+    "hostedVerification": {
+      "status": "pending-rescan",
+      "evidenceRef": null,
+      "note": "Hosted code scanning must be rechecked after the base image and prototype hardening changes are pushed; no hosted closure is claimed here."
+    }
+  },
+  "blockingRules": [
+    "No critical advisory is excepted; the five baseline critical image findings must be removed by the base-image upgrade, not waived.",
+    "Trivy SARIF uploads remain blocking workflow steps; CodeQL and Trivy findings remain advisory until triaged and evidenced.",
+    "Hosted alert closure requires a post-remediation rescan recorded in remediation.hostedVerification.",
+    "Green Phase 1 CI proves gate parity only and does not supply production security, compliance or launch evidence.",
+    "promotionAllowed remains false and the verdict remains NO-GO."
+  ],
+  "evidenceGaps": [
+    "Local container build and startup remain unverified; the base image was scanned by digest only.",
+    "No distributed rate limiter, production asset pipeline, structured log redaction or centralised audit sink is attached.",
+    "No signed release, penetration test or production security evidence is attached by this triage."
+  ]
+}

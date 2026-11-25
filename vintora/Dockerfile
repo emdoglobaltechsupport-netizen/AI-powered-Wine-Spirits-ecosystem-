@@ -1,7 +1,7 @@
 # Platform-neutral runtime for the API and the zero-build prototype.
 # Base image is digest-pinned; refresh via config/artifact-policy.json and
 # `npm run artifacts:check` when Dependabot opens an image update PR.
-FROM node:20-bookworm-slim@sha256:2cf067cfed83d5ea958367df9f966191a942351a2df77d6f0193e162b5febfc0
+FROM node:24-trixie-slim@sha256:4d00acb4bcc42c454c4eb801526f7ad7f772ea3bd4fd168c5cc2e384abcbb9d4
 
 WORKDIR /app
 
@@ -21,5 +21,6 @@ RUN npm ci --legacy-peer-deps --no-audit --no-fund \
 USER node
 ENV NODE_ENV=development
 EXPOSE 4000 8123
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 CMD node -e "fetch('http://127.0.0.1:4000/health').then(function (r) { process.exit(r.ok ? 0 : 1); }).catch(function () { process.exit(1); })"
 
 CMD ["npm", "run", "start", "--workspace", "@vintora/api"]

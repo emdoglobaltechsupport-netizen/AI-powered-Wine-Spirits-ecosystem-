@@ -15,7 +15,8 @@ This document is the authoritative answer to how npm packages, container images,
 | SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 701 components |
 | Secret scanning | Deterministic offline `npm run secrets:scan`; advisory gitleaks in CI | Passing locally; gitleaks requires `GITLEAKS_LICENSE` to become blocking |
 | Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 617 third-party packages checked |
-| Container and IaC scanning | Trivy config/image scans in [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml); release scan blocks High/Critical | Workflow configured; GitHub-hosted scans not executed locally |
+| Container and IaC scanning | Trivy config/image scans in [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml); release scan blocks High/Critical | Workflow configured; baseline 143 hosted code-scanning alerts triaged in [`security/code-scanning-triage.json`](./security/code-scanning-triage.json), hosted rescan pending |
+| Code-scanning triage | [`security/code-scanning-triage.json`](./security/code-scanning-triage.json) with `npm run code-scanning-triage:check` | Baseline 5 critical image advisories removed by the digest-pinned Node 24 Trixie upgrade; no critical exception; NO-GO |
 | Immutable artifact pinning | Digest-pinned base images, SHA-pinned actions and `npm run artifacts:check` | Passing locally |
 | Artifact signing and verification | Cosign keyless signing in [`release.yml`](./.github/workflows/release.yml), with image and blob verification | Workflow configured; no local release has been signed |
 | Evidence retention | Audit reports, SARIF, SBOM, checksums, signatures and certificates retained for 365 days | Release workflow configured |
@@ -40,7 +41,7 @@ This document is the authoritative answer to how npm packages, container images,
 - Refresh a digest from the registry, then commit the value in both places:
 
 ```bash
-docker buildx imagetools inspect node:20-bookworm-slim --format "{{.Manifest.Digest}}"
+docker buildx imagetools inspect node:24-trixie-slim --format "{{.Manifest.Digest}}"
 docker buildx imagetools inspect pgvector/pgvector:pg16 --format "{{.Manifest.Digest}}"
 docker buildx imagetools inspect redis:7-alpine --format "{{.Manifest.Digest}}"
 ```
@@ -70,6 +71,7 @@ The former `zod@3.25.76` exception was closed by upgrading to `zod@4.6.7` and re
 | Security PR checks | [`ci-security.yml`](./.github/workflows/ci-security.yml) | Deterministic secret scan, scoped audit gate, licence check, pin check, SBOM and CodeQL block; gitleaks is advisory without a license |
 | Triage consistency | `npm run dependabot-triage:check` | Static alert-count and NO-GO boundary register blocks on drift; no GitHub call is made |
 | Supply-chain PR checks | [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml) | Policy checks and SARIF uploads block; Trivy findings are advisory in PRs until triaged |
+| Code-scanning triage | `npm run code-scanning-triage:check` | Static baseline, remediation, no-critical-exception and NO-GO consistency gate; no GitHub call |
 | Release promotion | [`release.yml`](./.github/workflows/release.yml) | Trivy High/Critical findings block; signature verification must pass |
 
 Full `npm audit` output is retained as `audit-full.json` but is informational because it includes non-production shells. After the recorded remediation both the full and scoped local audits report 0 vulnerabilities. The scoped gate writes `audit-scoped.json` and applies only matching, unexpired exceptions.
@@ -124,8 +126,8 @@ npm run setup:verify       # full local setup verification without containers
 
 ## 9. Residual gaps and honesty statement
 
-- GitHub-hosted Trivy and release workflows are configured but were not executed locally; no repository release, GHCR push or cosign signature exists yet.
+- GitHub-hosted Trivy and release workflows are configured; the base image was scanned locally by digest, but no repository release, GHCR push, container build or cosign signature exists yet.
 - The Docker daemon was unavailable during local authoring. Compose configuration and digest-pinned image references were validated, but `npm run setup` container startup remains locally unverified.
-- The time-boxed Zod exception expires `2026-12-31`; critical advisories are never exempt.
+- The former time-boxed Zod exception was closed by the 4.6.7 upgrade; critical advisories are never exempt.
 - Production IdP/MFA, a managed secret store, distributed rate limiting and centralised retained audit storage are specified but not implemented.
 - Green CI means the documented Phase 1 gates passed. It is not a production security attestation and does not change the NO-GO launch posture.

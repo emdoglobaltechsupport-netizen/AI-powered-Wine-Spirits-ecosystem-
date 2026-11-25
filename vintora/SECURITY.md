@@ -119,7 +119,11 @@ Dependabot monitors npm and GitHub Actions weekly.
 
 `npm run licenses:check` is an offline licence gate driven by [`config/license-policy.json`](./config/license-policy.json). `ci-supply-chain.yml` builds the local image from the pinned Dockerfile, runs Trivy against the image and the repository IaC/configuration, publishes both SARIF reports to GitHub Code Scanning (upload failures block the job) and retains them as artifacts. PR container/IaC findings are advisory until triaged; the release workflow blocks on untriaged High/Critical findings.
 
-### 5.3 Immutable artifacts and release signing
+### 5.3 Code-scanning triage
+
+Hosted CodeQL and Trivy findings are recorded in [`security/code-scanning-triage.json`](./security/code-scanning-triage.json) and checked by `npm run code-scanning-triage:check`. The 2026-11-25 baseline was 143 open alerts: 105 Trivy (104 image, 1 IaC) and 38 CodeQL, including five critical image advisories. The critical findings were removed by moving the Dockerfile from the unsupported Node 20 Bookworm base to the supported, digest-pinned Node 24 Trixie base; a container `HEALTHCHECK` was added for the Trivy IaC finding. Startup logs were reduced to fixed mode labels, Windows argument quoting was hardened, and the static prototype server now verifies realpath containment. Remaining CodeQL findings have named owners, rationales and follow-up work in the register; none is waived as launch approval. No critical advisory is excepted, hosted closure requires a recorded rescan, and the verdict remains **NO-GO**.
+
+### 5.4 Immutable artifacts and release signing
 
 [`config/artifact-policy.json`](./config/artifact-policy.json) declares the approved digest for every base image and requires digest-only promotion, SHA-pinned actions, checksums, signatures and 365-day evidence retention. `npm run artifacts:check` verifies the Dockerfile, Compose file and all workflow action references. [`release.yml`](./.github/workflows/release.yml) builds one image, signs it and the SBOM/checksums with cosign keyless OIDC, then verifies both before the release is considered valid. No signing key is stored in the repository. See [`DEPENDENCY_MANAGEMENT.md`](./DEPENDENCY_MANAGEMENT.md).
 
@@ -146,8 +150,8 @@ Dependabot monitors npm and GitHub Actions weekly.
 - Production IdP, MFA and secret manager are not implemented.
 - Distributed rate limiting and centralised audit retention are not implemented.
 - Penetration test, restore drill, DR failover and load test are outstanding.
-- Web and mobile shells contain known advisories and are excluded from the release gate only because they are not promoted surfaces.
-- GitHub-hosted Trivy and release-signing workflows are configured but have not been executed in this local workspace; no release artifact has been signed yet.
+- Web and mobile shells were remediated to zero local npm advisories but remain non-production scaffolding, not promoted surfaces.
+- GitHub-hosted Trivy and release-signing workflows are configured but no local container build or signed release artifact exists; hosted scans remain Phase 1 gate evidence only.
 - No timed agent kill-switch drill, live agent egress policy, WORM audit retention or high-impact tool review record exists; all agent operation remains advisory simulation.
 - GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. Settings metadata and a hosted evidence reference are recorded in [`config/repository-policy.json`](./config/repository-policy.json). `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off and distinct-review approval remain CI policy checks only.
 

@@ -37,6 +37,6 @@
   "evidenceGaps": [
     "No live private-reporting mailbox, hosted advisory inbox or on-call rota is attached.",
     "No incident drill, coordinated-disclosure record or published advisory is attached.",
-    "No hosted CI, Trivy, CodeQL or signed release result is attached."
+    "Hosted CI, Trivy and CodeQL results are Phase 1 gate-parity evidence only; no local container build, penetration test or signed release result is attached."
   ]
 }
