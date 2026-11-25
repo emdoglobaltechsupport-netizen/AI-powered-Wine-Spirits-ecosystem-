@@ -37,6 +37,6 @@
     "This is a static repository dashboard, not a running status page or metrics endpoint.",
     "Hosted Phase 1 CI run URLs are attached for commit 701b419; deployment history, uptime measurement, SLO error-budget burn and p95/p99 by route are not attached.",
     "A green check proves Phase 1 gate parity only and does not change the NO-GO verdict.",
-    "GitHub branch protection is enabled on main with 15 required Phase 1 check contexts; code scanning is enabled and CodeQL/Trivy SARIF uploads are blocking. enforce_admins is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only."
+    "GitHub branch protection is enabled on main with 15 required Phase 1 check contexts; code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads, and GitHub default setup is disabled to avoid conflicting analyses. enforce_admins is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only."
   ]
 }

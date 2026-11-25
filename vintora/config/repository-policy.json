@@ -39,7 +39,9 @@
     },
     "codeScanning": {
       "enabled": true,
-      "defaultSetupState": "configured",
+      "setupMode": "advanced-workflow",
+      "defaultSetupState": "not-configured",
+      "advancedSetupWorkflow": ".github/workflows/ci-security.yml",
       "sarifUploadsBlocking": true
     },
     "verifiedOn": "2026-11-25",

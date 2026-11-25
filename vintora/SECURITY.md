@@ -149,6 +149,6 @@ Dependabot monitors npm and GitHub Actions weekly.
 - Web and mobile shells contain known advisories and are excluded from the release gate only because they are not promoted surfaces.
 - GitHub-hosted Trivy and release-signing workflows are configured but have not been executed in this local workspace; no release artifact has been signed yet.
 - No timed agent kill-switch drill, live agent egress policy, WORM audit retention or high-impact tool review record exists; all agent operation remains advisory simulation.
-- GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled with blocking CodeQL/Trivy SARIF uploads. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off and distinct-review approval remain CI policy checks only.
+- GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off and distinct-review approval remain CI policy checks only.
 
 Do not infer from a green CI run that the project is production-secure. Green CI means the documented Phase 1 gates passed.

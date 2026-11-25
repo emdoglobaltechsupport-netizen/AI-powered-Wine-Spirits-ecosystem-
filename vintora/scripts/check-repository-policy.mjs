@@ -56,8 +56,10 @@ if (protection.enabled !== true || protection.strictRequiredChecks !== true ||
   fail('branch protection metadata must record 15 strict checks, one review, no force pushes and no admin enforcement');
 }
 const scanning = enforcement.codeScanning ?? {};
-if (scanning.enabled !== true || scanning.defaultSetupState !== 'configured' || scanning.sarifUploadsBlocking !== true) {
-  fail('code scanning metadata must record configured default setup and blocking SARIF uploads');
+if (scanning.enabled !== true || scanning.setupMode !== 'advanced-workflow' ||
+    scanning.defaultSetupState !== 'not-configured' ||
+    scanning.advancedSetupWorkflow !== '.github/workflows/ci-security.yml' || scanning.sarifUploadsBlocking !== true) {
+  fail('code scanning metadata must record advanced workflow setup with default setup disabled and blocking SARIF uploads');
 }
 if (enforcement.evidenceRef !== null &&
     !(typeof enforcement.evidenceRef === 'string' && /^https?:\/\/\S+/.test(enforcement.evidenceRef))) {
