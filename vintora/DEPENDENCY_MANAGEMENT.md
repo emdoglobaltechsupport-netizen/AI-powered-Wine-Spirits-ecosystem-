@@ -69,7 +69,7 @@ Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`.
 | Build verification | `npm run ci:build` | Scoped builds and SBOM freshness block |
 | Security PR checks | [`ci-security.yml`](./.github/workflows/ci-security.yml) | Deterministic secret scan, scoped audit gate, licence check, pin check, SBOM and CodeQL block; gitleaks is advisory without a license |
 | Triage consistency | `npm run dependabot-triage:check` | Static alert-count and NO-GO boundary register blocks on drift; no GitHub call is made |
-| Supply-chain PR checks | [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml) | Policy checks block; Trivy SARIF is reported to GitHub Security and retained |
+| Supply-chain PR checks | [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml) | Policy checks and SARIF uploads block; Trivy findings are advisory in PRs until triaged |
 | Release promotion | [`release.yml`](./.github/workflows/release.yml) | Trivy High/Critical findings block; signature verification must pass |
 
 Full `npm audit` output is retained as `audit-full.json` but is informational because it includes non-production shells. The scoped gate writes `audit-scoped.json` and applies only matching, unexpired exceptions.

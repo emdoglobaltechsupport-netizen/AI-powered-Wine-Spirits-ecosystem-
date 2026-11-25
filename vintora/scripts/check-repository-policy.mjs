@@ -43,6 +43,26 @@ if (contribution.dcoSignOffRequired !== true || contribution.distinctReviewerReq
 for (const check of contribution.requiredChecks ?? []) {
   if (!pkg.scripts?.[check.replace(/^npm run /, '')]) fail(`contribution policy requires missing script: ${check}`);
 }
+const enforcement = policy.githubEnforcement ?? {};
+if (enforcement.visibility !== 'public' || enforcement.defaultBranch !== 'main' ||
+    enforcement.verifiedOn !== '2026-11-25') {
+  fail('GitHub enforcement metadata drifted from the verified public-repository baseline');
+}
+const protection = enforcement.branchProtection ?? {};
+if (protection.enabled !== true || protection.strictRequiredChecks !== true ||
+    protection.requiredCheckCount !== 15 || protection.enforceAdmins !== false ||
+    protection.requiredApprovingReviewCount !== 1 || protection.allowForcePushes !== false ||
+    protection.allowDeletions !== false) {
+  fail('branch protection metadata must record 15 strict checks, one review, no force pushes and no admin enforcement');
+}
+const scanning = enforcement.codeScanning ?? {};
+if (scanning.enabled !== true || scanning.defaultSetupState !== 'configured' || scanning.sarifUploadsBlocking !== true) {
+  fail('code scanning metadata must record configured default setup and blocking SARIF uploads');
+}
+if (enforcement.evidenceRef !== null &&
+    !(typeof enforcement.evidenceRef === 'string' && /^https?:\/\/\S+/.test(enforcement.evidenceRef))) {
+  fail('GitHub enforcement evidenceRef must be null or an absolute http(s) URL');
+}
 const assets = policy.assetSubmission ?? {};
 for (const key of ['provenanceRecordRequired', 'authorOrRightsHolderRequired', 'licenceOrPermissionRequired',
   'aiGeneratedAssetsMustBeReviewed', 'thirdPartyTrademarksProhibitedWithoutWrittenPermission',
@@ -96,6 +116,7 @@ for (const needle of [
   'config/security-reporting.json',
   'Signed-release caveat',
   'not executed in this local workspace',
+  'GitHub branch protection is enabled on `main`',
 ]) {
   requireText(security, needle, 'SECURITY.md');
 }
@@ -116,5 +137,5 @@ if (errors.length) {
   process.exit(1);
 }
 console.log('Repository policy check passed: Apache-2.0 with trademark/data reservations, DCO and rejection rules.');
-console.log('Asset provenance and private security reporting paths are present; hosted enforcement is not evidenced.');
+console.log('Asset provenance and private security reporting paths are present; hosted repository settings are enabled with documented limits.');
 console.log('This gate is policy parity only; it is not legal advice or repository-setting evidence.');

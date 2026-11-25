@@ -117,7 +117,7 @@ Dependabot monitors npm and GitHub Actions weekly.
 
 ### 5.2 Licence, container and IaC scanning
 
-`npm run licenses:check` is an offline licence gate driven by [`config/license-policy.json`](./config/license-policy.json). `ci-supply-chain.yml` builds the local image from the pinned Dockerfile, runs Trivy against the image and the repository IaC/configuration, publishes SARIF to GitHub Security and retains both reports. PR container/IaC findings are advisory until triaged; the release workflow blocks on untriaged High/Critical findings.
+`npm run licenses:check` is an offline licence gate driven by [`config/license-policy.json`](./config/license-policy.json). `ci-supply-chain.yml` builds the local image from the pinned Dockerfile, runs Trivy against the image and the repository IaC/configuration, publishes both SARIF reports to GitHub Code Scanning (upload failures block the job) and retains them as artifacts. PR container/IaC findings are advisory until triaged; the release workflow blocks on untriaged High/Critical findings.
 
 ### 5.3 Immutable artifacts and release signing
 
@@ -149,6 +149,6 @@ Dependabot monitors npm and GitHub Actions weekly.
 - Web and mobile shells contain known advisories and are excluded from the release gate only because they are not promoted surfaces.
 - GitHub-hosted Trivy and release-signing workflows are configured but have not been executed in this local workspace; no release artifact has been signed yet.
 - No timed agent kill-switch drill, live agent egress policy, WORM audit retention or high-impact tool review record exists; all agent operation remains advisory simulation.
-- GitHub branch protection and code scanning are not enabled for this private repository on the current GitHub plan. Hosted checks and SARIF uploads are evidence only; they are not merge-enforcing controls.
+- GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled with blocking CodeQL/Trivy SARIF uploads. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off and distinct-review approval remain CI policy checks only.
 
 Do not infer from a green CI run that the project is production-secure. Green CI means the documented Phase 1 gates passed.

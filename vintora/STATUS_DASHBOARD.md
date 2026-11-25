@@ -34,7 +34,7 @@
 
 ## 4. Measurement boundary
 
-Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. GitHub branch protection and code scanning are not enabled for this private repository on the current plan; hosted checks and SARIF uploads are evidence only, not merge-enforcing controls. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
+Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled with blocking CodeQL/Trivy SARIF uploads. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
 
 ## 5. Review
 

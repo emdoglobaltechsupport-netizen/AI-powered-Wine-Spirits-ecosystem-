@@ -57,6 +57,6 @@
   "evidenceGaps": [
     "Hosted Phase 1 CI run URLs are attached for commit 701b419; signed release, load test, penetration test, DPIA or counsel approval is not attached.",
     "Launch approval remains blocked; no promotion decision record exists and promotionAllowed remains false.",
-    "GitHub branch protection and code scanning are not enabled for this private repository on the current GitHub plan; hosted checks and SARIF uploads are evidence only, not merge-enforcing controls."
+    "GitHub branch protection is enabled on main with 15 required Phase 1 check contexts; code scanning is enabled and CodeQL/Trivy SARIF uploads are blocking. enforce_admins is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only."
   ]
 }

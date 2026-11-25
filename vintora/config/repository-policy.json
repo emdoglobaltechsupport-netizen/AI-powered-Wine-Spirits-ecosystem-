@@ -25,6 +25,26 @@
     "canonicalClaimsReviewRequired": true,
     "externalCallsRequireDesignReview": true
   },
+  "githubEnforcement": {
+    "visibility": "public",
+    "defaultBranch": "main",
+    "branchProtection": {
+      "enabled": true,
+      "strictRequiredChecks": true,
+      "requiredCheckCount": 15,
+      "enforceAdmins": false,
+      "requiredApprovingReviewCount": 1,
+      "allowForcePushes": false,
+      "allowDeletions": false
+    },
+    "codeScanning": {
+      "enabled": true,
+      "defaultSetupState": "configured",
+      "sarifUploadsBlocking": true
+    },
+    "verifiedOn": "2026-11-25",
+    "evidenceRef": null
+  },
   "rejectionRules": [
     "Any change that adds fixed, reused or real credentials to source, fixtures, workflows or documentation.",
     "Any change that calls a real age, KYC, sanctions, payment, marketing, custody, model or supplier provider from this prototype.",
@@ -60,7 +80,7 @@
   ],
   "evidenceGaps": [
     "No named individual holds the policy owner or approver role in this workspace.",
-    "No GitHub repository setting, branch protection rule or DCO enforcement has been evidenced locally.",
+    "Branch protection with 15 required Phase 1 checks and code scanning are enabled on the public repository, but no GitHub DCO app or independent reviewer is configured; DCO sign-off and distinct-review approval remain policy checks rather than enforced repository settings.",
     "No contributor signature, asset provenance record or third-party asset submission has been attached."
   ]
 }
