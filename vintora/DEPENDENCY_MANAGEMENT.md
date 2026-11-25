@@ -11,10 +11,10 @@ This document is the authoritative answer to how npm packages, container images,
 |---|---|---|
 | Automated dependency updates | [`dependabot.yml`](./.github/dependabot.yml) opens weekly grouped PRs for npm, GitHub Actions and Docker base images | Configured |
 | Vulnerability reporting | Private disclosure route in [`SECURITY.md`](./SECURITY.md) §2 | Documented |
-| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 hosted alerts triaged in [`security/dependabot-triage.json`](./security/dependabot-triage.json), one scoped production exception |
-| SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 991 components |
+| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 baseline hosted alerts triaged and locally remediated in [`security/dependabot-triage.json`](./security/dependabot-triage.json), hosted rescan pending |
+| SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 701 components |
 | Secret scanning | Deterministic offline `npm run secrets:scan`; advisory gitleaks in CI | Passing locally; gitleaks requires `GITLEAKS_LICENSE` to become blocking |
-| Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 873 third-party packages checked |
+| Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 617 third-party packages checked |
 | Container and IaC scanning | Trivy config/image scans in [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml); release scan blocks High/Critical | Workflow configured; GitHub-hosted scans not executed locally |
 | Immutable artifact pinning | Digest-pinned base images, SHA-pinned actions and `npm run artifacts:check` | Passing locally |
 | Artifact signing and verification | Cosign keyless signing in [`release.yml`](./.github/workflows/release.yml), with image and blob verification | Workflow configured; no local release has been signed |
@@ -59,7 +59,7 @@ Timelines run from triage confirmation. A fix may be a patch, a safe configurati
 
 Exceptions are recorded in [`security/audit-exceptions.json`](./security/audit-exceptions.json) for npm advisories and in the release approval record for scan findings. Every exception needs a package/finding, named owner, reason, remediation plan, tracking link and expiry no more than 90 days out. Expired entries fail CI. Critical advisories are never excepted.
 
-Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`. See [`SECURITY.md`](./SECURITY.md) §3.5. The full hosted alert triage is in [`security/dependabot-triage.json`](./security/dependabot-triage.json); the critical `tar` finding is confined to the non-production mobile shell and is never excepted.
+The former `zod@3.25.76` exception was closed by upgrading to `zod@4.6.7` and removing the entry from [`security/audit-exceptions.json`](./security/audit-exceptions.json). See [`SECURITY.md`](./SECURITY.md) §3.5. The baseline hosted triage and local remediation record are in [`security/dependabot-triage.json`](./security/dependabot-triage.json); upgrades were `zod@4.6.7`, `next@16.4.6`, `expo@58.0.26` and `react-native@0.88.1`, with a scoped `@expo/fingerprint` `minimatch@11.0.9` override. The former critical `tar` finding was confined to the non-production mobile shell and was never excepted.
 
 ## 5. Automated scanning
 
@@ -72,7 +72,7 @@ Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`.
 | Supply-chain PR checks | [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml) | Policy checks and SARIF uploads block; Trivy findings are advisory in PRs until triaged |
 | Release promotion | [`release.yml`](./.github/workflows/release.yml) | Trivy High/Critical findings block; signature verification must pass |
 
-Full `npm audit` output is retained as `audit-full.json` but is informational because it includes non-production shells. The scoped gate writes `audit-scoped.json` and applies only matching, unexpired exceptions.
+Full `npm audit` output is retained as `audit-full.json` but is informational because it includes non-production shells. After the recorded remediation both the full and scoped local audits report 0 vulnerabilities. The scoped gate writes `audit-scoped.json` and applies only matching, unexpired exceptions.
 
 ## 6. Licence policy
 

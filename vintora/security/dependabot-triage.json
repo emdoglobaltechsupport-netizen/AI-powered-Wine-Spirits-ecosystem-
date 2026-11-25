@@ -1,17 +1,18 @@
 {
   "version": 1,
-  "status": "prototype-dependabot-triage",
+  "status": "prototype-dependency-remediation",
   "prototypeMode": true,
   "publicLaunch": false,
   "verdict": "NO-GO",
   "triageDate": "2026-11-25",
+  "remediationDate": "2026-11-25",
   "ownerRole": "Platform Security",
   "sources": {
     "hostedAlerts": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/dependabot",
     "localFullAudit": "npm audit --json (informational; includes non-production shells)",
     "localScopedAudit": "npm audit --workspace @vintora/api --workspace @vintora/shared --workspace @vintora/prototype --workspace @vintora/db --json (blocking gate)"
   },
-  "counts": {
+  "baseline": {
     "hostedOpenAlerts": 39,
     "hostedCritical": 1,
     "hostedHigh": 28,
@@ -24,23 +25,79 @@
     "productionScopedCritical": 0,
     "productionScopedHigh": 1
   },
+  "remediation": {
+    "verifiedOn": "2026-11-25",
+    "localFullAudit": {
+      "npmVulnerablePackages": 0,
+      "npmCriticalPackages": 0,
+      "npmHighPackages": 0,
+      "npmModeratePackages": 0
+    },
+    "localScopedAudit": {
+      "productionScopedPackages": 0,
+      "productionScopedCritical": 0,
+      "productionScopedHigh": 0
+    },
+    "hostedVerification": {
+      "status": "pending-rescan",
+      "evidenceRef": null,
+      "note": "Hosted Dependabot must be rechecked after the remediation commit lands; this file does not claim hosted alerts are closed."
+    },
+    "upgrades": [
+      {
+        "package": "zod",
+        "from": "3.25.76",
+        "to": "4.6.7",
+        "workspace": "@vintora/api",
+        "advisory": "GHSA-mrhx-c7xc-m3w5"
+      },
+      {
+        "package": "next",
+        "from": "15.1.x",
+        "to": "16.4.6",
+        "workspace": "@vintora/web"
+      },
+      {
+        "package": "expo",
+        "from": "52.0.x",
+        "to": "58.0.26",
+        "workspace": "@vintora/mobile"
+      },
+      {
+        "package": "react-native",
+        "from": "0.76.x",
+        "to": "0.88.1",
+        "workspace": "@vintora/mobile",
+        "note": "Aligned with the React Native version bundled by Expo 58."
+      }
+    ],
+    "overrides": [
+      {
+        "parent": "@expo/fingerprint",
+        "package": "minimatch",
+        "to": "11.0.9",
+        "advisory": "GHSA-g3hv-75wg-m249"
+      }
+    ]
+  },
   "groups": [
     {
       "id": "production-gate",
-      "hostedAlertCount": 2,
+      "status": "remediated-locally",
+      "baselineHostedAlertCount": 2,
       "packages": ["zod"],
-      "hostedAlerts": {
+      "baselineHostedAlerts": {
         "GHSA-mrhx-c7xc-m3w5": ["vintora/services/api/package.json", "vintora/package-lock.json"]
       },
-      "decision": "Documented time-boxed high-severity exception; no critical exception and no promotion clearance.",
-      "exceptionRef": "SEC-2026-ZOD-VALIDATION",
-      "expires": "2026-12-31",
-      "remediation": "Migrate API validation to zod@4.6.7, rerun typechecks/shared tests/API smoke, then remove the exception in the same change."
+      "baselineExceptionRef": "SEC-2026-ZOD-VALIDATION",
+      "baselineExpires": "2026-12-31",
+      "remediation": "Migrated API validation to zod@4.6.7, reran typechecks, shared tests, API build and smoke; the exception is removed from security/audit-exceptions.json."
     },
     {
       "id": "non-production-shared-lockfile",
-      "hostedAlertCount": 37,
-      "hostedAlertPackages": {
+      "status": "remediated-locally",
+      "baselineHostedAlertCount": 37,
+      "baselineHostedAlertPackages": {
         "@xmldom/xmldom": 15,
         "tar": 12,
         "postcss": 4,
@@ -50,41 +107,18 @@
         "minimatch": 1
       },
       "workspaceRefs": ["apps/web", "apps/mobile"],
-      "localWebShellPackages": ["next", "postcss"],
-      "localMobileShellPackages": [
-        "@expo/bunyan",
-        "@expo/cli",
-        "@expo/config",
-        "@expo/config-plugins",
-        "@expo/metro-config",
-        "@expo/plist",
-        "@expo/prebuild-config",
-        "@expo/rudder-sdk-node",
-        "@xmldom/xmldom",
-        "cacache",
-        "expo",
-        "expo-asset",
-        "expo-constants",
-        "glob",
-        "image-size",
-        "minimatch",
-        "postcss",
-        "tar",
-        "uuid",
-        "xcode"
-      ],
-      "decision": "Reported only while these shells remain non-production; the critical tar advisory is in the Expo/mobile shell, not in the production gate.",
-      "remediation": "Upgrade the mobile shell to expo@58.0.26 and the web shell to next@16.4.6 before promotion; re-run the full audit, SBOM, licence and smoke gates in the same change."
+      "remediation": "Upgraded Next to 16.4.6, Expo to 58.0.26 and React Native to 0.88.1; scoped minimatch override removed the remaining Expo fingerprint advisory. image-size disappeared with the older Metro tree."
     }
   ],
   "blockingRules": [
-    "No critical advisory is excepted; the tar critical alert blocks mobile-shell promotion.",
-    "Green Phase 1 CI proves the scoped gate only and does not clear hosted Dependabot alerts.",
-    "All web/mobile shell advisories must be resolved before those surfaces are promoted.",
+    "No critical advisory is excepted; the baseline tar critical alert was confined to the non-production mobile shell and was removed by the Expo/React Native upgrade.",
+    "Green Phase 1 CI proves the scoped gate only and does not itself clear hosted Dependabot alerts.",
+    "Hosted alert closure requires a post-remediation rescan recorded in remediation.hostedVerification.",
+    "All web/mobile shell advisories must remain at zero before those surfaces are promoted.",
     "promotionAllowed remains false and the verdict remains NO-GO."
   ],
   "evidenceGaps": [
-    "No approved upgrade record for Expo 58 or Next 16 is attached.",
+    "Hosted Dependabot rescan evidence is pending after the remediation commit.",
     "No evidence claims that web/mobile shells are used by a live or production surface."
   ]
 }

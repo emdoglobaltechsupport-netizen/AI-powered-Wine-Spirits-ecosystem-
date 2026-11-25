@@ -55,7 +55,7 @@ The release audit gate blocks:
 - any expired exception;
 - an SBOM that does not match `package-lock.json`.
 
-The production workspace set is `@vintora/api`, `@vintora/shared`, `@vintora/prototype` and `@vintora/db`. The `apps/web` and `apps/mobile` shells are non-production scaffolding; their advisories are reported in the full audit report but do not gate this Phase 1 release. They must be remediated before those surfaces are promoted.
+The production workspace set is `@vintora/api`, `@vintora/shared`, `@vintora/prototype` and `@vintora/db`. The `apps/web` and `apps/mobile` shells are non-production scaffolding; their advisories are reported in the full audit report but do not gate this Phase 1 release. They must remain clear before those surfaces are promoted.
 
 ### 3.4 Exceptions
 
@@ -70,13 +70,13 @@ A temporary exception must be recorded in [`security/audit-exceptions.json`](./s
 
 Exceptions never apply to critical advisories. CI rejects expired entries.
 
-### 3.5 Current exception
+### 3.5 Resolved exception
 
-`zod@3.25.76` is under a time-boxed high-severity exception because the patched major release requires a validation-layer migration. Owner: Platform Security. Expiry: 2026-12-31. Remediation: migrate to Zod 4 or an approved patched 3.x release and run the full smoke suite.
+The former `zod@3.25.76` high-severity exception was owned by Platform Security and expired 2026-12-31. It has been closed by migrating API validation to `zod@4.6.7`, rerunning typechecks, shared tests, API build and smoke, and removing the entry from [`security/audit-exceptions.json`](./security/audit-exceptions.json). The exception remains recorded only as baseline history in [`security/dependabot-triage.json`](./security/dependabot-triage.json).
 
-### 3.6 Current Dependabot triage
+### 3.6 Dependency remediation and triage
 
-The open hosted alerts were triaged on 2026-11-25 and are registered in [`security/dependabot-triage.json`](./security/dependabot-triage.json): 39 alerts (1 critical, 28 high, 10 medium). The local full audit reports 22 vulnerable package records because npm groups multiple advisories per package. The blocking scoped production audit reports only `zod@3.25.76`, which is covered by the exception above. The critical `tar` advisory and the remaining high/medium findings are in the non-production `apps/web` / `apps/mobile` dependency shells; they are reported, not exempted, and must be resolved before those surfaces are promoted. Planned remediations are `zod@4.6.7`, `next@16.4.6` and `expo@58.0.26`, each with a full gate rerun in the same change. Green Phase 1 CI does not clear hosted alerts and does not change the NO-GO verdict.
+The hosted alerts were triaged on 2026-11-25 and remediated locally in the same register: 39 baseline alerts (1 critical, 28 high, 10 medium), 22 baseline npm package records and one baseline scoped `zod` record. The current local full audit and blocking scoped production audit both report **0 vulnerabilities**. Remediation upgraded `zod` to 4.6.7, `next` to 16.4.6, `expo` to 58.0.26 and `react-native` to 0.88.1 (aligned with Expo 58), and added a scoped `@expo/fingerprint` `minimatch@11.0.9` override. The former critical `tar` finding disappeared with the older Expo tree. Hosted Dependabot rescan evidence is recorded as pending in the register until GitHub re-evaluates the pushed lockfile. Green Phase 1 CI does not itself close hosted alerts and does not change the NO-GO verdict.
 
 ### 3.7 Licence policy
 
