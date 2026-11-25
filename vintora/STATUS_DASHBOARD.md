@@ -17,12 +17,12 @@
 
 | ID | Gate | Command | Result evidence |
 |---|---|---|---|
-| verify | API typecheck and shared tests | `npm run verify` | [45646288632](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288632) |
-| migrations | Migration contract | `npm run db:migrations:test` | [45646288177](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288177) |
-| domain | Offline domain selftests | `npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest` | [45646288632](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288632) |
-| api | API smoke suite (requires live API) | `npm run test:smoke` | [45646288632](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288632) |
-| aggregate | Aggregate Phase 1 verification | `npm run ci:verify` | [45646293287](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646293287) |
-| build | Build and SBOM parity | `npm run ci:build` | [45646288110](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288110) |
+| verify | API typecheck and shared tests | `npm run verify` | [45657006563](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006563) |
+| migrations | Migration contract | `npm run db:migrations:test` | [45657006702](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006702) |
+| domain | Offline domain selftests | `npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest` | [45657006563](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006563) |
+| api | API smoke suite (requires live API) | `npm run test:smoke` | [45657006563](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006563) |
+| aggregate | Aggregate Phase 1 verification | `npm run ci:verify` | [45657006666](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006666) |
+| build | Build and SBOM parity | `npm run ci:build` | [45657006617](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006617) |
 
 ## 3. Health checks
 
@@ -34,7 +34,7 @@
 
 ## 4. Measurement boundary
 
-Hosted Phase 1 CI run URLs are attached for commit `a0bac80` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
+Hosted Phase 1 CI run URLs are attached for commit `7185294` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
 
 ## 5. Review
 

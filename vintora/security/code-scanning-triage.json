@@ -132,7 +132,7 @@
         "decision": "remediated",
         "owner": "Platform Engineering",
         "rationale": "app.ts now uses the CodeQL-recognised express-rate-limit package before all routes, including the SPA fallback. The prototype cap, IETF headers and 429 rate_limited contract are preserved; distributed rate limiting remains an explicit production gap.",
-        "followUp": "Confirm closure on the next hosted CodeQL analysis, then implement and evidence a distributed limiter before any pilot or production promotion."
+        "followUp": "Closure confirmed on the 7185294 rescan; implement and evidence a distributed limiter before any pilot or production promotion."
       },
       {
         "rule": "js/clear-text-logging",
@@ -140,7 +140,7 @@
         "decision": "remediated",
         "owner": "Platform Security",
         "rationale": "Startup logs, local CLI failure paths and setup-doctor diagnostics now emit fixed mode/status labels only; no environment-derived value, remote health payload value or raw database error is interpolated into console output.",
-        "followUp": "Confirm closure on the next hosted CodeQL analysis, then adopt structured log redaction and external audit sinks before pilot."
+        "followUp": "Closure confirmed on the 7185294 rescan; adopt structured log redaction and external audit sinks before pilot."
       },
       {
         "rule": "js/path-injection",
@@ -148,7 +148,7 @@
         "decision": "remediated",
         "owner": "Platform Engineering",
         "rationale": "The static prototype server normalises the URL path, confines it to apps/prototype with a CodeQL-recognised path.relative containment guard and verifies realpath containment before streaming files.",
-        "followUp": "Confirm closure on the next hosted CodeQL analysis, then replace the dependency-free static server with a production-reviewed asset pipeline before pilot."
+        "followUp": "Closure confirmed on the 7185294 rescan; replace the dependency-free static server with a production-reviewed asset pipeline before pilot."
       },
       {
         "rule": "js/xss-through-dom",
@@ -156,7 +156,7 @@
         "decision": "remediated",
         "owner": "Prototype UI owner",
         "rationale": "Both render() sinks are fed by deterministic view builders; cart identifiers, quantities, provenance, confirmation item counts and currency are now escaped with esc() and the prototype has no live user-generated production surface.",
-        "followUp": "Confirm closure on the next hosted CodeQL analysis, then introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
+        "followUp": "Closure confirmed on the 7185294 rescan; introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
       },
       {
         "rule": "js/incomplete-sanitization",
@@ -164,7 +164,7 @@
         "decision": "remediated",
         "owner": "Platform Engineering",
         "rationale": "cmd.exe argument quoting now escapes backslashes before quotes, addressing the CodeQL finding in scripts/with-env.mjs.",
-        "followUp": "Confirm closure on the next hosted CodeQL analysis."
+        "followUp": "Closure confirmed by the final hosted rescan on 7185294, which reports zero open CodeQL alerts."
       }
     ],
     "priorRescan": {
@@ -186,25 +186,75 @@
     },
     "lastVerifiedRescan": {
       "verifiedOn": "2026-11-25",
-      "commit": "a0bac80",
+      "commit": "7185294",
       "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
-      "hostedOpenAlerts": 33,
+      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006542",
+      "hostedOpenAlerts": 20,
       "byTool": {
-        "CodeQL": 13,
+        "CodeQL": 0,
         "Trivy": 20
       },
       "bySeverity": {
         "critical": 0,
-        "high": 20,
+        "high": 7,
         "medium": 12,
         "low": 1
       },
-      "note": "Historical rescan after the express-rate-limit work. All 22 js/missing-rate-limiting alerts were closed."
+      "byCategory": {
+        "trivy-image": 20
+      },
+      "codeqlRules": {
+        "js/missing-rate-limiting": 0,
+        "js/clear-text-logging": 0,
+        "js/path-injection": 0,
+        "js/xss-through-dom": 0,
+        "js/incomplete-sanitization": 0
+      },
+      "note": "Final rescan after the clear-text-logging, prototype path containment and render escaping changes. All CodeQL alerts are closed; the 20 Trivy image findings remain as prototype gate-parity findings, not launch approval."
     },
+    "rescanMilestones": [
+      {
+        "verifiedOn": "2026-11-25",
+        "commit": "a0bac80",
+        "hostedOpenAlerts": 33,
+        "byTool": { "CodeQL": 13, "Trivy": 20 },
+        "note": "All 22 js/missing-rate-limiting alerts were closed."
+      },
+      {
+        "verifiedOn": "2026-11-25",
+        "commit": "58c758b",
+        "hostedOpenAlerts": 27,
+        "byTool": { "CodeQL": 7, "Trivy": 20 },
+        "note": "All six js/clear-text-logging alerts were closed."
+      },
+      {
+        "verifiedOn": "2026-11-25",
+        "commit": "648cef6",
+        "hostedOpenAlerts": 22,
+        "byTool": { "CodeQL": 2, "Trivy": 20 },
+        "note": "All five js/path-injection alerts were closed; two js/xss-through-dom alerts remained and were addressed by escaping confirmation item counts."
+      }
+    ],
     "hostedVerification": {
-      "status": "pending-rescan",
-      "evidenceRef": null,
-      "note": "Hosted code scanning must be rechecked after the clear-text-logging change is pushed; no closure for those findings is claimed here."
+      "status": "verified",
+      "commit": "7185294",
+      "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
+      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006542",
+      "hostedOpenAlerts": 20,
+      "byTool": {
+        "CodeQL": 0,
+        "Trivy": 20
+      },
+      "bySeverity": {
+        "critical": 0,
+        "high": 7,
+        "medium": 12,
+        "low": 1
+      },
+      "byCategory": {
+        "trivy-image": 20
+      },
+      "note": "The hosted CodeQL analysis after 7185294 reports zero open CodeQL alerts, closing the six clear-text-logging, five path-injection and two XSS-through-dom findings. Trivy's 20 image findings remain open with zero critical; this is Phase 1 gate-parity evidence only."
     }
   },
   "blockingRules": [
