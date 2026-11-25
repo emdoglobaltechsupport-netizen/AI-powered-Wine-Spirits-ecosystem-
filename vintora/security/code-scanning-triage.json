@@ -64,6 +64,13 @@
       "fixedHighCritical": 7,
       "note": "Informational local scan only. Hosted Trivy SARIF from the pinned CI action is the authoritative gate evidence; a local Docker build is still unavailable."
     },
+    "localRateLimitVerification": {
+      "verifiedOn": "2026-11-25",
+      "configuredLimit": 3,
+      "configuredWindowMs": 60000,
+      "result": "Requests 1-3 returned 200 with RateLimit-Limit, RateLimit-Remaining and RateLimit-Reset; requests 4-5 returned 429 rate_limited with Retry-After. The default 1000/900000 configuration is unchanged.",
+      "evidenceRef": null
+    },
     "codeChanges": [
       {
         "file": "Dockerfile",
@@ -80,16 +87,24 @@
       {
         "file": "scripts/serve-prototype.mjs",
         "change": "Static prototype serving now verifies realpath containment in addition to lexical containment."
+      },
+      {
+        "file": "services/api/src/app.ts",
+        "change": "Replaced the custom fixed-window middleware with the CodeQL-recognised express-rate-limit package, installed before all prototype routes including the SPA fallback."
+      },
+      {
+        "file": "services/api/package.json",
+        "change": "Added the MIT-licensed express-rate-limit package as the recognised prototype baseline limiter."
       }
     ],
     "dispositions": [
       {
         "rule": "js/missing-rate-limiting",
         "count": 22,
-        "decision": "accepted-prototype-control",
+        "decision": "remediated",
         "owner": "Platform Engineering",
-        "rationale": "app.ts applies a baseline in-memory rate limiter to all /v1 traffic before routers mount; CodeQL does not infer custom Express middleware. Distributed rate limiting remains an explicit production gap.",
-        "followUp": "Implement and evidence a distributed limiter before any pilot or production promotion."
+        "rationale": "app.ts now uses the CodeQL-recognised express-rate-limit package before all routes, including the SPA fallback. The prototype cap, IETF headers and 429 rate_limited contract are preserved; distributed rate limiting remains an explicit production gap.",
+        "followUp": "Confirm closure on the next hosted CodeQL analysis, then implement and evidence a distributed limiter before any pilot or production promotion."
       },
       {
         "rule": "js/clear-text-logging",
@@ -124,9 +139,9 @@
         "followUp": "Confirm closure on the next hosted CodeQL analysis."
       }
     ],
-    "hostedVerification": {
-      "status": "verified",
+    "priorRescan": {
       "verifiedOn": "2026-11-25",
+      "commit": "4dda348",
       "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
       "hostedOpenAlerts": 55,
       "byTool": {
@@ -139,11 +154,12 @@
         "medium": 12,
         "low": 1
       },
-      "byCategory": {
-        "/language:javascript-typescript": 35,
-        "trivy-image": 20
-      },
-      "note": "Hosted code scanning was rescanned after commit 4dda348. The five critical image advisories and the single IaC finding are closed; 55 triaged open alerts remain with documented owners and follow-up work. This is not launch or production security evidence."
+      "note": "Historical rescan after the base-image and prototype hardening work. The five critical image advisories and the single IaC finding were closed."
+    },
+    "hostedVerification": {
+      "status": "pending-rescan",
+      "evidenceRef": null,
+      "note": "Hosted code scanning must be rechecked after the express-rate-limit change is pushed; no closure for the 22 rate-limiting alerts is claimed here."
     }
   },
   "blockingRules": [

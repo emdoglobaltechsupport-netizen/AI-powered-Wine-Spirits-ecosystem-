@@ -239,7 +239,7 @@ The SBOM is generated from `package-lock.json` with `npm run sbom:generate` and 
 
 ## 5. API surface
 
-All `/v1` responses include `X-Vintora-Api-Version: v1`, including validation errors and unmatched routes. Clients may pin the version with `Accept-Version: v1` (or `1`); unsupported values return `400 invalid_request`. `/v1` traffic is subject to an in-memory fixed-window rate limit (default 1,000 requests per 15 minutes per client IP, configurable with `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS`) with `RateLimit-*` headers and `429 rate_limited` / `Retry-After`. Mutating requests emit structured stdout audit records; checkout accepts an idempotency UUID in `idempotencyKey` or the `Idempotency-Key` header. See [`API_POLICY.md`](./API_POLICY.md) for compatibility and production requirements.
+All `/v1` responses include `X-Vintora-Api-Version: v1`, including validation errors and unmatched routes. Clients may pin the version with `Accept-Version: v1` (or `1`); unsupported values return `400 invalid_request`. all prototype HTTP requests are subject to a CodeQL-recognised `express-rate-limit` fixed-window limiter (default 1,000 requests per 15 minutes per client IP, configurable with `RATE_LIMIT_MAX` / `RATE_LIMIT_WINDOW_MS`) with `RateLimit-*` headers and `429 rate_limited` / `Retry-After`. Mutating requests emit structured stdout audit records; checkout accepts an idempotency UUID in `idempotencyKey` or the `Idempotency-Key` header. See [`API_POLICY.md`](./API_POLICY.md) for compatibility and production requirements.
 
 ### System and reference
 

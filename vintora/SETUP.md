@@ -230,8 +230,8 @@ Use `EXPECTED_EMBEDDING_MODE=pgvector` only against a disposable pgvector-enable
 | `SESSION_SECRET` | Required, generated | empty in template; generated locally | Session configuration secret; 32+ characters enforced at boot. |
 | `SESSION_TTL_HOURS` | Defaulted | `12` | Session lifetime in hours. |
 | `COOKIE_SECURE` | Defaulted | `false` | Set only behind HTTPS; `production` requires `true` but remains rejected. |
-| `RATE_LIMIT_WINDOW_MS` | Defaulted | `900000` | In-memory prototype rate-limit window. Production needs a distributed limiter. |
-| `RATE_LIMIT_MAX` | Defaulted | `1000` | In-memory prototype request ceiling per window. |
+| `RATE_LIMIT_WINDOW_MS` | Defaulted | `900000` | In-memory `express-rate-limit` prototype window. Production needs a distributed limiter. |
+| `RATE_LIMIT_MAX` | Defaulted | `1000` | Prototype request ceiling per window. |
 | `ALLOW_DEMO_SEED` | Defaulted | `false` in template; local setup sets `true` | Local/test-only demo-identity opt-in; blocked outside development profiles. |
 | `SEED_ADMIN_EMAIL` | Defaulted | `admin@vintora.local` | Local-only, non-production admin identity email. |
 | `SEED_ADMIN_PASSWORD` | Required, generated | empty in template; generated locally | Local-only admin password; generated first-run and never published. |

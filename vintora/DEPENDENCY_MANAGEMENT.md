@@ -12,11 +12,11 @@ This document is the authoritative answer to how npm packages, container images,
 | Automated dependency updates | [`dependabot.yml`](./.github/dependabot.yml) opens weekly grouped PRs for npm, GitHub Actions and Docker base images | Configured |
 | Vulnerability reporting | Private disclosure route in [`SECURITY.md`](./SECURITY.md) §2 | Documented |
 | Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 baseline hosted alerts triaged, remediated and rescanned to 0 open alerts in [`security/dependabot-triage.json`](./security/dependabot-triage.json) |
-| SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 701 components |
+| SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 705 components |
 | Secret scanning | Deterministic offline `npm run secrets:scan`; advisory gitleaks in CI | Passing locally; gitleaks requires `GITLEAKS_LICENSE` to become blocking |
-| Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 617 third-party packages checked |
+| Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 619 third-party packages checked |
 | Container and IaC scanning | Trivy config/image scans in [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml); release scan blocks High/Critical | Workflow configured; baseline 143 hosted alerts triaged in [`security/code-scanning-triage.json`](./security/code-scanning-triage.json), rescan recorded at 55 open / 0 critical |
-| Code-scanning triage | [`security/code-scanning-triage.json`](./security/code-scanning-triage.json) with `npm run code-scanning-triage:check` | Baseline 5 critical image advisories removed by the digest-pinned Node 24 Trixie upgrade; no critical exception; NO-GO |
+| Code-scanning triage | [`security/code-scanning-triage.json`](./security/code-scanning-triage.json) with `npm run code-scanning-triage:check` | Baseline 5 critical image advisories removed by the digest-pinned Node 24 Trixie upgrade; 22 rate-limit findings addressed with CodeQL-recognised `express-rate-limit`; no critical exception; NO-GO |
 | Immutable artifact pinning | Digest-pinned base images, SHA-pinned actions and `npm run artifacts:check` | Passing locally |
 | Artifact signing and verification | Cosign keyless signing in [`release.yml`](./.github/workflows/release.yml), with image and blob verification | Workflow configured; no local release has been signed |
 | Evidence retention | Audit reports, SARIF, SBOM, checksums, signatures and certificates retained for 365 days | Release workflow configured |
@@ -60,7 +60,7 @@ Timelines run from triage confirmation. A fix may be a patch, a safe configurati
 
 Exceptions are recorded in [`security/audit-exceptions.json`](./security/audit-exceptions.json) for npm advisories and in the release approval record for scan findings. Every exception needs a package/finding, named owner, reason, remediation plan, tracking link and expiry no more than 90 days out. Expired entries fail CI. Critical advisories are never excepted.
 
-The former `zod@3.25.76` exception was closed by upgrading to `zod@4.6.7` and removing the entry from [`security/audit-exceptions.json`](./security/audit-exceptions.json). See [`SECURITY.md`](./SECURITY.md) §3.5. The baseline hosted triage and local remediation record are in [`security/dependabot-triage.json`](./security/dependabot-triage.json); upgrades were `zod@4.6.7`, `next@16.4.6`, `expo@58.0.26` and `react-native@0.88.1`, with a scoped `@expo/fingerprint` `minimatch@11.0.9` override. The former critical `tar` finding was confined to the non-production mobile shell and was never excepted.
+The former `zod@3.25.76` exception was closed by upgrading to `zod@4.6.7` and removing the entry from [`security/audit-exceptions.json`](./security/audit-exceptions.json). See [`SECURITY.md`](./SECURITY.md) §3.5. The baseline hosted triage and local remediation record are in [`security/dependabot-triage.json`](./security/dependabot-triage.json); upgrades were `zod@4.6.7`, `next@16.4.6`, `expo@58.0.26` and `react-native@0.88.1`, with a scoped `@expo/fingerprint` `minimatch@11.0.9` override. The former critical `tar` finding was confined to the non-production mobile shell and was never excepted. `express-rate-limit@8.7.5` was added as the CodeQL-recognised prototype rate limiter; it is MIT licensed and included in the SBOM and licence gates.
 
 ## 5. Automated scanning
 

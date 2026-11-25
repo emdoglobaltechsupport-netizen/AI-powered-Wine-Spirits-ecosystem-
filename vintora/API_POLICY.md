@@ -79,7 +79,7 @@ Authentication failures return `401 unauthorized`; authorisation failures return
 
 ### 3.1 Implemented baseline
 
-- An in-memory fixed-window limiter is applied to `/v1` requests.
+- A CodeQL-recognised `express-rate-limit` in-memory fixed-window limiter is installed before every prototype route, including the static SPA fallback.
 - Default: 1,000 requests per 15 minutes per client IP; configurable with `RATE_LIMIT_MAX` and `RATE_LIMIT_WINDOW_MS`.
 - Responses include `RateLimit-Limit`, `RateLimit-Remaining` and `RateLimit-Reset` (seconds until reset).
 - Exceeded limits return `429 rate_limited` with `Retry-After`.

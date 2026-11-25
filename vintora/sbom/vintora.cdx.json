@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:a8eb22b9-b27a-5156-aed3-dc85c89d3972",
+  "serialNumber": "urn:uuid:0aa72eb7-f942-59eb-8b21-6eaca404d09d",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-11-25T13:44:02.104Z",
+    "timestamp": "2026-11-25T15:20:59.336Z",
     "tools": [
       {
         "vendor": "Vintora",
@@ -8179,6 +8179,66 @@
     },
     {
       "type": "library",
+      "bom-ref": "pkg:npm/express-rate-limit@8.7.5#node_modules/express-rate-limit",
+      "name": "express-rate-limit",
+      "version": "8.7.5",
+      "purl": "pkg:npm/express-rate-limit@8.7.5",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "c22fafdfc731d84a83d099e113f7bbe28e6d16a29650e00f149220c848aa27cbf630da68380037908da15d8388f9833e1c4e72a9b740955c66d86a8e21e60e80"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/debug@4.4.3#node_modules/express-rate-limit/node_modules/debug",
+      "name": "debug",
+      "version": "4.4.3",
+      "purl": "pkg:npm/debug@4.4.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "446c305a7c10be455f6af295b76d8518bc3ec5849dcc04709b4aeee83853540dee994e6165cdbc57790ee2cb6062bcab4e52e9baf808f468a28e5b408cd6dca8"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ms@2.1.3#node_modules/express-rate-limit/node_modules/ms",
+      "name": "ms",
+      "version": "2.1.3",
+      "purl": "pkg:npm/ms@2.1.3",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "bom-ref": "pkg:npm/fb-dotslash@0.5.8#node_modules/fb-dotslash",
       "name": "fb-dotslash",
       "version": "0.5.8",
@@ -8835,6 +8895,26 @@
         {
           "alg": "SHA-512",
           "content": "a6125f41506e689339ada3a926349f9220fa0696c213836cfff2da5e5eb0198b54058f379d64ba45ff6d5e6d9ef1568aeb42448d895d6cf89ffc0d81d42da034"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ip-address@10.7.6#node_modules/ip-address",
+      "name": "ip-address",
+      "version": "10.7.6",
+      "purl": "pkg:npm/ip-address@10.7.6",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "hashes": [
+        {
+          "alg": "SHA-512",
+          "content": "d342d890ce9bc882daf5e408c7aaa869708ce34c532dde7a019e2fc9a3d6dd84f26f8f556583e8e71b2202ae2db90e78187e11ee055d612709d41ec1efb3ee4e"
         }
       ]
     },

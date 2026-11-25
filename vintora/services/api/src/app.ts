@@ -5,9 +5,10 @@ import { config } from './config.js';
 import { attachAuth } from './middleware/auth.js';
 import { requestId } from './middleware/request.js';
 import { apiVersion } from './middleware/version.js';
-import { rateLimit } from './middleware/rateLimit.js';
+import { rateLimit as expressRateLimit } from 'express-rate-limit';
 import { auditRequests } from './middleware/audit.js';
 import { errorHandler, notFoundHandler } from './middleware/error.js';
+import { tooMany } from './lib/errors.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { ageRouter } from './modules/age/age.routes.js';
 import { catalogRouter } from './modules/catalog/catalog.routes.js';
@@ -34,9 +35,23 @@ app.use(express.json({ limit: '64kb' }));
 app.use(requestId);
 app.use(attachAuth);
 
-// All /v1 traffic carries the version header, baseline rate limit and
-// structured audit for mutating requests. Errors and 404s inherit them.
-app.use('/v1', apiVersion, rateLimit, auditRequests);
+// CodeQL-recognised baseline limiter. It is installed before every route,
+// including the static SPA fallback, so expensive handlers share one cap.
+// Production still requires the distributed limiter documented in API_POLICY.md.
+const limiter = expressRateLimit({
+  windowMs: config.RATE_LIMIT_WINDOW_MS,
+  limit: config.RATE_LIMIT_MAX,
+  standardHeaders: 'draft-6',
+  legacyHeaders: false,
+  handler: (_req, _res, next) => {
+    next(tooMany('Rate limit exceeded'));
+  },
+});
+app.use(limiter);
+
+// All /v1 traffic carries the version header and structured audit for mutating
+// requests. Errors and 404s inherit the global rate limiter.
+app.use('/v1', apiVersion, auditRequests);
 
 // Health, canon, FX and reference data — no authentication required.
 app.use(systemRouter);
