@@ -6,11 +6,11 @@
 
 | Stage | Required evidence | Hosted evidence |
 |---|---|---|
-| `local-verify` | `npm run ci:verify`, `npm run verify` | [45342913176](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176) |
-| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | [45342913172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913172) |
-| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | [45342913226](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913226) |
-| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | [45342913267](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913267) |
-| `hosted-ci` | Six workflow definitions in `.github/workflows/` | [45342913176](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176) |
+| `local-verify` | `npm run ci:verify`, `npm run verify` | [45619977254](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977254) |
+| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | [45619977214](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977214) |
+| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | [45619977135](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977135) |
+| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | [45619977418](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977418) |
+| `hosted-ci` | Six workflow definitions in `.github/workflows/` | [45619977254](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977254) |
 | `launch-approval` | `npm run launch:check`, `npm run jurisdiction:check`, `npm run gates:check` | `null` |
 
 ## 2. Blocking rules
@@ -27,4 +27,4 @@ Workflows exist for typecheck/tests, governance, migrations, security, supply ch
 
 ## 4. Evidence gaps
 
-Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only. `promotionAllowed` remains false and verdict remains NO-GO.
+Hosted Phase 1 CI run URLs are attached for commit `fbf9b29` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. GitHub branch protection is enabled on `main` with 15 required Phase 1 check contexts, and code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads; GitHub default setup is disabled to avoid conflicting analyses. `enforce_admins` is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only. `promotionAllowed` remains false and verdict remains NO-GO.

@@ -20,12 +20,12 @@
     "externalStatusPage": null
   },
   "checks": [
-    { "id": "verify", "label": "API typecheck and shared tests", "command": "npm run verify", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176" },
-    { "id": "migrations", "label": "Migration contract", "command": "npm run db:migrations:test", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913172" },
-    { "id": "domain", "label": "Offline domain selftests", "command": "npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176" },
-    { "id": "api", "label": "API smoke suite (requires live API)", "command": "npm run test:smoke", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176" },
-    { "id": "aggregate", "label": "Aggregate Phase 1 verification", "command": "npm run ci:verify", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913226" },
-    { "id": "build", "label": "Build and SBOM parity", "command": "npm run ci:build", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913234" }
+    { "id": "verify", "label": "API typecheck and shared tests", "command": "npm run verify", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977254" },
+    { "id": "migrations", "label": "Migration contract", "command": "npm run db:migrations:test", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977214" },
+    { "id": "domain", "label": "Offline domain selftests", "command": "npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977254" },
+    { "id": "api", "label": "API smoke suite (requires live API)", "command": "npm run test:smoke", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977254" },
+    { "id": "aggregate", "label": "Aggregate Phase 1 verification", "command": "npm run ci:verify", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977135" },
+    { "id": "build", "label": "Build and SBOM parity", "command": "npm run ci:build", "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45619977314" }
   ],
   "measurement": {
     "sloPipelineImplemented": false,
@@ -35,7 +35,7 @@
   },
   "evidenceGaps": [
     "This is a static repository dashboard, not a running status page or metrics endpoint.",
-    "Hosted Phase 1 CI run URLs are attached for commit 701b419; deployment history, uptime measurement, SLO error-budget burn and p95/p99 by route are not attached.",
+    "Hosted Phase 1 CI run URLs are attached for commit fbf9b29; deployment history, uptime measurement, SLO error-budget burn and p95/p99 by route are not attached.",
     "A green check proves Phase 1 gate parity only and does not change the NO-GO verdict.",
     "GitHub branch protection is enabled on main with 15 required Phase 1 check contexts; code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads, and GitHub default setup is disabled to avoid conflicting analyses. enforce_admins is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only."
   ]
