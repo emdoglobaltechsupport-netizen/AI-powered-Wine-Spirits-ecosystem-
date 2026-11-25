@@ -110,7 +110,7 @@ All listed clinical and commercial portals remain Design. The only runnable clie
 | Approved model provider, DPA and data residency | AI gateway fails closed outside offline prototype | Owner decision, tested provider integration and contract before any pilot |
 | AI safety evaluation and clinical governance | Prototype policy gates are tested, not clinically evaluated | Safety evaluation and signed governance before any clinical use |
 | Voice and multilingual AI runtime | Design-only; no tested speech or translation provider | Separate decision and tested provider before implementation |
-| Hosted environments | Not provisioned | Infrastructure decision record |
+| Hosted environments | Provider-neutral staging manifests are prepared but no environment is provisioned or deployed (`STAGING.md`) | Infrastructure decision record, hosted secrets, TLS ingress, MFA, rate limiting and monitoring |
 | Backup automation and restore evidence | Not implemented | `BACKUP_AND_DR.md` §5 |
 
 ## 6. Rules still binding

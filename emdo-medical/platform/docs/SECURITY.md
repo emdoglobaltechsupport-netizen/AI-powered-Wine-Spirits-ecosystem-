@@ -28,7 +28,7 @@
 | M10 de-identified boundary | Only fixed parameterised aggregate SQL; no PHI table, decryption, credential hash, consent grant or raw identifier can be selected; no caller-supplied query builder | `insight-queries.ts`, `insight-queries.spec.ts` |
 | M10 evidence integrity | Absent sources return `UNAVAILABLE_NO_SOURCE` with null values; small cells below 10 are suppressed; no estimated or vendor metric is rendered | `metric-registry.ts`, `insight.service.ts`, e2e evidence and suppression assertions |
 | M10 audit | Report generation writes `insight_report_generated` with allowlisted report IDs, cadence, period and country only; no report content or prompts are stored | `audit-sanitizer.spec.ts`, `insight.e2e-spec.ts` |
-| Portal session boundary | HMAC-signed HTTP-only session cookie, constant-time verification, short expiry, `Secure` in production, refresh token discarded, missing secret fails closed | `apps/admin/src/lib/session.ts`, `session.spec.ts`, login route spec |
+| Portal session boundary | HMAC-signed HTTP-only session cookie, constant-time verification, short expiry, `Secure` in production and staging, refresh token discarded, missing secret fails closed | `apps/admin/src/lib/session.ts`, `session.spec.ts`, login route spec |
 | Portal API boundary | Browser code never receives the Insight token; server components and route handlers re-send it to the API, which remains the only authoriser | `apps/admin/src/lib/api.ts`, `api.spec.ts`, generate route spec |
 | Portal PHI-safe rendering | Allowlisted response copier; no patient-record page; unavailable and suppressed cells must have null values and are labelled explicitly | `sanitize.spec.ts`, `metric-card.spec.tsx` |
 | Secrets | No secrets committed; `.env` and `.env.local` gitignored; placeholders rejected at startup; separate access/refresh signing keys and a separate portal cookie secret | `.env.example`, `env.validation.ts`, `SUPER_ADMIN_PORTAL.md` |
@@ -58,7 +58,7 @@
 | Unapproved model egress | Single offline gateway with fail-closed configuration validation | No tested provider, DPA, residency decision or output filtering evaluation |
 | AI self-approval or autonomous action | Different named human required; fresh auth; coded decisions; approval returns `executed: false` | No delegated approval policy engine or SIEM correlation |
 | Executive dashboard PHI exposure | M10 uses fixed aggregate queries, 12-role matrix and no row-level endpoints; Super Admin cannot read patient records; the portal renders only sanitized aggregate responses | No signed de-identification review or privacy engineering sign-off yet |
-| Portal session theft | Signed HTTP-only cookie, `SameSite=Lax`, `Secure` in production, short expiry and no browser-held token | No MFA, rate limiting, session revocation list or hosted cookie-domain review |
+| Portal session theft | Signed HTTP-only cookie, `SameSite=Lax`, `Secure` in production and staging, short expiry and no browser-held token | No MFA, rate limiting, session revocation list or hosted cookie-domain review |
 | Client-side response injection | Portal sanitizers copy only allowlisted fields and refuse numeric values on unavailable/suppressed cells | No hosted CSP review, DLP tooling or penetration test |
 | Invented executive metrics | Evidence status is part of every metric; missing sources return `UNAVAILABLE_NO_SOURCE` and null values | Source modules M4–M8, finance and incident ledgers do not exist |
 | Small-cell re-identification | Minimum group size 10; suppressed values are null; no totals are returned for grouped metrics | Complementary suppression and longitudinal linkage need formal privacy review |
@@ -80,6 +80,7 @@
 11. AI safety evaluation and signed clinical governance covering labels, source attribution, human approval and prohibited actions.
 12. Signed M10 de-identification methodology, privacy sign-off and trusted source modules; no executive metric with an absent source may be promoted to a measured claim.
 13. Portal deployment review covering MFA, rate limiting, session revocation, cookie domain, hosted TLS/CSP and no persistent report storage; the local prototype must not be exposed publicly.
+14. Hosted staging decision with provider, region, secret store and ingress controls. The prepared manifests in `STAGING.md` build artefacts only; they are not security evidence and must not be exposed publicly.
 
 ## 5. Explicitly not claimed
 

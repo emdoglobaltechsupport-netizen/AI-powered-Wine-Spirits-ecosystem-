@@ -40,6 +40,7 @@ The `SANDBOX` profile permits manual verification for non-clinical testing only.
 | [`docs/API_DOCUMENTATION.md`](docs/API_DOCUMENTATION.md) | Endpoints, auth, error codes, known limitations |
 | [`docs/SECURITY.md`](docs/SECURITY.md) | Controls, key management, threat model, gaps |
 | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Environments, local/Docker setup, operations |
+| [`docs/STAGING.md`](docs/STAGING.md) | Prepared staging manifests, secret placeholders and deployment gaps |
 | [`docs/BACKUP_AND_DR.md`](docs/BACKUP_AND_DR.md) | Backup/restore procedure and gaps |
 | [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) | What is implemented, tested, and still blocked |
 | [`docs/EXECUTIVE_DASHBOARD_DESIGN.md`](docs/EXECUTIVE_DASHBOARD_DESIGN.md) | M10 Insight / Super Admin architecture and decision history |

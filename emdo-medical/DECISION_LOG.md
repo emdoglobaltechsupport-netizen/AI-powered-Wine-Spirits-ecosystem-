@@ -252,6 +252,7 @@ These are technical choices inside the owner-approved scope (Foundation + EMDO R
 - **Safety constraints:** The portal must render only aggregate API responses; it must not query or display PHI, record content, raw identifiers, prompts or generated clinical text. Role-filtered navigation is a usability aid and does not replace API enforcement. Unavailable metrics must be visibly labelled with evidence status and must never be rendered as zero, estimates or trends. No credential, patient, revenue, incident or partnership claim may be seeded into the UI as production data.
 - **Alternatives considered:** M3 Telehealth, M4 Practice and hardening gates (not selected by owner); design-only portal (rejected: owner chose implementation); building new business sources now (rejected: separate modules and one workstream at a time); client-side-only role checks (rejected: API must remain authoritative).
 - **Evidence:** `platform/apps/admin/src/`; `platform/docs/SUPER_ADMIN_PORTAL.md`; `platform/docs/IMPLEMENTATION_STATUS.md`. Local gates passed: typecheck, build (including Next.js production build), 21 unit suites / 78 tests, 4 API e2e suites / 13 tests. Portal remains Prototype; no hosted deployment or privacy sign-off exists.
+- **Later owner instruction:** Prepare provider-neutral staging configuration only (`platform/docs/STAGING.md`); no live deployment, registry publish or maturity promotion was authorised.
 - **Owner:** Project Owner / Senior Full-Stack Engineering Team
 
 ---

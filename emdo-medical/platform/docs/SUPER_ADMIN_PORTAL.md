@@ -70,7 +70,7 @@ The browser never holds the Insight access token. The discarded API refresh toke
 | Control | Implementation |
 |---|---|
 | Session integrity | HMAC-SHA256 signed cookie with expiry and constant-time signature comparison; tampered cookies are rejected |
-| Session transport | `HttpOnly`, `SameSite=Lax`, `Secure` in production, path-scoped; no token in JSON bodies or client components |
+| Session transport | `HttpOnly`, `SameSite=Lax`, `Secure` in production and staging, path-scoped; no token in JSON bodies or client components |
 | Least privilege | Canonical shared report-group matrix; navigation is filtered locally but every API call is re-authorised server-side |
 | PHI boundary | No patient-record page or query; only fixed aggregate API responses are rendered |
 | Response sanitation | Allowlisted field copier rejects unknown keys and refuses unavailable/suppressed cells that contain numbers |

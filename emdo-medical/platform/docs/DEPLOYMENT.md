@@ -27,7 +27,7 @@ platform/
 |---|---|---|---|
 | `development` | Local feature work | `sandbox` | Synthetic/local data only |
 | `test` | Automated unit + integration tests | `sandbox` | Throwaway `emdo_test` database; truncated before e2e |
-| `staging` | Planned, not provisioned | `sandbox` or `ready_for_review` | Synthetic data only |
+| `staging` | Config prepared, not provisioned or deployed | `sandbox` | Synthetic data only; see [`STAGING.md`](STAGING.md) |
 | `production` | Planned, blocked pending launch gate | `approved` | Real data only after legal/clinical/security sign-off |
 
 `validateEnvironment` rejects production startup unless `COUNTRY_PROFILE_MODE=approved`. No approved country profile ships with this repository. It also rejects every `AI_MODEL_BACKEND` other than `offline` and rejects production entirely: only the offline deterministic prototype exists, and no model provider, DPA or residency decision has been approved or tested.
@@ -65,6 +65,8 @@ npm run dev:admin   # http://127.0.0.1:3001
 ```
 
 Generate the portal secret with `node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"`. Missing or placeholder values fail closed. Never expose the local portal publicly; see [`SUPER_ADMIN_PORTAL.md`](SUPER_ADMIN_PORTAL.md).
+
+Provider-neutral container manifests are prepared in [`STAGING.md`](STAGING.md). They are configuration artefacts only: no hosted staging environment is provisioned, no image is published and no maturity state is promoted.
 
 To exercise the human approval workflow in a non-clinical environment, create two `compliance_officer` accounts and one `clinician` account through `POST /v1/identity/users`. The reviewer who opens a review cannot approve it.
 

@@ -9,6 +9,7 @@ import {
 } from '../../../../lib/session';
 
 export async function POST(request: Request) {
+  const secureCookie = ['production', 'staging'].includes(String(process.env.NODE_ENV));
   try {
     const body = await readJsonBody(request);
     const identifier = body['identifier'];
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     });
     response.cookies.set(SESSION_COOKIE, cookie, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      secure: secureCookie,
       sameSite: 'lax',
       path: '/',
       maxAge: issued.expiresIn,
