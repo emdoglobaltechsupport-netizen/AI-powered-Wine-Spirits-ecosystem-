@@ -156,7 +156,7 @@ import { render } from '../app.js';
         '<div class="spread"><span>Order</span><strong>VNT-2026-' + Math.floor(100000 + Math.random() * 900000) + '</strong></div>' +
         '<div class="spread"><span>Items</span><strong>' + Object.keys(state.cart).reduce(function (a, id) { return a + state.cart[id]; }, 0) + '</strong></div>' +
         '<div class="spread"><span>Delivery</span><strong>Temperature-controlled · insured</strong></div>' +
-        '<div class="spread"><span>FX</span><strong>Locked at ' + state.currency + '</strong></div>' +
+        '<div class="spread"><span>FX</span><strong>Locked at ' + esc(state.currency) + '</strong></div>' +
       '</div>' +
       '<button class="btn btn-primary" data-view="home">Continue exploring →</button>' +
       '<p class="fine-print" style="margin-top:16px">' + t('demo') + '</p>' +

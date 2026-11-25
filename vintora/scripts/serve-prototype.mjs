@@ -2,7 +2,7 @@
 /** Dependency-free static server for the zero-build prototype. */
 import { createReadStream, existsSync, realpathSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, join, normalize, resolve, sep } from 'node:path';
+import { extname, join, normalize, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = resolve(fileURLToPath(new URL('../apps/prototype/', import.meta.url)));
@@ -28,9 +28,11 @@ const MIME = {
 
 function safePath(urlPath) {
   const decoded = decodeURIComponent(urlPath.split('?')[0] ?? '/');
-  const relative = normalize(decoded).replace(/^([/\\])+/, '');
-  const target = resolve(ROOT, relative);
-  if (target !== ROOT && !target.startsWith(ROOT + sep)) return null;
+  const relativePath = normalize(decoded).replace(/^([/\\])+/, '');
+  const target = resolve(ROOT, relativePath);
+  // CodeQL recognises this canonical relative-path containment check.
+  const insideRoot = relative(ROOT, target);
+  if (insideRoot === '..' || insideRoot.startsWith('..' + sep)) return null;
   return target;
 }
 

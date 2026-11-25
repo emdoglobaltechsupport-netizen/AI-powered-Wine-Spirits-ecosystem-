@@ -299,10 +299,11 @@
     }
     var lines = ids.map(function (id) {
       var p = getProduct(id), qty = state.cart[id];
+      var safeId = esc(id);
       return '<div class="cart-line">' + bottleHTML(p) +
-        '<div class="line-info"><strong>' + esc(p.name) + '</strong><div class="product-sub">' + esc(p.region) + ' · provenance ' + p.provenance + '</div>' +
-        '<div class="row" style="margin-top:6px"><span class="qty"><button data-qty="-1" data-id="' + id + '" aria-label="Decrease">−</button><span>' + qty + '</span><button data-qty="1" data-id="' + id + '" aria-label="Increase">+</button></span>' +
-        '<button class="link-btn" data-remove="' + id + '">Remove</button></div></div>' +
+        '<div class="line-info"><strong>' + esc(p.name) + '</strong><div class="product-sub">' + esc(p.region) + ' · provenance ' + esc(p.provenance) + '</div>' +
+        '<div class="row" style="margin-top:6px"><span class="qty"><button data-qty="-1" data-id="' + safeId + '" aria-label="Decrease">−</button><span>' + esc(qty) + '</span><button data-qty="1" data-id="' + safeId + '" aria-label="Increase">+</button></span>' +
+        '<button class="link-btn" data-remove="' + safeId + '">Remove</button></div></div>' +
         '<strong>' + money(p.price * qty) + '</strong></div>';
     }).join('');
     var subtotal = ids.reduce(function (a, id) { return a + getProduct(id).price * state.cart[id]; }, 0);
@@ -772,7 +773,7 @@
         '<div class="spread"><span>Order</span><strong>VNT-2026-' + Math.floor(100000 + Math.random() * 900000) + '</strong></div>' +
         '<div class="spread"><span>Items</span><strong>' + Object.keys(state.cart).reduce(function (a, id) { return a + state.cart[id]; }, 0) + '</strong></div>' +
         '<div class="spread"><span>Delivery</span><strong>Temperature-controlled · insured</strong></div>' +
-        '<div class="spread"><span>FX</span><strong>Locked at ' + state.currency + '</strong></div>' +
+        '<div class="spread"><span>FX</span><strong>Locked at ' + esc(state.currency) + '</strong></div>' +
       '</div>' +
       '<button class="btn btn-primary" data-view="home">Continue exploring →</button>' +
       '<p class="fine-print" style="margin-top:16px">' + t('demo') + '</p>' +

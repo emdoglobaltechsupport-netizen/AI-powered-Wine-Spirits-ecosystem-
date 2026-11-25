@@ -9,10 +9,11 @@ import { state, esc, t, money, bottleHTML, getProduct } from '../core.js';
     }
     var lines = ids.map(function (id) {
       var p = getProduct(id), qty = state.cart[id];
+      var safeId = esc(id);
       return '<div class="cart-line">' + bottleHTML(p) +
-        '<div class="line-info"><strong>' + esc(p.name) + '</strong><div class="product-sub">' + esc(p.region) + ' · provenance ' + p.provenance + '</div>' +
-        '<div class="row" style="margin-top:6px"><span class="qty"><button data-qty="-1" data-id="' + id + '" aria-label="Decrease">−</button><span>' + qty + '</span><button data-qty="1" data-id="' + id + '" aria-label="Increase">+</button></span>' +
-        '<button class="link-btn" data-remove="' + id + '">Remove</button></div></div>' +
+        '<div class="line-info"><strong>' + esc(p.name) + '</strong><div class="product-sub">' + esc(p.region) + ' · provenance ' + esc(p.provenance) + '</div>' +
+        '<div class="row" style="margin-top:6px"><span class="qty"><button data-qty="-1" data-id="' + safeId + '" aria-label="Decrease">−</button><span>' + esc(qty) + '</span><button data-qty="1" data-id="' + safeId + '" aria-label="Increase">+</button></span>' +
+        '<button class="link-btn" data-remove="' + safeId + '">Remove</button></div></div>' +
         '<strong>' + money(p.price * qty) + '</strong></div>';
     }).join('');
     var subtotal = ids.reduce(function (a, id) { return a + getProduct(id).price * state.cart[id]; }, 0);

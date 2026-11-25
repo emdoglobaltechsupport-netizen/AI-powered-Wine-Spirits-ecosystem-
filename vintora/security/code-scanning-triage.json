@@ -86,7 +86,19 @@
       },
       {
         "file": "scripts/serve-prototype.mjs",
-        "change": "Static prototype serving now verifies realpath containment in addition to lexical containment."
+        "change": "Static prototype serving now verifies realpath containment and uses a CodeQL-recognised path.relative containment guard."
+      },
+      {
+        "file": "apps/prototype/app.js",
+        "change": "Zero-build render output now escapes cart identifiers, quantities, provenance and confirmation currency."
+      },
+      {
+        "file": "apps/prototype/src/views/checkout.js",
+        "change": "Modular cart view now escapes item identifiers, quantities and provenance before HTML assembly."
+      },
+      {
+        "file": "apps/prototype/src/views/assistant.js",
+        "change": "Modular confirmation view now escapes the currency label before HTML assembly."
       },
       {
         "file": "services/api/src/app.ts",
@@ -133,18 +145,18 @@
       {
         "rule": "js/path-injection",
         "count": 4,
-        "decision": "false-positive-mitigated",
+        "decision": "remediated",
         "owner": "Platform Engineering",
-        "rationale": "The static prototype server normalises the URL path, confines it to apps/prototype and now verifies realpath containment before streaming files.",
-        "followUp": "Replace the dependency-free static server with a production-reviewed asset pipeline before pilot."
+        "rationale": "The static prototype server normalises the URL path, confines it to apps/prototype with a CodeQL-recognised path.relative containment guard and verifies realpath containment before streaming files.",
+        "followUp": "Confirm closure on the next hosted CodeQL analysis, then replace the dependency-free static server with a production-reviewed asset pipeline before pilot."
       },
       {
         "rule": "js/xss-through-dom",
         "count": 2,
-        "decision": "accepted-prototype-control",
+        "decision": "remediated",
         "owner": "Prototype UI owner",
-        "rationale": "Both render() sinks are fed by deterministic view builders that escape dynamic values with esc(); the prototype has no live user-generated production surface.",
-        "followUp": "Introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
+        "rationale": "Both render() sinks are fed by deterministic view builders; cart identifiers, quantities, provenance and confirmation currency are now escaped with esc() and the prototype has no live user-generated production surface.",
+        "followUp": "Confirm closure on the next hosted CodeQL analysis, then introduce a reviewed templating or sanitisation library before any user-generated content is accepted."
       },
       {
         "rule": "js/incomplete-sanitization",
