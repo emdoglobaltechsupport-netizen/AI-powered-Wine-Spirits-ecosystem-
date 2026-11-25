@@ -157,9 +157,25 @@
       "note": "Historical rescan after the base-image and prototype hardening work. The five critical image advisories and the single IaC finding were closed."
     },
     "hostedVerification": {
-      "status": "pending-rescan",
-      "evidenceRef": null,
-      "note": "Hosted code scanning must be rechecked after the express-rate-limit change is pushed; no closure for the 22 rate-limiting alerts is claimed here."
+      "status": "verified",
+      "verifiedOn": "2026-11-25",
+      "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
+      "hostedOpenAlerts": 33,
+      "byTool": {
+        "CodeQL": 13,
+        "Trivy": 20
+      },
+      "bySeverity": {
+        "critical": 0,
+        "high": 20,
+        "medium": 12,
+        "low": 1
+      },
+      "byCategory": {
+        "/language:javascript-typescript": 13,
+        "trivy-image": 20
+      },
+      "note": "Hosted code scanning was rescanned after commit a0bac80. All 22 js/missing-rate-limiting alerts are closed; 33 triaged open alerts remain with documented owners and follow-up work. This is not launch or production security evidence."
     }
   },
   "blockingRules": [

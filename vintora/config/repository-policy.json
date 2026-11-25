@@ -45,7 +45,7 @@
       "sarifUploadsBlocking": true
     },
     "verifiedOn": "2026-11-25",
-    "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45640150531"
+    "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45646288666"
   },
   "rejectionRules": [
     "Any change that adds fixed, reused or real credentials to source, fixtures, workflows or documentation.",
