@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "status": "prototype-dependabot-triage",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "triageDate": "2026-11-25",
+  "ownerRole": "Platform Security",
+  "sources": {
+    "hostedAlerts": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/dependabot",
+    "localFullAudit": "npm audit --json (informational; includes non-production shells)",
+    "localScopedAudit": "npm audit --workspace @vintora/api --workspace @vintora/shared --workspace @vintora/prototype --workspace @vintora/db --json (blocking gate)"
+  },
+  "counts": {
+    "hostedOpenAlerts": 39,
+    "hostedCritical": 1,
+    "hostedHigh": 28,
+    "hostedMedium": 10,
+    "npmVulnerablePackages": 22,
+    "npmCriticalPackages": 1,
+    "npmHighPackages": 8,
+    "npmModeratePackages": 13,
+    "productionScopedPackages": 1,
+    "productionScopedCritical": 0,
+    "productionScopedHigh": 1
+  },
+  "groups": [
+    {
+      "id": "production-gate",
+      "hostedAlertCount": 2,
+      "packages": ["zod"],
+      "hostedAlerts": {
+        "GHSA-mrhx-c7xc-m3w5": ["vintora/services/api/package.json", "vintora/package-lock.json"]
+      },
+      "decision": "Documented time-boxed high-severity exception; no critical exception and no promotion clearance.",
+      "exceptionRef": "SEC-2026-ZOD-VALIDATION",
+      "expires": "2026-12-31",
+      "remediation": "Migrate API validation to zod@4.6.7, rerun typechecks/shared tests/API smoke, then remove the exception in the same change."
+    },
+    {
+      "id": "non-production-shared-lockfile",
+      "hostedAlertCount": 37,
+      "hostedAlertPackages": {
+        "@xmldom/xmldom": 15,
+        "tar": 12,
+        "postcss": 4,
+        "glob": 2,
+        "image-size": 2,
+        "uuid": 1,
+        "minimatch": 1
+      },
+      "workspaceRefs": ["apps/web", "apps/mobile"],
+      "localWebShellPackages": ["next", "postcss"],
+      "localMobileShellPackages": [
+        "@expo/bunyan",
+        "@expo/cli",
+        "@expo/config",
+        "@expo/config-plugins",
+        "@expo/metro-config",
+        "@expo/plist",
+        "@expo/prebuild-config",
+        "@expo/rudder-sdk-node",
+        "@xmldom/xmldom",
+        "cacache",
+        "expo",
+        "expo-asset",
+        "expo-constants",
+        "glob",
+        "image-size",
+        "minimatch",
+        "postcss",
+        "tar",
+        "uuid",
+        "xcode"
+      ],
+      "decision": "Reported only while these shells remain non-production; the critical tar advisory is in the Expo/mobile shell, not in the production gate.",
+      "remediation": "Upgrade the mobile shell to expo@58.0.26 and the web shell to next@16.4.6 before promotion; re-run the full audit, SBOM, licence and smoke gates in the same change."
+    }
+  ],
+  "blockingRules": [
+    "No critical advisory is excepted; the tar critical alert blocks mobile-shell promotion.",
+    "Green Phase 1 CI proves the scoped gate only and does not clear hosted Dependabot alerts.",
+    "All web/mobile shell advisories must be resolved before those surfaces are promoted.",
+    "promotionAllowed remains false and the verdict remains NO-GO."
+  ],
+  "evidenceGaps": [
+    "No approved upgrade record for Expo 58 or Next 16 is attached.",
+    "No evidence claims that web/mobile shells are used by a live or production surface."
+  ]
+}

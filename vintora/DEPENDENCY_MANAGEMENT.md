@@ -11,7 +11,7 @@ This document is the authoritative answer to how npm packages, container images,
 |---|---|---|
 | Automated dependency updates | [`dependabot.yml`](./.github/dependabot.yml) opens weekly grouped PRs for npm, GitHub Actions and Docker base images | Configured |
 | Vulnerability reporting | Private disclosure route in [`SECURITY.md`](./SECURITY.md) §2 | Documented |
-| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; scoped gate enforces documented exceptions |
+| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 hosted alerts triaged in [`security/dependabot-triage.json`](./security/dependabot-triage.json), one scoped production exception |
 | SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 991 components |
 | Secret scanning | Deterministic offline `npm run secrets:scan`; advisory gitleaks in CI | Passing locally; gitleaks requires `GITLEAKS_LICENSE` to become blocking |
 | Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 873 third-party packages checked |
@@ -59,7 +59,7 @@ Timelines run from triage confirmation. A fix may be a patch, a safe configurati
 
 Exceptions are recorded in [`security/audit-exceptions.json`](./security/audit-exceptions.json) for npm advisories and in the release approval record for scan findings. Every exception needs a package/finding, named owner, reason, remediation plan, tracking link and expiry no more than 90 days out. Expired entries fail CI. Critical advisories are never excepted.
 
-Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`. See [`SECURITY.md`](./SECURITY.md) §3.5.
+Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`. See [`SECURITY.md`](./SECURITY.md) §3.5. The full hosted alert triage is in [`security/dependabot-triage.json`](./security/dependabot-triage.json); the critical `tar` finding is confined to the non-production mobile shell and is never excepted.
 
 ## 5. Automated scanning
 
@@ -68,6 +68,7 @@ Current exception: `zod@3.25.76`, owner Platform Security, expires `2026-12-31`.
 | Local and PR verification | `npm run ci:verify` | Typechecks, domain tests, secret scan, licence scan, pin check, gates and forecasts all block |
 | Build verification | `npm run ci:build` | Scoped builds and SBOM freshness block |
 | Security PR checks | [`ci-security.yml`](./.github/workflows/ci-security.yml) | Deterministic secret scan, scoped audit gate, licence check, pin check, SBOM and CodeQL block; gitleaks is advisory without a license |
+| Triage consistency | `npm run dependabot-triage:check` | Static alert-count and NO-GO boundary register blocks on drift; no GitHub call is made |
 | Supply-chain PR checks | [`ci-supply-chain.yml`](./.github/workflows/ci-supply-chain.yml) | Policy checks block; Trivy SARIF is reported to GitHub Security and retained |
 | Release promotion | [`release.yml`](./.github/workflows/release.yml) | Trivy High/Critical findings block; signature verification must pass |
 

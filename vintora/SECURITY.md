@@ -74,7 +74,11 @@ Exceptions never apply to critical advisories. CI rejects expired entries.
 
 `zod@3.25.76` is under a time-boxed high-severity exception because the patched major release requires a validation-layer migration. Owner: Platform Security. Expiry: 2026-12-31. Remediation: migrate to Zod 4 or an approved patched 3.x release and run the full smoke suite.
 
-### 3.6 Licence policy
+### 3.6 Current Dependabot triage
+
+The open hosted alerts were triaged on 2026-11-25 and are registered in [`security/dependabot-triage.json`](./security/dependabot-triage.json): 39 alerts (1 critical, 28 high, 10 medium). The local full audit reports 22 vulnerable package records because npm groups multiple advisories per package. The blocking scoped production audit reports only `zod@3.25.76`, which is covered by the exception above. The critical `tar` advisory and the remaining high/medium findings are in the non-production `apps/web` / `apps/mobile` dependency shells; they are reported, not exempted, and must be resolved before those surfaces are promoted. Planned remediations are `zod@4.6.7`, `next@16.4.6` and `expo@58.0.26`, each with a full gate rerun in the same change. Green Phase 1 CI does not clear hosted alerts and does not change the NO-GO verdict.
+
+### 3.7 Licence policy
 
 [`config/license-policy.json`](./config/license-policy.json) is the machine-readable licence register. `npm run licenses:check` scans every third-party package in `package-lock.json`, skips first-party workspaces and enforces three classes: allowed permissive licences, review-required licences with named package-family approvals, and denied copyleft/network licences. A missing or expired approval blocks the build. Licence values are retained in the SBOM so evidence can be rechecked after installation.
 

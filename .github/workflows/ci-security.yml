@@ -142,6 +142,9 @@ jobs:
           console.log(`Scoped release audit passed (${count} vulnerability record(s), ${applied} documented exception(s) applied).`);
           NODE
 
+      - name: Check Dependabot triage register
+        run: npm run dependabot-triage:check
+
       - name: Verify SBOM freshness
         run: npm run sbom:check
 
