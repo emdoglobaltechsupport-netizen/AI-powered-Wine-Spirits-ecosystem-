@@ -12,7 +12,7 @@
       "title": "Phase 1 test and validation register",
       "registerRef": "VALIDATION_STATUS.md",
       "definitionRefs": ["config/test-counts.json", "services/api/scripts/smoke.mjs", "apps/prototype/selftest.js"],
-      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45628928087",
+      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45640150609",
       "status": "hosted-ci-pass-phase1-only",
       "ownerRole": "Release Manager"
     },
@@ -22,7 +22,7 @@
       "title": "Migration fresh-apply, idempotency and rollback contract",
       "registerRef": "DATABASE_OPERATIONS.md",
       "definitionRefs": ["services/api/scripts/migration-mode-check.ts", ".github/workflows/ci-migrations.yml"],
-      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45628928304",
+      "resultRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45640150263",
       "status": "hosted-ci-pass-phase1-only",
       "ownerRole": "Staff Data Engineer"
     },

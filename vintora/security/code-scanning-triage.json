@@ -125,9 +125,25 @@
       }
     ],
     "hostedVerification": {
-      "status": "pending-rescan",
-      "evidenceRef": null,
-      "note": "Hosted code scanning must be rechecked after the base image and prototype hardening changes are pushed; no hosted closure is claimed here."
+      "status": "verified",
+      "verifiedOn": "2026-11-25",
+      "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
+      "hostedOpenAlerts": 55,
+      "byTool": {
+        "CodeQL": 35,
+        "Trivy": 20
+      },
+      "bySeverity": {
+        "critical": 0,
+        "high": 42,
+        "medium": 12,
+        "low": 1
+      },
+      "byCategory": {
+        "/language:javascript-typescript": 35,
+        "trivy-image": 20
+      },
+      "note": "Hosted code scanning was rescanned after commit 4dda348. The five critical image advisories and the single IaC finding are closed; 55 triaged open alerts remain with documented owners and follow-up work. This is not launch or production security evidence."
     }
   },
   "blockingRules": [
