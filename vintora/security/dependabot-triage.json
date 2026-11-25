@@ -39,9 +39,14 @@
       "productionScopedHigh": 0
     },
     "hostedVerification": {
-      "status": "pending-rescan",
-      "evidenceRef": null,
-      "note": "Hosted Dependabot must be rechecked after the remediation commit lands; this file does not claim hosted alerts are closed."
+      "status": "verified",
+      "verifiedOn": "2026-11-25",
+      "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/dependabot",
+      "hostedOpenAlerts": 0,
+      "hostedCritical": 0,
+      "hostedHigh": 0,
+      "hostedMedium": 0,
+      "note": "Hosted Dependabot reports zero open alerts after the remediation commit was pushed and rescanned."
     },
     "upgrades": [
       {
@@ -118,7 +123,7 @@
     "promotionAllowed remains false and the verdict remains NO-GO."
   ],
   "evidenceGaps": [
-    "Hosted Dependabot rescan evidence is pending after the remediation commit.",
+    "No signed release, penetration test or production security evidence is attached by this dependency remediation.",
     "No evidence claims that web/mobile shells are used by a live or production surface."
   ]
 }

@@ -11,7 +11,7 @@ This document is the authoritative answer to how npm packages, container images,
 |---|---|---|
 | Automated dependency updates | [`dependabot.yml`](./.github/dependabot.yml) opens weekly grouped PRs for npm, GitHub Actions and Docker base images | Configured |
 | Vulnerability reporting | Private disclosure route in [`SECURITY.md`](./SECURITY.md) §2 | Documented |
-| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 baseline hosted alerts triaged and locally remediated in [`security/dependabot-triage.json`](./security/dependabot-triage.json), hosted rescan pending |
+| Dependency vulnerability scanning | `npm audit` full report plus scoped production release gate in `ci-security.yml` | Configured; 39 baseline hosted alerts triaged, remediated and rescanned to 0 open alerts in [`security/dependabot-triage.json`](./security/dependabot-triage.json) |
 | SBOM generation and retention | CycloneDX 1.5 at [`sbom/vintora.cdx.json`](./sbom/vintora.cdx.json); `npm run sbom:generate` / `sbom:check` | Passing; 701 components |
 | Secret scanning | Deterministic offline `npm run secrets:scan`; advisory gitleaks in CI | Passing locally; gitleaks requires `GITLEAKS_LICENSE` to become blocking |
 | Licence scanning | Offline `npm run licenses:check` with [`config/license-policy.json`](./config/license-policy.json) | Passing; 617 third-party packages checked |
