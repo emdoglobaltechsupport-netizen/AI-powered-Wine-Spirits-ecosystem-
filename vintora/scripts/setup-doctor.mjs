@@ -132,9 +132,10 @@ if (satisfiesRange(process.version, matrix.repository.nodeEngine)) {
 const npmVersion = userAgentField('npm');
 if (!npmVersion) warn('npm version unavailable from npm_config_user_agent; run the doctor through an npm script');
 else if (satisfiesRange(npmVersion, matrix.repository.npmSupported)) {
-  pass(`npm ${npmVersion} satisfies ${matrix.repository.npmSupported} (verified ${matrix.repository.npmVerified})`);
+  // The value came from process.env; log only the checked outcome.
+  pass('npm version satisfies the supported range');
 } else {
-  fail(`npm ${npmVersion} is outside ${matrix.repository.npmSupported}`);
+  fail('npm version is outside the supported range');
 }
 
 // 1b. Toolchain pins and enforced engine range.
@@ -176,9 +177,10 @@ if (allContractKeys.length > 0) pass(`.env.example and SETUP.md cover ${allContr
 
 const embeddingMode = String(values.EMBEDDING_MODE ?? template.EMBEDDING_MODE ?? 'auto').trim().toLowerCase();
 if (matrix.embeddingModes.allowed.includes(embeddingMode)) {
-  pass(`embedding mode configuration ${embeddingMode} is allowlisted`);
+  // The value came from .env/process.env; log only the checked outcome.
+  pass('embedding mode configuration is allowlisted');
 } else {
-  fail(`EMBEDDING_MODE=${embeddingMode} must be one of ${matrix.embeddingModes.allowed.join(', ')}`);
+  fail('EMBEDDING_MODE must be an allowlisted value');
 }
 
 if (values.NODE_ENV === 'production') fail('NODE_ENV=production is rejected by this prototype at startup');
@@ -189,15 +191,16 @@ const nodeEnv = String(values.NODE_ENV ?? 'development').trim().toLowerCase();
 const explicitProfile = String(values[boundaryConfig.profileEnv] ?? '').trim().toLowerCase();
 const resolvedProfile = explicitProfile || profileByNodeEnv[nodeEnv];
 const profileRule = boundaryConfig.profiles[resolvedProfile];
-if (!profileRule) fail(`${boundaryConfig.profileEnv}=${explicitProfile || '(unset)'} is not a known runtime profile`);
+if (!profileRule) fail('runtime profile value is not recognised');
 else {
-  pass(`runtime profile ${resolvedProfile} resolved from environment`);
+  // Profile values came from .env/process.env; log only the checked outcome.
+  pass('runtime profile resolved from environment');
   if (nodeEnv !== profileRule.nodeEnv) {
-    fail(`NODE_ENV must be ${profileRule.nodeEnv} for runtime profile ${resolvedProfile}`);
+    fail('NODE_ENV must match the resolved runtime profile');
   }
-  if (profileRule.allowed === false) fail(profileRule.blockReason ?? `runtime profile ${resolvedProfile} is blocked`);
+  if (profileRule.allowed === false) fail(profileRule.blockReason ?? 'runtime profile is blocked');
   if (String(values.ALLOW_DEMO_SEED ?? '').toLowerCase() === 'true' && !profileRule.allowDemoIdentities) {
-    fail(`demo identities are not allowed in ${resolvedProfile}`);
+    fail('demo identities are not allowed in this runtime profile');
   }
   const localProfile = credentialPolicy.localProfiles.includes(resolvedProfile);
   if (!localProfile && (
@@ -228,8 +231,9 @@ if (String(values[boundaryConfig.globalRealOptInEnv] ?? '').toLowerCase() === 't
 for (const provider of boundaryConfig.providers) {
   const value = String(values[provider.env] ?? provider.defaultValue).trim().toLowerCase();
   if (provider.simulatedValues.includes(value)) continue;
+  // The adapter value came from .env/process.env; log the variable name only.
   if (value === 'real') fail(`${provider.env}=real is blocked until launch, licence and provider evidence exists`);
-  else fail(`${provider.env}=${value} is not an allowlisted ${provider.id} adapter`);
+  else fail(`${provider.env} is not an allowlisted ${provider.id} adapter`);
 }
 if (existsSync(join(ROOT, '.env'))) pass('.env exists and is gitignored; values are not printed');
 else warn('.env is absent; run npm run setup:env before a manual DB setup');
@@ -281,8 +285,8 @@ if (CHECK_DB) {
     await client.connect();
     try {
       const version = await client.query('SHOW server_version');
-      if (atLeast(version.rows[0].server_version, '16')) pass(`PostgreSQL ${version.rows[0].server_version} satisfies the 16.x target`);
-      else fail(`PostgreSQL ${version.rows[0].server_version} is below the 16.x target`);
+      if (atLeast(version.rows[0].server_version, '16')) pass('PostgreSQL server version satisfies the 16.x target');
+      else fail('PostgreSQL server version is below the 16.x target');
 
       const extensions = await client.query('SELECT extname FROM pg_extension');
       const installed = new Set(extensions.rows.map((row) => row.extname));
@@ -298,7 +302,7 @@ if (CHECK_DB) {
           "SELECT value->>'mode' AS mode FROM schema_migration_metadata WHERE key = 'embedding_mode'",
         );
         const recorded = modeResult.rows[0]?.mode;
-        if (matrix.embeddingModes.allowed.slice(1).includes(recorded)) pass(`recorded migration embedding mode ${recorded}`);
+        if (matrix.embeddingModes.allowed.slice(1).includes(recorded)) pass('recorded migration embedding mode is allowlisted');
         else warn('embedding mode has not been recorded; run npm run db:setup');
       } catch {
         warn('embedding mode has not been recorded; run npm run db:setup');
@@ -317,8 +321,9 @@ if (CHECK_DB) {
     } finally {
       await client.end();
     }
-  } catch (error) {
-    fail(`database diagnostic failed: ${error instanceof Error ? error.message : String(error)}`);
+  } catch {
+    // The error can carry the env-derived connection string; log a fixed label.
+    fail('database diagnostic failed; inspect the local database configuration');
   }
 }
 
@@ -350,17 +355,19 @@ if (CHECK_API) {
   try {
     const response = await fetch(`http://127.0.0.1:${port}/health`);
     const body = await response.json();
-    if (response.ok && body?.db?.ok === true) pass(`API health endpoint ready on port ${port}`);
-    else warn(`API responded but reported degraded health on port ${port}`);
+    // The port came from .env/process.env and the body is a remote response;
+    // log only checked outcomes and fixed safe labels.
+    if (response.ok && body?.db?.ok === true) pass('API health endpoint ready');
+    else warn('API responded but reported degraded health');
     if (body?.embedding?.mode && body.embedding.consistent !== false) {
-      pass(`API reports embedding mode ${body.embedding.mode}`);
+      pass('API reports an allowlisted embedding mode');
     } else if (body?.embedding?.mode) {
-      warn(`API reports inconsistent embedding mode: ${body.embedding.detail ?? 'see /health'}`);
+      warn('API reports an inconsistent embedding mode; see /health');
     } else {
       warn('API health has no embedding mode field; run npm run db:setup and restart the API');
     }
   } catch {
-    warn(`API health endpoint is not reachable on port ${port}; run npm run dev:api or npm run setup`);
+    warn('API health endpoint is not reachable; run npm run dev:api or npm run setup');
   }
 }
 

@@ -11,8 +11,9 @@ migrate()
     );
     return pool.end();
   })
-  .catch(async (err) => {
-    console.error('[db] migrations failed', err);
+  .catch(async () => {
+    // Do not interpolate the error: it can carry the env-derived database URL.
+    console.error('[db] migrations failed; inspect the local database log');
     await pool.end();
     process.exitCode = 1;
   });

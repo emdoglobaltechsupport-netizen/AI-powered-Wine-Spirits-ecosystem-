@@ -7,8 +7,9 @@ seedDatabase()
     console.log('[db] setup complete');
     await pool.end();
   })
-  .catch(async (err) => {
-    console.error('[db] setup failed', err);
+  .catch(async () => {
+    // Do not interpolate the error: it can carry the env-derived database URL.
+    console.error('[db] setup failed; inspect the local database log');
     await pool.end();
     process.exitCode = 1;
   });
