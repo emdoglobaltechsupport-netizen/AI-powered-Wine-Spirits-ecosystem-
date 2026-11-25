@@ -107,7 +107,11 @@ import { viewAdmin, adminState, adminFmt, adminApplyFilters, adminCommandHTML, a
       state.ageVerified = true;
       save();
       // Best-effort DB assertion (ADR-008). Local gate remains authoritative offline.
-      api.verifyAge(dob, country).catch(function () { /* API unavailable — local verification stands */ });
+      // Skip the POST entirely on the zero-build static preview: the static server
+      // only serves GET/HEAD, so an attempted assertion would surface a 405 error.
+      if (state.apiMode === 'api') {
+        api.verifyAge(dob, country).catch(function () { /* API unavailable — local verification stands */ });
+      }
       startApp();
     });
   }
