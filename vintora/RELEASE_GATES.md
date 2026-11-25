@@ -6,11 +6,11 @@
 
 | Stage | Required evidence | Hosted evidence |
 |---|---|---|
-| `local-verify` | `npm run ci:verify`, `npm run verify` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
-| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | [45225866083](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083) |
-| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | [45225866172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866172) |
-| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | [45225866056](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866056) |
-| `hosted-ci` | Six workflow definitions in `.github/workflows/` | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) |
+| `local-verify` | `npm run ci:verify`, `npm run verify` | [45342913176](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176) |
+| `migration-contract` | `npm run db:ops:check`, `npm run db:migrations:test` | [45342913172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913172) |
+| `repository-policy` | `npm run policy:check`, `npm run adr:check`, `npm run evidence:check`, `npm run fixtures:check`, `npm run claims-change:check`, `npm run status:check`, `npm run markdown:check`, `npm run schemas:check` | [45342913226](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913226) |
+| `security-and-supply-chain` | `npm run secrets:scan`, `npm run licenses:check`, `npm run artifacts:check`, `npm run sbom:check`, `npm run security:check` | [45342913267](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913267) |
+| `hosted-ci` | Six workflow definitions in `.github/workflows/` | [45342913176](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176) |
 | `launch-approval` | `npm run launch:check`, `npm run jurisdiction:check`, `npm run gates:check` | `null` |
 
 ## 2. Blocking rules
@@ -27,4 +27,4 @@ Workflows exist for typecheck/tests, governance, migrations, security, supply ch
 
 ## 4. Evidence gaps
 
-Hosted Phase 1 CI run URLs are attached for commit `005f823` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. `promotionAllowed` remains false and verdict remains NO-GO.
+Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. `promotionAllowed` remains false and verdict remains NO-GO.

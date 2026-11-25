@@ -62,7 +62,7 @@ Shared, API and generated suite counts are derived from their source files. If a
 - No production scale target has been measured: 100M users, 10M SKU target, 200 countries, 1.2M orders/day peak, 50k requests/second, p95 < 200 ms and 99.99% availability are design targets only.
 - No revenue or market-size figure is reported actual performance; all are management projections.
 - No external accessibility audit, DPIA, penetration test, load test, disaster-recovery drill, kill-switch timing drill or independent security audit is attached.
-- Hosted Phase 1 CI workflows are green for commit `005f823` (see [`EVIDENCE_INDEX.md`](./EVIDENCE_INDEX.md) / [`RELEASE_GATES.md`](./RELEASE_GATES.md)); this is Phase 1 gate-parity evidence only, not launch approval, signed release evidence, or production security/compliance evidence.
+- Hosted Phase 1 CI workflows are green for commit `701b419` (see [`EVIDENCE_INDEX.md`](./EVIDENCE_INDEX.md) / [`RELEASE_GATES.md`](./RELEASE_GATES.md)); this is Phase 1 gate-parity evidence only, not launch approval, signed release evidence, or production security/compliance evidence.
 - Docker Compose config and daemon reachability passed the latest `setup:doctor` run; full container startup via `npm run setup` is still not exercised locally, and an earlier HTTP 500 daemon error remains a documented recovery case.
 
 ## 4. Release verdict

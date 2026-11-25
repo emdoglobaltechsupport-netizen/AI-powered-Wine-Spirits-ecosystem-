@@ -6,10 +6,10 @@
 
 | ID | Register | Definitions | Result | Status |
 |---|---|---|---|---|
-| EV-T01 | [`VALIDATION_STATUS.md`](./VALIDATION_STATUS.md) | [`config/test-counts.json`](./config/test-counts.json), [`smoke.mjs`](./services/api/scripts/smoke.mjs), [`selftest.js`](./apps/prototype/selftest.js) | [45225866337](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866337) | Hosted CI pass (Phase 1 gate parity only) |
-| EV-T02 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`migration-mode-check.ts`](./services/api/scripts/migration-mode-check.ts), [`ci-migrations.yml`](./.github/workflows/ci-migrations.yml) | [45225866083](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45225866083) | Hosted CI pass (Phase 1 gate parity only) |
+| EV-T01 | [`VALIDATION_STATUS.md`](./VALIDATION_STATUS.md) | [`config/test-counts.json`](./config/test-counts.json), [`smoke.mjs`](./services/api/scripts/smoke.mjs), [`selftest.js`](./apps/prototype/selftest.js) | [45342913176](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913176) | Hosted CI pass (Phase 1 gate parity only) |
+| EV-T02 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`migration-mode-check.ts`](./services/api/scripts/migration-mode-check.ts), [`ci-migrations.yml`](./.github/workflows/ci-migrations.yml) | [45342913172](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45342913172) | Hosted CI pass (Phase 1 gate parity only) |
 
-Hosted run URLs are attached for Phase 1 CI parity on commit `005f823`. They do not constitute coverage artefacts, load/performance evidence, security audit evidence, or launch approval.
+Hosted run URLs are attached for Phase 1 CI parity on commit `701b419`. They do not constitute coverage artefacts, load/performance evidence, security audit evidence, or launch approval.
 
 ## 2. Performance
 
