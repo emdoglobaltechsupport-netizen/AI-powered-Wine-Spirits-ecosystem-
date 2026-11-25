@@ -10,7 +10,7 @@
 | Verdict | NO-GO |
 | Prototype mode | true |
 | Public launch | false |
-| Last reviewed | 2026-11-21 |
+| Last reviewed | 2026-11-25 |
 | External status page | `null` — none attached |
 
 ## 2. Check register
@@ -34,7 +34,7 @@
 
 ## 4. Measurement boundary
 
-Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
+Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. SLO pipeline, error-budget measurement, deployment history, uptime history, and p95/p99 by route remain not implemented/attached. Capacity figures in [`CAPACITY_AND_RELIABILITY.md`](./CAPACITY_AND_RELIABILITY.md) are targets only. GitHub branch protection and code scanning are not enabled for this private repository on the current plan; hosted checks and SARIF uploads are evidence only, not merge-enforcing controls. Release stages and evidence refs are listed in [`RELEASE_GATES.md`](./RELEASE_GATES.md).
 
 ## 5. Review
 

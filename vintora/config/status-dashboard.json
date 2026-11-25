@@ -5,7 +5,7 @@
   "publicLaunch": false,
   "verdict": "NO-GO",
   "scope": "Phase 1 gates only",
-  "lastReviewed": "2026-11-21",
+  "lastReviewed": "2026-11-25",
   "sources": [
     "config/implementation-status.json",
     "config/high-risk-features.json",
@@ -36,6 +36,7 @@
   "evidenceGaps": [
     "This is a static repository dashboard, not a running status page or metrics endpoint.",
     "Hosted Phase 1 CI run URLs are attached for commit 701b419; deployment history, uptime measurement, SLO error-budget burn and p95/p99 by route are not attached.",
-    "A green check proves Phase 1 gate parity only and does not change the NO-GO verdict."
+    "A green check proves Phase 1 gate parity only and does not change the NO-GO verdict.",
+    "GitHub branch protection and code scanning are not enabled for this private repository on the current GitHub plan; hosted checks and SARIF uploads are evidence only, not merge-enforcing controls."
   ]
 }

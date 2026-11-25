@@ -145,5 +145,6 @@ Dependabot monitors npm and GitHub Actions weekly.
 - Web and mobile shells contain known advisories and are excluded from the release gate only because they are not promoted surfaces.
 - GitHub-hosted Trivy and release-signing workflows are configured but have not been executed in this local workspace; no release artifact has been signed yet.
 - No timed agent kill-switch drill, live agent egress policy, WORM audit retention or high-impact tool review record exists; all agent operation remains advisory simulation.
+- GitHub branch protection and code scanning are not enabled for this private repository on the current GitHub plan. Hosted checks and SARIF uploads are evidence only; they are not merge-enforcing controls.
 
 Do not infer from a green CI run that the project is production-secure. Green CI means the documented Phase 1 gates passed.

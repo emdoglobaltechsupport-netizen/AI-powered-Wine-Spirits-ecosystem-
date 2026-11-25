@@ -27,4 +27,4 @@ Workflows exist for typecheck/tests, governance, migrations, security, supply ch
 
 ## 4. Evidence gaps
 
-Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. `promotionAllowed` remains false and verdict remains NO-GO.
+Hosted Phase 1 CI run URLs are attached for commit `701b419` as gate-parity evidence only. Signed release, load test, penetration test, DPIA, counsel approval, and launch/promotion decision records are not attached. GitHub branch protection and code scanning are not enabled for this private repository on the current plan; hosted checks and SARIF uploads are evidence only, not merge-enforcing controls. `promotionAllowed` remains false and verdict remains NO-GO.
