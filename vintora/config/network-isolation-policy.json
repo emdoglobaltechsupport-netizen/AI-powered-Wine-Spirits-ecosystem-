@@ -40,7 +40,7 @@
   "egressRestriction": "Data network is Compose-internal; no production or shared VPC attachment is defined. Hosted firewall policy is not evidenced.",
   "evidenceGaps": [
     "No hosted network policy, firewall rule, VPC attachment or network ACL evidence is attached.",
-    "Docker Compose daemon reachability passed local setup:doctor, but full container startup is not exercised in this workspace.",
+    "Docker Compose config passed local setup:doctor, but full container startup is not exercised in this workspace because the Docker Desktop Linux engine cannot start without a WSL2 kernel; the manual host-PostgreSQL path is used instead.",
     "No secrets-manager integration exists; secrets come from generated local environment values only."
   ]
 }

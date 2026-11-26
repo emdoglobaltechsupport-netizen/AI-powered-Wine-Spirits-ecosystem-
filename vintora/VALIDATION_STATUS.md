@@ -63,7 +63,7 @@ Shared, API and generated suite counts are derived from their source files. If a
 - No revenue or market-size figure is reported actual performance; all are management projections.
 - No external accessibility audit, DPIA, penetration test, load test, disaster-recovery drill, kill-switch timing drill or independent security audit is attached.
 - Hosted Phase 1 CI workflows are green for commit `7185294` (see [`EVIDENCE_INDEX.md`](./EVIDENCE_INDEX.md) / [`RELEASE_GATES.md`](./RELEASE_GATES.md)); this is Phase 1 gate-parity evidence only, not launch approval, signed release evidence, or production security/compliance evidence.
-- Docker Compose config and daemon reachability passed the latest `setup:doctor` run; full container startup via `npm run setup` is still not exercised locally, and an earlier HTTP 500 daemon error remains a documented recovery case.
+- The manual host-PostgreSQL path was exercised again on 2026-11-26: PostgreSQL 16.16 with the `jsonb` fallback, `dev:api` healthy at `http://localhost:4000/health`, API smoke 34/34 and browser `?selftest=1` 65/65. Docker Compose config and daemon reachability passed `setup:doctor`, but full container startup via `npm run setup` remains unexercised: the Docker Desktop Linux engine cannot start because the WSL2 kernel file is missing and `wsl --update` failed; this is a local environment blocker, not launch evidence.
 
 ## 4. Release verdict
 

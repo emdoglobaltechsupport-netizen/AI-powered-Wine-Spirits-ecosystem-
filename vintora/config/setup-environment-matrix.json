@@ -122,7 +122,7 @@
       "node": "26.13.1",
       "npm": "11.20.0",
       "postgres": "pgvector/pgvector:pg16 digest-pinned image",
-      "evidence": "docker compose config --quiet and docker info passed in the latest setup:doctor run; an earlier HTTP 500 from the DockerDesktopLinuxEngine pipe is documented as a recovery case. Full npm run setup container startup remains unexercised."
+      "evidence": "docker compose config --quiet passed and docker info was reachable during the latest setup:doctor run, but the Docker Desktop Linux engine subsequently could not start: WSL2 reports a missing kernel file and wsl --update failed. Full npm run setup container startup remains unexercised in this workspace; the manual host-PostgreSQL path is the verified fallback."
     },
     {
       "id": "linux-ci",
