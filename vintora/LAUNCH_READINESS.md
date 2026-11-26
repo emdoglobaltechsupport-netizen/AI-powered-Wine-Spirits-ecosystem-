@@ -6,7 +6,7 @@ A green verification run proves **Phase 1 gates only**. Lifecycle state is gover
 
 ## What is verified here
 
-- The offline catalogue pipelines passed their bundled checks: catalogue **18**, accessories **36**, and Africa Marketplace **45** assertions.
+- The offline catalogue pipelines passed their bundled checks: catalogue **18**, accessories **36**, and Africa Marketplace **54** assertions.
 - The API TypeScript project type-checks with the installed dependencies.
 - Development data, identities and provider integrations are explicitly labelled as simulated or deterministic.
 - Internal ADM-19 agents are advisory-only: `npm run agents:check` verifies the 24-agent register, least-privilege tools, distinct approval, injection defence, append-only audit and independent safe-stop; `executionEnabled` is false and no timed kill-switch drill has been performed.
@@ -33,6 +33,7 @@ A green verification run proves **Phase 1 gates only**. Lifecycle state is gover
 
 - [`DISCLAIMER.md`](./DISCLAIMER.md) — maturity and compliance boundary.
 - [`FEATURE_STATUS.md`](./FEATURE_STATUS.md) — implementation, regulation and production-readiness matrix.
+- [`LAUNCH_READINESS_AUDIT.md`](./LAUNCH_READINESS_AUDIT.md) and [`config/launch-readiness-audit.json`](./config/launch-readiness-audit.json) — machine-checked gap, owner and three-phase milestone audit; `npm run launch-readiness-audit:check`.
 - [`API_POLICY.md`](./API_POLICY.md) — versioning, compatibility, auth, rate limiting, idempotency and audit requirements.
 - [`IDENTITY_ACCESS_BOUNDARIES.md`](./IDENTITY_ACCESS_BOUNDARIES.md) and [`config/identity-access-policy.json`](./config/identity-access-policy.json) — consumer, merchant, distributor, investor and Admin boundaries; `npm run identity:check`.
 - [`AGENT_AUTONOMY_CONTROLS.md`](./AGENT_AUTONOMY_CONTROLS.md), [`adr/ADR-0005-agent-boundaries.md`](./adr/ADR-0005-agent-boundaries.md) and [`config/agent-autonomy-policy.json`](./config/agent-autonomy-policy.json) — advisory-only internal agents; `npm run agents:check`.

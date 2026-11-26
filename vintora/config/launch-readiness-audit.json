@@ -1,0 +1,628 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-no-go-audit",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "promotionAllowed": false,
+  "scope": "Phase 1 gates only",
+  "auditedOn": "2026-11-26",
+  "processDoc": "LAUNCH_READINESS_AUDIT.md",
+  "launchApproval": null,
+  "authorityRefs": [
+    "LAUNCH_READINESS.md",
+    "config/release-gates.json",
+    "config/launch-manifest.json",
+    "config/high-risk-features.json",
+    "config/evidence-index.json",
+    "security/code-scanning-triage.json"
+  ],
+  "notice": "This register audits the NO-GO prototype. Every gap is open or blocked, every evidence reference is null, and every milestone is a planning target with no launch date. It does not close a gate, provide production evidence or grant launch approval.",
+  "gaps": [
+    {
+      "id": "LR-01",
+      "category": "security",
+      "title": "Production identity provider and hardware MFA enrolment",
+      "description": "Production IdP, phishing-resistant hardware-backed MFA and named individual Admin accounts are not attached; the local seeded admin identity is generated, local-only and not a production account.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "Hosted IdP configuration, hardware MFA enrolment record for named individuals, server-derived role assignment and a distinct approval record.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-02",
+      "category": "security",
+      "title": "Immutable external audit sink, retention and alert routing",
+      "description": "Local admin actions are append-only, but no external immutable sink, WORM-equivalent schedule or login/mutation alert routing is configured.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "External append-only sink configuration, dated WORM retention schedule, alert routing proof and a tested replay/reconciliation report.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-03",
+      "category": "security",
+      "title": "Penetration test and independent security audit",
+      "description": "No penetration test, threat-model review or independent security audit result is attached; hosted scans are Phase 1 gate-parity evidence only.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "Dated penetration test report, remediation verification and an independent security audit opinion with named assessors.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-04",
+      "category": "security",
+      "title": "Tenant isolation, key custody and transport evidence",
+      "description": "No staging or production cross-tenant RLS test run, KMS custody record, at-rest encryption or TLS configuration evidence is attached.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "Cross-tenant RLS test output against a non-local database, KMS custody record, encryption configuration and TLS proof.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-05",
+      "category": "security",
+      "title": "Open hosted image advisories including shadow CVE",
+      "description": "Hosted scanning shows 22 open image findings with zero critical; the two unscored CVE-2026-135901 / DSA-6661-1 shadow alerts remain open and are not waived.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "Refreshed digest-pinned base image with shadow at 1:4.17.4-2+deb13u1 or later plus a hosted rescan recording closure of all open findings.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-06",
+      "category": "compliance",
+      "title": "Launch manifest approvals and guard removal record",
+      "description": "Legal approver, compliance approver and guard-removal approval fields are null in the launch manifest and jurisdiction clearance register.",
+      "ownerRole": "Legal / Compliance Lead",
+      "acceptanceEvidence": "Signed, distinct legal and compliance approval records with effective dates plus a reviewed production guard replacement decision.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-07",
+      "category": "compliance",
+      "title": "Jurisdiction licensing owners, counsel and tax rules",
+      "description": "All 17 jurisdiction records have null licensing owner, effective date, counsel review and tax rule references; six regulated activity counsel records are also null.",
+      "ownerRole": "Legal / Compliance Lead",
+      "acceptanceEvidence": "Per-jurisdiction licensing owner, effective date, counsel opinion reference and dated tax rule source for every enabled market.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-08",
+      "category": "compliance",
+      "title": "Commercial licence domains remain unobtained",
+      "description": "All six commercial licence domains are not_obtained with null evidence refs: alcohol retail, fulfilment, tax registration, payment processing, custody and distribution.",
+      "ownerRole": "Legal / Compliance Lead",
+      "acceptanceEvidence": "Dated licence or regulator evidence for each commercial domain required by the enabled markets, with named holders and expiry tracking.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-09",
+      "category": "compliance",
+      "title": "Vault legal opinions and custody protections",
+      "description": "All five Vault legal reviews are not_obtained; no securities advice, title/fractional interest, custody licence, AML/sanctions/tax or consumer protection opinion is attached.",
+      "ownerRole": "Vault / Investment Product Lead",
+      "acceptanceEvidence": "Five signed legal opinions with named owners, jurisdictions and effective dates; custody and investor protection evidence for any live Vault feature.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-10",
+      "category": "privacy-data",
+      "title": "DPIA, lawful bases and signed processing record",
+      "description": "No DPIA is completed; all 15 lawful bases are design targets with null evidence and no signed record of processing is attached.",
+      "ownerRole": "Data Protection Lead",
+      "acceptanceEvidence": "Completed DPIA, evidence-backed lawful basis register and a signed record of processing activities with named owner and review date.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-11",
+      "category": "privacy-data",
+      "title": "Retention, deletion and crypto-shredding jobs",
+      "description": "No scheduled retention job, deletion worker, crypto-shredding integration or legal-hold model is implemented; schedules are design targets only.",
+      "ownerRole": "Data Protection Lead",
+      "acceptanceEvidence": "Executed retention and deletion job records, downstream propagation proof, legal-hold test and crypto-shredding integration evidence.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-12",
+      "category": "privacy-data",
+      "title": "Consent receipts, withdrawal propagation and DSAR execution",
+      "description": "Prototype consent and DSAR flows are simulated; no production consent receipt, downstream withdrawal propagation or executed erasure/export exists.",
+      "ownerRole": "Data Protection Lead",
+      "acceptanceEvidence": "Production consent receipts with timestamps, withdrawal propagation trace and an executed DSAR run with verified downstream effects.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-13",
+      "category": "privacy-data",
+      "title": "Cross-border transfer mechanism and processor agreements",
+      "description": "No transfer impact assessment, approved cross-border mechanism, processor agreement or subprocessor list is attached.",
+      "ownerRole": "Data Protection Lead",
+      "acceptanceEvidence": "Approved transfer impact assessment, mechanism record and signed processor/subprocessor agreements with effective dates.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-14",
+      "category": "reliability-capacity",
+      "title": "Load, stress, soak, canary and chaos results",
+      "description": "All six test plans remain planned with null evidence; every route p95/p99 measured field is null and only a sequential loopback baseline exists.",
+      "ownerRole": "Platform SRE Lead",
+      "acceptanceEvidence": "Executed load, stress, soak, failure injection, canary and chaos reports with source-derived pass/skip/fail counts and measured p95/p99 by route.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-15",
+      "category": "reliability-capacity",
+      "title": "SLO pipeline, error budget and status history",
+      "description": "No SLO measurement pipeline, error-budget burn report, external status page, deployment history or uptime history is attached.",
+      "ownerRole": "Platform SRE Lead",
+      "acceptanceEvidence": "Live SLO measurement output, dated error-budget report, external status page reference and uptime/deployment history.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "launch-week"
+    },
+    {
+      "id": "LR-16",
+      "category": "reliability-capacity",
+      "title": "Distributed rate limiting and log redaction",
+      "description": "Local rate limiting and log hygiene are prototype-scope; no distributed limiter or structured log redaction evidence is attached.",
+      "ownerRole": "Platform Security Lead",
+      "acceptanceEvidence": "Distributed rate-limit configuration with measured enforcement and structured log samples proving secret redaction.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-17",
+      "category": "reliability-capacity",
+      "title": "Browser-flow CI coverage",
+      "description": "Browser self-test runs locally but no hosted browser-flow CI result is attached; the register records this as an outstanding gap.",
+      "ownerRole": "Developer Experience / Platform Lead",
+      "acceptanceEvidence": "Hosted workflow result running the browser flow with generated pass/skip/fail counts on a release candidate commit.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-18",
+      "category": "operations-dr",
+      "title": "Production backup, PITR, failover, RTO and RPO",
+      "description": "Only a local logical restore drill exists with a null production ref; no production backup, PITR, offsite copy, failover or RTO/RPO measurement is attached.",
+      "ownerRole": "Staff Data Engineer",
+      "acceptanceEvidence": "Production backup configuration, PITR restore record, offsite or immutable copy proof, failover drill and measured RTO/RPO with named approver.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-19",
+      "category": "operations-dr",
+      "title": "Migration role separation, staging run and licensed data",
+      "description": "No dedicated production migration role, staging migration run or representative licensed-data validation is attached.",
+      "ownerRole": "Staff Data Engineer",
+      "acceptanceEvidence": "Production migration role evidence, reviewed staging run record and licensed-data validation report with checksums.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-20",
+      "category": "operations-dr",
+      "title": "Container startup and signed release artifact",
+      "description": "Full container startup remains unverified locally and the release workflow has produced no signed artifact in this workspace.",
+      "ownerRole": "Release Manager",
+      "acceptanceEvidence": "Container build/startup record from the pinned image, cosign signature, checksum verification and an immutable SBOM/scan bundle for the promoted artifact.",
+      "evidenceRef": null,
+      "status": "open",
+      "blocking": true,
+      "phase": "launch-week"
+    },
+    {
+      "id": "LR-21",
+      "category": "governance-release",
+      "title": "Promotion decision record and launch gate evidence",
+      "description": "The launch-approval release stage has a null hosted evidence ref; promotionAllowed is false and no promotion decision record exists.",
+      "ownerRole": "Release Manager",
+      "acceptanceEvidence": "Distinct executive, compliance and operations approval records, a dated promotion decision and a hosted release-stage result.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "launch-week"
+    },
+    {
+      "id": "LR-22",
+      "category": "governance-release",
+      "title": "Named reviewers and enforced repository controls",
+      "description": "No named individual holds owner or approver roles; enforce_admins is false, no GitHub DCO app or independent reviewer is configured.",
+      "ownerRole": "Developer Experience / Platform Lead",
+      "acceptanceEvidence": "Named owner/approver register, enabled admin enforcement, configured DCO app and independent reviewer approval on the promotion commit.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-23",
+      "category": "governance-release",
+      "title": "Architecture review and signed deliverable records",
+      "description": "No hosted Architecture Review Board approval or signed deliverable review is attached; all ADRs remain prototype-scope only.",
+      "ownerRole": "Principal Architect",
+      "acceptanceEvidence": "Hosted ARB approval record, signed deliverable review signatures and ADRs with production-scope evidence where applicable.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-24",
+      "category": "ai-agents",
+      "title": "Agent kill-switch drill and adversarial evidence",
+      "description": "No timed agent kill-switch drill under 60 seconds, sandbox/canary/replay run or prompt-injection red-team result is attached; execution stays disabled.",
+      "ownerRole": "Chief AI Officer",
+      "acceptanceEvidence": "Timed kill-switch drill under 60 seconds, sandbox/canary/replay records, red-team report and distinct high-impact tool review.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-25",
+      "category": "ai-agents",
+      "title": "Model evaluation gates and retained AI logs",
+      "description": "No offline evaluation result, human-reviewed model/prompt promotion record, production retrieval log sink or licensed safety classifier is attached.",
+      "ownerRole": "Chief AI Officer",
+      "acceptanceEvidence": "Evaluation results with thresholds, distinct human promotion approval, retained prompt/model/retrieval logs and licensed safety classifier evidence.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-26",
+      "category": "commerce-finance",
+      "title": "Licensed payment, ledger and dispute workflows",
+      "description": "No licensed PSP, PCI scope review, double-entry ledger, settlement reconciliation or dispute workflow is integrated; payments are simulated.",
+      "ownerRole": "Payments Lead",
+      "acceptanceEvidence": "Licensed PSP agreement, PCI scope review, ledger and reconciliation test results, idempotency verification and executed dispute workflow.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-27",
+      "category": "commerce-finance",
+      "title": "Age, KYC, AML and sanctions provider integration",
+      "description": "No certified age/KYC provider, official sanctions/PEP/AML list, signature verification or delivery age-check integration exists; six age fraud scenarios are simulated.",
+      "ownerRole": "Compliance Lead",
+      "acceptanceEvidence": "Provider due diligence, signed jurisdiction age rules, official screening feed, delivery age proof and executed fraud scenario suite.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-28",
+      "category": "commerce-finance",
+      "title": "Licensed catalogue and verified inventory",
+      "description": "The served catalogue is 12 labelled demo rows with zero licensed feeds and zero verified rows; no supplier contract or rights evidence is attached.",
+      "ownerRole": "Beverage Data / Catalog Lead",
+      "acceptanceEvidence": "Licensed feed agreements, verified row counts, rights and provenance evidence, supplier contracts and pricing/tax source records.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-29",
+      "category": "commerce-finance",
+      "title": "External marketing execution and alcohol-ad validation",
+      "description": "No ad platform or email connector, live spend cap, jurisdiction alcohol-advertising validation, immutable audit sink or kill-switch drill result is attached.",
+      "ownerRole": "CMO / Growth lead",
+      "acceptanceEvidence": "Sandbox connector validation, alcohol-advertising counsel approval, budget-owner record, immutable audit proof and executed pause/rollback/kill-switch drill.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-30",
+      "category": "commerce-finance",
+      "title": "Pricing counsel, human approvals and disparity testing",
+      "description": "Competition/consumer pricing and alcohol-promotion counsel opinions are not obtained; no human-approved published change or measured disparity result is attached.",
+      "ownerRole": "Chief AI Officer / Pricing Lead",
+      "acceptanceEvidence": "Dated counsel opinions, distinct human approval record, explainability evidence and measured geographic/demographic disparity results.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "pre-launch"
+    },
+    {
+      "id": "LR-31",
+      "category": "commerce-finance",
+      "title": "Responsible-drinking review and measured outcomes",
+      "description": "No licensed harm classifier, clinical/minors policy review, measured velocity or complaint outcome, delivery proof or immutable event sink is attached.",
+      "ownerRole": "Compliance Lead",
+      "acceptanceEvidence": "Clinical and minors policy review, measured velocity/complaint outcomes, localised support resources and immutable screening event records.",
+      "evidenceRef": null,
+      "status": "blocked",
+      "blocking": true,
+      "phase": "post-launch"
+    }
+  ],
+  "responsibilities": [
+    {
+      "ownerRole": "Release Manager",
+      "accountabilities": ["Owns the audit baseline and promotion decision package", "Gate 20 and gate 21 evidence assembly and four-eyes scheduling"]
+    },
+    {
+      "ownerRole": "Platform Security Lead",
+      "accountabilities": ["Owns identity, MFA, audit sink, scanning and isolation evidence", "Owns incident readiness and alert routing evidence"]
+    },
+    {
+      "ownerRole": "Platform SRE Lead",
+      "accountabilities": ["Owns load/failure plans, measured latency and SLO evidence", "Owns staged exposure and error-budget review"]
+    },
+    {
+      "ownerRole": "Staff Data Engineer",
+      "accountabilities": ["Owns production backup, PITR, failover and RTO/RPO evidence", "Owns migration role separation and staging run evidence"]
+    },
+    {
+      "ownerRole": "Legal / Compliance Lead",
+      "accountabilities": ["Owns launch manifest approvals and jurisdiction clearance", "Owns commercial licence register and counsel evidence"]
+    },
+    {
+      "ownerRole": "Vault / Investment Product Lead",
+      "accountabilities": ["Owns Vault legal opinions and custody protections", "Keeps Vault non-live until every legal review is evidenced"]
+    },
+    {
+      "ownerRole": "Data Protection Lead",
+      "accountabilities": ["Owns DPIA, lawful bases and processing records", "Owns retention, DSAR, withdrawal and transfer evidence"]
+    },
+    {
+      "ownerRole": "Developer Experience / Platform Lead",
+      "accountabilities": ["Owns browser-flow CI coverage", "Owns named ownership, DCO app and independent reviewer enforcement"]
+    },
+    {
+      "ownerRole": "Principal Architect",
+      "accountabilities": ["Owns Architecture Review Board approval record", "Owns signed deliverable review and ADR scope decisions"]
+    },
+    {
+      "ownerRole": "Chief AI Officer",
+      "accountabilities": ["Owns agent kill-switch, sandbox, replay and red-team evidence", "Owns model evaluation gates and retained AI logs"]
+    },
+    {
+      "ownerRole": "Payments Lead",
+      "accountabilities": ["Owns licensed PSP, PCI scope, ledger and reconciliation evidence", "Owns dispute workflow execution records"]
+    },
+    {
+      "ownerRole": "Compliance Lead",
+      "accountabilities": ["Owns age, KYC, AML and sanctions provider evidence", "Owns responsible-drinking review and measured outcomes"]
+    },
+    {
+      "ownerRole": "Beverage Data / Catalog Lead",
+      "accountabilities": ["Owns licensed feed agreements and verified inventory evidence", "Owns supplier, provenance and rights records"]
+    },
+    {
+      "ownerRole": "CMO / Growth lead",
+      "accountabilities": ["Owns external marketing connectors and alcohol-advertising validation", "Owns spend caps, immutable audit and kill-switch drill evidence"]
+    },
+    {
+      "ownerRole": "Chief AI Officer / Pricing Lead",
+      "accountabilities": ["Owns pricing counsel opinions and human approval records", "Owns explainability and disparity-test evidence"]
+    }
+  ],
+  "timeline": {
+    "basis": "relative-planning-targets-no-launch-date",
+    "note": "All windows are relative planning targets, not committed dates. No launch date is set, and no phase may start until its entry criteria are evidenced and reviewed.",
+    "phases": [
+      {
+        "id": "pre-launch",
+        "window": "T-180 to T-1 (planning target only)",
+        "objective": "Close every blocking gap with independent evidence and prepare a signed promotion decision package.",
+        "ownerRole": "Release Manager",
+        "entryCriteria": ["Verdict is NO-GO and promotionAllowed is false", "This register has been reviewed with four-eyes and all gap evidence refs remain null"],
+        "evidenceRef": null,
+        "status": "planned",
+        "milestones": [
+          {
+            "id": "M-PL-01",
+            "title": "Audit baseline accepted by four-eyes review",
+            "ownerRole": "Release Manager",
+            "exitCriteria": "All 31 gaps are open or blocked with a named owner role and null evidence refs; a distinct reviewer records acceptance.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": []
+          },
+          {
+            "id": "M-PL-02",
+            "title": "Legal, jurisdiction and licence clearance pack",
+            "ownerRole": "Legal / Compliance Lead",
+            "exitCriteria": "Launch approvals, per-jurisdiction counsel/tax records, commercial licences, Vault opinions and licensed catalogue rights are attached and dated.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-06", "LR-07", "LR-08", "LR-09", "LR-28"]
+          },
+          {
+            "id": "M-PL-03",
+            "title": "Security and identity control evidence",
+            "ownerRole": "Platform Security Lead",
+            "exitCriteria": "IdP/MFA enrolment, immutable audit, penetration test, RLS/KMS/TLS evidence, advisory closure and distributed limits are attached.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-01", "LR-02", "LR-03", "LR-04", "LR-05", "LR-16"]
+          },
+          {
+            "id": "M-PL-04",
+            "title": "Privacy and data lifecycle evidence",
+            "ownerRole": "Data Protection Lead",
+            "exitCriteria": "DPIA, lawful bases, retention jobs, consent receipts, withdrawal propagation, DSAR run and transfer mechanism are evidenced.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-10", "LR-11", "LR-12", "LR-13"]
+          },
+          {
+            "id": "M-PL-05",
+            "title": "Reliability, migration and disaster-recovery evidence",
+            "ownerRole": "Platform SRE Lead",
+            "exitCriteria": "All six test plans are executed with measured p95/p99, browser-flow CI is green, backup/PITR/failover and role separation are evidenced.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-14", "LR-17", "LR-18", "LR-19"]
+          },
+          {
+            "id": "M-PL-06",
+            "title": "Commerce, AI and marketing control evidence",
+            "ownerRole": "Release Manager",
+            "exitCriteria": "Payments, age/KYC, agent and model gates, marketing execution controls and pricing/disparity reviews carry distinct approvals.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-24", "LR-25", "LR-26", "LR-27", "LR-29", "LR-30"]
+          },
+          {
+            "id": "M-PL-07",
+            "title": "Repository governance and named ownership",
+            "ownerRole": "Developer Experience / Platform Lead",
+            "exitCriteria": "Named owners, enforced admin checks, DCO app, independent reviewer, ARB approval and signed deliverable reviews are attached.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["LR-22", "LR-23"]
+          },
+          {
+            "id": "M-PL-08",
+            "title": "Promotion decision package prepared",
+            "ownerRole": "Release Manager",
+            "exitCriteria": "A four-eyes promotion package records every gap as evidenced or explicitly accepted as a blocking no-go, with the launch-approval stage still null until signed.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-PL-01", "M-PL-02", "M-PL-03", "M-PL-04", "M-PL-05", "M-PL-06", "M-PL-07", "LR-21"]
+          }
+        ]
+      },
+      {
+        "id": "launch-week",
+        "window": "T0 to T+7 (planning target only)",
+        "objective": "Execute a controlled, reversible exposure only after the pre-launch exit criteria and explicit promotion decision are evidenced.",
+        "ownerRole": "Release Manager",
+        "entryCriteria": ["M-PL-08 exit criteria are evidenced", "Signed promotion decision and launch-approval stage evidence exist"],
+        "evidenceRef": null,
+        "status": "planned",
+        "milestones": [
+          {
+            "id": "M-LW-01",
+            "title": "Change freeze and signed artifact verification",
+            "ownerRole": "Release Manager",
+            "exitCriteria": "Pinned image digest, cosign signature, checksums, SBOM and scan bundle are verified against the promoted commit under change freeze.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-PL-08", "LR-20"]
+          },
+          {
+            "id": "M-LW-02",
+            "title": "Staged exposure with live SLO monitoring",
+            "ownerRole": "Platform SRE Lead",
+            "exitCriteria": "Staged rollout, measured p95/p99, error-budget burn and rollback thresholds are observed and recorded at each stage.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-LW-01", "LR-15"]
+          },
+          {
+            "id": "M-LW-03",
+            "title": "Incident command, support rota and rollback readiness",
+            "ownerRole": "Platform Security Lead",
+            "exitCriteria": "On-call rota, monitored reporting channel, alert routing and a rehearsed rollback path are active with named contacts.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-LW-01", "LR-02", "LR-22"]
+          }
+        ]
+      },
+      {
+        "id": "post-launch",
+        "window": "T+8 to T+90 (planning target only)",
+        "objective": "Review measured outcomes, reconcile audit and incidents, and close the evidence register before any maturity reassessment.",
+        "ownerRole": "Release Manager",
+        "entryCriteria": ["M-LW-02 and M-LW-03 exit criteria are evidenced", "No unresolved critical incident remains open"],
+        "evidenceRef": null,
+        "status": "planned",
+        "milestones": [
+          {
+            "id": "M-PO-01",
+            "title": "Stabilisation review and error-budget report",
+            "ownerRole": "Platform SRE Lead",
+            "exitCriteria": "A dated stabilisation report records measured availability, p95/p99 by route, error-budget burn and any threshold breach.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-LW-02", "LR-15"]
+          },
+          {
+            "id": "M-PO-02",
+            "title": "Post-incident and audit reconciliation review",
+            "ownerRole": "Platform Security Lead",
+            "exitCriteria": "Incident reviews, break-glass/post-incident records and immutable audit reconciliation are attached with named reviewers.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-LW-03", "LR-02", "LR-31"]
+          },
+          {
+            "id": "M-PO-03",
+            "title": "Evidence closure and maturity reassessment",
+            "ownerRole": "Release Manager",
+            "exitCriteria": "Every gap is closed with evidence or explicitly reopened; any lifecycle-state change passes four-eyes and never relies on documentation alone.",
+            "evidenceRef": null,
+            "status": "planned",
+            "dependsOn": ["M-PO-01", "M-PO-02", "LR-21"]
+          }
+        ]
+      }
+    ]
+  },
+  "evidentiaryBoundary": "Hosted green checks prove Phase 1 gate parity only; local drill, baseline and Admin walkthrough evidence is prototype-only. No milestone is complete until independent evidence is attached. This audit is not a penetration test, security audit, DPIA, counsel opinion, compliance certificate, production DR result, signed release or launch approval.",
+  "evidenceGaps": [
+    "No launch date or launch approval is set; all timeline windows are relative planning targets.",
+    "No owner is a named individual signature; role assignments are accountability labels until reviewed and signed.",
+    "No gap evidence reference is attached; a null reference remains an explicit gap."
+  ]
+}

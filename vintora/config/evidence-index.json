@@ -88,6 +88,16 @@
       "resultRef": null,
       "status": "blocked-register-only",
       "ownerRole": "Legal / Compliance Lead"
+    },
+    {
+      "id": "EV-C02",
+      "category": "complianceReviews",
+      "title": "Launch-readiness gap, owner and milestone audit",
+      "registerRef": "LAUNCH_READINESS_AUDIT.md",
+      "definitionRefs": ["config/launch-readiness-audit.json", "scripts/check-launch-readiness-audit.mjs", "LAUNCH_READINESS.md"],
+      "resultRef": null,
+      "status": "no-go-gap-register-only",
+      "ownerRole": "Release Manager"
     }
   ],
   "review": {
@@ -100,6 +110,7 @@
     "No penetration test, security audit, DPIA, compliance certificate or signed counsel opinion is attached.",
     "No external status-page history or p95/p99 measurement is attached; all performance figures remain targets.",
     "The attached restore drill is local prototype evidence only; no production backup, PITR, failover, RTO or RPO measurement is attached.",
-    "The attached local Admin walkthrough and loopback latency baseline are prototype-only; no production IdP/MFA record, immutable audit sink, alert routing, load test or p95/p99-by-route measurement is attached."
+    "The attached local Admin walkthrough and loopback latency baseline are prototype-only; no production IdP/MFA record, immutable audit sink, alert routing, load test or p95/p99-by-route measurement is attached.",
+    "The launch-readiness audit is a NO-GO planning register; all gap, phase and milestone evidence refs remain null."
   ]
 }
