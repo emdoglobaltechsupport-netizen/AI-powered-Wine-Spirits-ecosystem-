@@ -38,6 +38,19 @@ for (const entry of policy.entries ?? []) {
   }
   if (entry.resultRef !== null && typeof entry.resultRef !== 'string') fail(`${entry.id}: resultRef must be null or a string evidence reference`);
   if (typeof entry.resultRef === 'string' && !/^https?:\/\/\S+/.test(entry.resultRef)) fail(`${entry.id}: resultRef must be an absolute http(s) URL`);
+  if (entry.localResultRef !== undefined) {
+    if (typeof entry.localResultRef !== 'string' || !existsSync(join(ROOT, entry.localResultRef))) {
+      fail(`${entry.id}: localResultRef must resolve to a repository file`);
+    } else {
+      const localResult = JSON.parse(readFileSync(join(ROOT, entry.localResultRef), 'utf8'));
+      if (localResult.prototypeMode !== true || localResult.publicLaunch !== false ||
+          localResult.verdict !== 'NO-GO' || localResult.productionEvidenceRef !== null ||
+          !read('EVIDENCE_INDEX.md').includes(entry.localResultRef)) {
+        fail(`${entry.id}: local result must be prototype-only, NO-GO, null production ref and linked from the index`);
+      }
+    }
+    if (entry.resultRef !== null) fail(`${entry.id}: a local-only result must keep the external resultRef null`);
+  }
   if (!entry.status || !entry.ownerRole) fail(`${entry.id}: status and owner role are required`);
 }
 for (const category of policy.categories) {

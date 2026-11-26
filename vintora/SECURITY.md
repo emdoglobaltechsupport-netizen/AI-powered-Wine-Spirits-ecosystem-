@@ -149,7 +149,7 @@ Hosted CodeQL and Trivy findings are recorded in [`security/code-scanning-triage
 
 - Production IdP, MFA and secret manager are not implemented.
 - Distributed rate limiting and centralised audit retention are not implemented.
-- Penetration test, restore drill, DR failover and load test are outstanding.
+- Penetration test, production restore drill, DR failover and load test are outstanding. A local prototype logical restore drill is attached at [`evidence/local-dr-drill.json`](./evidence/local-dr-drill.json) with a null production evidence ref; it is Phase 1 prototype evidence only, not recovery assurance.
 - Web and mobile shells were remediated to zero local npm advisories but remain non-production scaffolding, not promoted surfaces.
 - GitHub-hosted Trivy and release-signing workflows are configured but no local container build or signed release artifact exists; hosted scans remain Phase 1 gate evidence only.
 - No timed agent kill-switch drill, live agent egress policy, WORM audit retention or high-impact tool review record exists; all agent operation remains advisory simulation.

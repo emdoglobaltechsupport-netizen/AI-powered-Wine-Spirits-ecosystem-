@@ -27,6 +27,17 @@
       "ownerRole": "Staff Data Engineer"
     },
     {
+      "id": "EV-T03",
+      "category": "tests",
+      "title": "Local prototype logical backup/restore drill",
+      "registerRef": "DATABASE_OPERATIONS.md",
+      "definitionRefs": ["scripts/local-dr-drill.mjs", "config/database-operations.json"],
+      "localResultRef": "evidence/local-dr-drill.json",
+      "resultRef": null,
+      "status": "local-prototype-drill-only-production-ref-null",
+      "ownerRole": "Staff Data Engineer"
+    },
+    {
       "id": "EV-P01",
       "category": "performance",
       "title": "Capacity model and SLO targets",
@@ -65,6 +76,7 @@
   "evidenceGaps": [
     "Hosted Phase 1 CI run URLs are attached for test/migration evidence only; they are not penetration tests, security audits, load tests, coverage artefacts, or launch approval.",
     "No penetration test, security audit, DPIA, compliance certificate or signed counsel opinion is attached.",
-    "No external status-page history or p95/p99 measurement is attached; all performance figures remain targets."
+    "No external status-page history or p95/p99 measurement is attached; all performance figures remain targets.",
+    "The attached restore drill is local prototype evidence only; no production backup, PITR, failover, RTO or RPO measurement is attached."
   ]
 }

@@ -8,8 +8,9 @@
 |---|---|---|---|---|
 | EV-T01 | [`VALIDATION_STATUS.md`](./VALIDATION_STATUS.md) | [`config/test-counts.json`](./config/test-counts.json), [`smoke.mjs`](./services/api/scripts/smoke.mjs), [`selftest.js`](./apps/prototype/selftest.js) | [45814305700](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305700) | Hosted CI pass (Phase 1 gate parity only) |
 | EV-T02 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`migration-mode-check.ts`](./services/api/scripts/migration-mode-check.ts), [`ci-migrations.yml`](./.github/workflows/ci-migrations.yml) | [45814306192](https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814306192) | Hosted CI pass (Phase 1 gate parity only) |
+| EV-T03 | [`DATABASE_OPERATIONS.md`](./DATABASE_OPERATIONS.md) | [`scripts/local-dr-drill.mjs`](./scripts/local-dr-drill.mjs), [`config/database-operations.json`](./config/database-operations.json) | `null` (local prototype result: [`evidence/local-dr-drill.json`](./evidence/local-dr-drill.json)) | Local prototype drill only; external and production recovery refs remain `null` |
 
-Hosted run URLs are attached for Phase 1 CI parity on commit `b7bdf75`. They do not constitute coverage artefacts, load/performance evidence, security audit evidence, or launch approval.
+Hosted run URLs are attached for Phase 1 CI parity on commit `b7bdf75`. They do not constitute coverage artefacts, load/performance evidence, security audit evidence, or launch approval. EV-T03 is a local prototype logical restore drill, not hosted or production recovery evidence; it does not close the backup, PITR, failover, RTO or RPO gap.
 
 ## 2. Performance
 

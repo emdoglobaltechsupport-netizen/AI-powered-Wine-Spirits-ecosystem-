@@ -105,7 +105,7 @@ Every current area is **not production-ready**; the term is reserved for compone
 | Release artifact signing | Implemented (cosign workflow) | Not applicable | Prototype-only | `release.yml` signs/verifies image, SBOM and checksums; no local release has been signed |
 | One-command verified setup | Implemented (Docker Compose) | Not applicable | Prototype-only | `npm run setup` generates `.env`, starts services, migrates and verifies |
 | Platform-neutral static server | Implemented (Node) | Not applicable | Design-ready | `npm run prototype` replaces the Windows-only PowerShell launcher |
-| Load testing / DR drill | Planned | Not applicable | Blocked | Required by [LAUNCH_READINESS.md](./LAUNCH_READINESS.md) |
+| Load testing / production DR drill | Planned | Not applicable | Blocked | Required by [LAUNCH_READINESS.md](./LAUNCH_READINESS.md); a local prototype logical restore drill is attached at [`evidence/local-dr-drill.json`](./evidence/local-dr-drill.json), with no production recovery evidence |
 
 ---
 

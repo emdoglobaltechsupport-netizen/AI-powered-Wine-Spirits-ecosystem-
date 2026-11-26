@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "status": "local-prototype-dr-drill",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "executedOn": "2026-11-26T13:29:14.259Z",
+  "runtimeProfile": "local",
+  "scope": "Local host PostgreSQL logical dump restored into a throwaway schema in the same disposable database; no production data or deployment.",
+  "sourceLabel": "public schema of the disposable local prototype database",
+  "targetLabel": "throwaway restore schema (dropped after comparison)",
+  "toolVersions": {
+    "pg_dump": "pg_dump (PostgreSQL) 16.16",
+    "psql": "psql (PostgreSQL) 16.16"
+  },
+  "checks": {
+    "backupCreated": true,
+    "restoreSchemaCreated": true,
+    "restoreCompleted": true,
+    "fingerprintsMatch": true,
+    "migrationRowsMatch": true,
+    "restoreSchemaDropped": true,
+    "forcedRlsRestored": true
+  },
+  "fingerprint": {
+    "algorithm": "sha256",
+    "source": "a45887761c5031567fa16bc3cdf679a91dddcdcec2603ae47e9400c19fdedf39",
+    "restored": "a45887761c5031567fa16bc3cdf679a91dddcdcec2603ae47e9400c19fdedf39"
+  },
+  "tableCount": 245,
+  "migrationRowCount": 19,
+  "forcedRlsTableCount": 34,
+  "productionEvidenceRef": null,
+  "note": "Prototype drill only. FORCE RLS was suspended on the disposable source for the dump and restored afterwards; the restore clone omits RLS enforcement so row counts can be verified. No production backup, offsite copy, WORM/immutable sink, point-in-time recovery, RTO/RPO measurement or launch approval is claimed."
+}

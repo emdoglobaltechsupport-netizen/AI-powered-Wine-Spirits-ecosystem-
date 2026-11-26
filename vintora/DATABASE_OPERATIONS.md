@@ -10,6 +10,7 @@
 | [`db:setup`](./package.json) | Yes | Yes | No | `local` / `test`; idempotent |
 | [`db:seed:dev`](./package.json) | Yes | Yes | Yes, generated credentials | Explicit `local` / `test` opt-in only |
 | `db:reset` | Not implemented | — | — | No destructive reset automation exists |
+| [`db:dr:drill`](./package.json) | No | No | No | `local` / `test` only against a loopback host; production blocked |
 
 `db:migrate` is the safe default for a database-only change. `db:setup` applies migrations plus the labelled demo catalogue and remains idempotent. `db:seed:dev` is the only path that creates the local admin/collector/distributor/seller identities, requires `ALLOW_DEMO_SEED=true` and generated seed passwords, and fails closed outside `local`/`test`. See [`SETUP.md`](./SETUP.md#3-database-bootstrap-behaviour) for the environment matrix and connection setup.
 
@@ -37,7 +38,9 @@ This protects against accidental edits to applied files. It is not a cryptograph
 ## 4. Backup, restore and representative-data checks
 
 - Take a backup before any destructive or potentially destructive operation. In Phase 1 the preferred recovery is to discard the throwaway local database, recreate it with `npm run db:configure`, and reapply `db:migrate` or `db:setup`.
-- No restore drill, point-in-time recovery test or production backup is attached. Recovery language here is a procedure definition only.
+- A **local prototype restore drill** was executed with `npm run db:dr:drill`. [`scripts/local-dr-drill.mjs`](./scripts/local-dr-drill.mjs) fails closed outside `local`/`test`, requires a loopback host and the generated `POSTGRES_DB`, dumps the `public` schema, restores it into a throwaway schema in the same disposable database, compares SHA-256 fingerprints of table row counts and applied migration rows, then drops the schema and dump. The passing result is recorded in [`evidence/local-dr-drill.json`](./evidence/local-dr-drill.json) with `productionEvidenceRef: null` and `verdict: NO-GO`.
+- The drill temporarily suspends `FORCE ROW LEVEL SECURITY` on the disposable source so the logical dump can include those tables, and restores it before the result is written. The clone omits RLS enforcement solely to verify row counts; it is not a tenant-isolation test.
+- No production restore drill, point-in-time recovery test or production backup is attached. Recovery language here is a procedure definition only.
 - After a schema change, run `npm run catalogue:selftest && npm run accessories:selftest && npm run africa:selftest` for representative offline data, then `npm run ci:verify`. These suites use seeded/demo fixtures; they do not validate licensed supplier data.
 - `npm run db:health` and `npm run api:health` confirm connectivity and embedding-mode health. They do not grant launch permission.
 
@@ -54,4 +57,4 @@ CI covers fresh apply, second-pass idempotency, a deliberately failing upgrade t
 
 ## 6. Evidence gaps
 
-No dedicated production migration role, production backup, restore drill, staging run or licensed-data validation is attached. Green local or CI checks prove the Phase 1 migration contract only; they are not production approval.
+No dedicated production migration role, production backup, production restore drill, staging run or licensed-data validation is attached. The attached local prototype restore drill proves only that a logical dump of the disposable database can be restored and fingerprint-matched locally. Green local or CI checks prove the Phase 1 migration contract only; they are not production approval.

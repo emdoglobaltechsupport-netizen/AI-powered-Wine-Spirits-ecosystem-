@@ -28,6 +28,14 @@
     "db:reset": {
       "implemented": false,
       "description": "No destructive reset automation. Recreate a disposable database and rerun the explicit commands."
+    },
+    "db:dr:drill": {
+      "implemented": true,
+      "appliesMigrations": false,
+      "appliesReferenceSeed": false,
+      "createsDemoIdentities": false,
+      "productionAllowed": false,
+      "description": "Local/test-only logical dump and throwaway-schema restore drill; temporary FORCE RLS suspension on the source is restored afterwards."
     }
   },
   "migrationRunner": {
@@ -44,7 +52,11 @@
   "backupAndRestore": {
     "backupRequiredBeforeDestructiveOperation": true,
     "preferredRecovery": "Recreate a throwaway local database from db:configure, then apply db:migrate and the explicit seed commands.",
-    "restoreDrillEvidenceRef": null
+    "restoreDrillEvidenceRef": null,
+    "restoreDrillEvidenceRefScope": "production",
+    "localPrototypeDrillRef": "evidence/local-dr-drill.json",
+    "localPrototypeDrillAllowedProfiles": ["local", "test"],
+    "localPrototypeDrillNote": "The attached drill is prototype-only; it does not close the production restore, PITR, RTO or RPO evidence gaps."
   },
   "roles": {
     "dedicatedMigrationRoleRequired": true,
@@ -84,6 +96,7 @@
     "DATABASE_OPERATIONS.md",
     "SETUP.md",
     ".github/workflows/ci-migrations.yml",
-    "services/api/src/db/migrate.ts"
+    "services/api/src/db/migrate.ts",
+    "evidence/local-dr-drill.json"
   ]
 }

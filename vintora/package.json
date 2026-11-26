@@ -33,6 +33,7 @@
     "db:seed:dev": "npm run db:seed:dev --workspace @vintora/api",
     "db:configure": "node scripts/configure-local-db.mjs",
     "db:health": "node scripts/service-health.mjs db",
+    "db:dr:drill": "node scripts/local-dr-drill.mjs",
     "api:health": "node scripts/service-health.mjs api",
     "with-env": "node scripts/with-env.mjs",
     "catalogue:ingest": "npm run catalogue:ingest --workspace @vintora/db",
