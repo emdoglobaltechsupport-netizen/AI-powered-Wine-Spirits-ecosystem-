@@ -11,35 +11,35 @@
       "label": "Local Phase 1 verification",
       "commands": ["npm run ci:verify", "npm run verify"],
       "required": true,
-      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006563"
+      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305700"
     },
     {
       "id": "migration-contract",
       "label": "Fresh apply, idempotency, rollback and embedding-mode health",
       "commands": ["npm run db:ops:check", "npm run db:migrations:test"],
       "required": true,
-      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006702"
+      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814306192"
     },
     {
       "id": "repository-policy",
       "label": "Licence, contribution and governance gates",
       "commands": ["npm run policy:check", "npm run adr:check", "npm run evidence:check", "npm run fixtures:check", "npm run claims-change:check", "npm run status:check", "npm run markdown:check", "npm run schemas:check"],
       "required": true,
-      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006666"
+      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305696"
     },
     {
       "id": "security-and-supply-chain",
       "label": "Secret, licence, artefact, SBOM and container policy",
       "commands": ["npm run secrets:scan", "npm run licenses:check", "npm run artifacts:check", "npm run sbom:check", "npm run security:check"],
       "required": true,
-      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006542"
+      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305703"
     },
     {
       "id": "hosted-ci",
       "label": "Hosted CI and signed release",
       "workflowRefs": [".github/workflows/ci-typecheck-tests.yml", ".github/workflows/ci-governance.yml", ".github/workflows/ci-migrations.yml", ".github/workflows/ci-security.yml", ".github/workflows/ci-supply-chain.yml", ".github/workflows/ci-build.yml", ".github/workflows/release.yml"],
       "required": true,
-      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006563"
+      "hostedEvidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305700"
     },
     {
       "id": "launch-approval",
@@ -55,7 +55,7 @@
     "The production profile remains rejected regardless of green checks."
   ],
   "evidenceGaps": [
-    "Hosted Phase 1 CI run URLs are attached for commit 7185294; signed release, load test, penetration test, DPIA or counsel approval is not attached.",
+    "Hosted Phase 1 CI run URLs are attached for commit b7bdf75; signed release, load test, penetration test, DPIA or counsel approval is not attached.",
     "Launch approval remains blocked; no promotion decision record exists and promotionAllowed remains false.",
     "GitHub branch protection is enabled on main with 15 required Phase 1 check contexts; code scanning is enabled through Vintora-managed advanced CodeQL/Trivy workflows with blocking SARIF uploads, and GitHub default setup is disabled to avoid conflicting analyses. enforce_admins is false and no GitHub DCO app or independent reviewer is configured, so direct admin maintenance can bypass reviews; DCO sign-off remains a CI policy check only."
   ]

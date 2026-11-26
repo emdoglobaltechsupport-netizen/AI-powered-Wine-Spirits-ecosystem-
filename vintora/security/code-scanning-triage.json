@@ -64,6 +64,18 @@
       "fixedHighCritical": 7,
       "note": "Informational local scan only. Hosted Trivy SARIF from the pinned CI action is the authoritative gate evidence; a local Docker build is still unavailable."
     },
+    "advisoryDrift": {
+      "verifiedOn": "2026-11-26",
+      "advisory": "CVE-2026-135901 / DSA-6661-1",
+      "package": "shadow (passwd, login.defs)",
+      "installedVersion": "1:4.17.4-2",
+      "fixedVersion": "1:4.17.4-2+deb13u1",
+      "openAlertsAdded": 2,
+      "decision": "open-pending-upstream-base-image-refresh",
+      "owner": "Platform Security",
+      "rationale": "Debian published the advisory after the pinned node:24-trixie-slim digest was pushed on 2026-11-24. The fixed shadow package exists in trixie-security, but Docker Hub still resolves the 24-trixie-slim tag to the pinned digest, so no refreshed upstream image is available to promote. No critical exception or waiver is claimed; both alerts remain open in the hosted scan.",
+      "followUp": "Refresh the digest-pinned base image when the upstream tag is rebuilt with shadow 1:4.17.4-2+deb13u1 or later, rerun the hosted image scan, and record the closure here."
+    },
     "localRateLimitVerification": {
       "verifiedOn": "2026-11-25",
       "configuredLimit": 3,
@@ -185,23 +197,24 @@
       "note": "Historical rescan after the base-image and prototype hardening work. The five critical image advisories and the single IaC finding were closed."
     },
     "lastVerifiedRescan": {
-      "verifiedOn": "2026-11-25",
-      "commit": "7185294",
+      "verifiedOn": "2026-11-26",
+      "commit": "b7bdf75",
       "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
-      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006542",
-      "hostedOpenAlerts": 20,
+      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305698",
+      "hostedOpenAlerts": 22,
       "byTool": {
         "CodeQL": 0,
-        "Trivy": 20
+        "Trivy": 22
       },
       "bySeverity": {
         "critical": 0,
         "high": 7,
         "medium": 12,
-        "low": 1
+        "low": 1,
+        "unscored": 2
       },
       "byCategory": {
-        "trivy-image": 20
+        "trivy-image": 22
       },
       "codeqlRules": {
         "js/missing-rate-limiting": 0,
@@ -210,7 +223,7 @@
         "js/xss-through-dom": 0,
         "js/incomplete-sanitization": 0
       },
-      "note": "Final rescan after the clear-text-logging, prototype path containment and render escaping changes. All CodeQL alerts are closed; the 20 Trivy image findings remain as prototype gate-parity findings, not launch approval."
+      "note": "Latest rescan after the preview and documentation commits. All CodeQL alerts remain closed. Two newly published, unscored Trivy image advisories (CVE-2026-135901, shadow/passwd) raised the image total from 20 to 22; zero are critical. This is Phase 1 gate-parity evidence only, not launch approval."
     },
     "rescanMilestones": [
       {
@@ -233,40 +246,57 @@
         "hostedOpenAlerts": 22,
         "byTool": { "CodeQL": 2, "Trivy": 20 },
         "note": "All five js/path-injection alerts were closed; two js/xss-through-dom alerts remained and were addressed by escaping confirmation item counts."
+      },
+      {
+        "verifiedOn": "2026-11-25",
+        "commit": "7185294",
+        "hostedOpenAlerts": 20,
+        "byTool": { "CodeQL": 0, "Trivy": 20 },
+        "note": "Final CodeQL closure rescan: zero open CodeQL alerts and 20 Trivy image findings."
+      },
+      {
+        "verifiedOn": "2026-11-25",
+        "commit": "3cd44e2",
+        "hostedOpenAlerts": 20,
+        "byTool": { "CodeQL": 0, "Trivy": 20 },
+        "note": "Static preview age-verification fix; alert counts unchanged from 7185294."
       }
     ],
     "hostedVerification": {
       "status": "verified",
-      "commit": "7185294",
+      "commit": "b7bdf75",
       "evidenceRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/security/code-scanning",
-      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45657006542",
-      "hostedOpenAlerts": 20,
+      "workflowRunRef": "https://github.com/emdoglobaltechsupport-netizen/AI-powered-Wine-Spirits-ecosystem-/actions/runs/45814305698",
+      "hostedOpenAlerts": 22,
       "byTool": {
         "CodeQL": 0,
-        "Trivy": 20
+        "Trivy": 22
       },
       "bySeverity": {
         "critical": 0,
         "high": 7,
         "medium": 12,
-        "low": 1
+        "low": 1,
+        "unscored": 2
       },
       "byCategory": {
-        "trivy-image": 20
+        "trivy-image": 22
       },
-      "note": "The hosted CodeQL analysis after 7185294 reports zero open CodeQL alerts, closing the six clear-text-logging, five path-injection and two XSS-through-dom findings. Trivy's 20 image findings remain open with zero critical; this is Phase 1 gate-parity evidence only."
+      "note": "The hosted CodeQL analysis after b7bdf75 reports zero open CodeQL alerts, keeping the six clear-text-logging, five path-injection and two XSS-through-dom findings closed. Trivy reports 22 image findings with zero critical: the original 20 plus two unscored alerts from DSA-6661-1/CVE-2026-135901 published after the pinned base image was pushed. No advisory is waived; this is Phase 1 gate-parity evidence only."
     }
   },
   "blockingRules": [
     "No critical advisory is excepted; the five baseline critical image findings must be removed by the base-image upgrade, not waived.",
     "Trivy SARIF uploads remain blocking workflow steps; CodeQL and Trivy findings remain advisory until triaged and evidenced.",
     "Hosted alert closure requires a post-remediation rescan recorded in remediation.hostedVerification.",
+    "Newly published advisories are recorded as open gaps and are never waived; closure requires a refreshed, digest-pinned base image and a hosted rescan.",
     "Green Phase 1 CI proves gate parity only and does not supply production security, compliance or launch evidence.",
     "promotionAllowed remains false and the verdict remains NO-GO."
   ],
   "evidenceGaps": [
     "Local container build and startup remain unverified; the base image was scanned by digest only.",
     "No distributed rate limiter, production asset pipeline, structured log redaction or centralised audit sink is attached.",
-    "No signed release, penetration test or production security evidence is attached by this triage."
+    "No signed release, penetration test or production security evidence is attached by this triage.",
+    "Two unscored shadow advisories (CVE-2026-135901) remain open until the digest-pinned base image is refreshed upstream; no waiver is claimed."
   ]
 }
