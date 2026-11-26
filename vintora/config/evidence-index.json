@@ -94,7 +94,7 @@
       "category": "complianceReviews",
       "title": "Launch-readiness gap, owner and milestone audit",
       "registerRef": "LAUNCH_READINESS_AUDIT.md",
-      "definitionRefs": ["config/launch-readiness-audit.json", "scripts/check-launch-readiness-audit.mjs", "LAUNCH_READINESS.md"],
+      "definitionRefs": ["config/launch-readiness-audit.json", "scripts/check-launch-readiness-audit.mjs", "config/launch-readiness-owners.json", "scripts/check-launch-readiness-owners.mjs", "LAUNCH_READINESS.md"],
       "resultRef": null,
       "status": "no-go-gap-register-only",
       "ownerRole": "Release Manager"

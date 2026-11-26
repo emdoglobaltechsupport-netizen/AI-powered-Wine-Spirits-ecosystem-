@@ -286,7 +286,7 @@ Regenerate with `npm run docs:check -- --write-docs`. Ownership and schemas: [`D
 | [`DISCLAIMER.md`](./DISCLAIMER.md) | Top-level maturity and compliance disclaimer; explicit NO-GO posture |
 | [`FEATURE_STATUS.md`](./FEATURE_STATUS.md) | Feature-status matrix across implementation, regulation and production readiness |
 | [`LAUNCH_READINESS.md`](./LAUNCH_READINESS.md) | Launch gate checklist and unresolved production blockers |
-| [`LAUNCH_READINESS_AUDIT.md`](./LAUNCH_READINESS_AUDIT.md) and [`config/launch-readiness-audit.json`](./config/launch-readiness-audit.json) | Machine-checked gap, owner and three-phase milestone audit; `npm run launch-readiness-audit:check` |
+| [`LAUNCH_READINESS_AUDIT.md`](./LAUNCH_READINESS_AUDIT.md), [`config/launch-readiness-audit.json`](./config/launch-readiness-audit.json) and [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json) | Machine-checked gap, owner, named-ownership and three-phase milestone audit; `npm run launch-readiness-audit:check` and `npm run launch-readiness-owners:check` |
 | [`API_POLICY.md`](./API_POLICY.md) | API versioning, compatibility, authentication, rate limiting, idempotency and audit requirements |
 | [`IDENTITY_ACCESS_BOUNDARIES.md`](./IDENTITY_ACCESS_BOUNDARIES.md) and [`config/identity-access-policy.json`](./config/identity-access-policy.json) | B2C/B2B/Seller/Vault/Admin role, tenant, jurisdiction and transaction boundaries; `npm run identity:check` |
 | [`FINANCIAL_CONTROLS.md`](./FINANCIAL_CONTROLS.md) | Reconciliation, refunds, disputes, payouts and segregation of duties |

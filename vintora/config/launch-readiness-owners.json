@@ -1,0 +1,143 @@
+{
+  "policyVersion": "v1",
+  "status": "prototype-ownership-record-pending",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "promotionAllowed": false,
+  "launchApproval": null,
+  "accepted": false,
+  "auditBaselineAccepted": false,
+  "milestoneId": "M-PL-01",
+  "processDoc": "LAUNCH_READINESS_AUDIT.md",
+  "auditedOn": "2026-11-26",
+  "notice": "Four-eyes acceptance record for the launch-readiness audit baseline. In prototype mode every named individual, effective date, sign-off reference and distinct review field remains null. A partial or claimed acceptance fails closed; this record is not launch approval.",
+  "owners": [
+    {
+      "role": "Release Manager",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Platform Security Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Platform SRE Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Staff Data Engineer",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Legal / Compliance Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Vault / Investment Product Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Data Protection Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Developer Experience / Platform Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Principal Architect",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Chief AI Officer",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Payments Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Compliance Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Beverage Data / Catalog Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "CMO / Growth lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    },
+    {
+      "role": "Chief AI Officer / Pricing Lead",
+      "namedIndividual": null,
+      "effectiveDate": null,
+      "signoffRef": null,
+      "status": "pending"
+    }
+  ],
+  "review": {
+    "ownerRole": "Release Manager",
+    "namedIndividual": null,
+    "effectiveDate": null,
+    "distinctReviewerRole": "Principal Architect",
+    "distinctReviewerIndividual": null,
+    "distinctReviewerEffectiveDate": null,
+    "acceptanceRef": null,
+    "reviewedAt": null
+  },
+  "acceptanceCriteria": [
+    "Every owner role has a named individual, an ISO effective date and a sign-off reference.",
+    "The release owner and distinct reviewer are different named individuals.",
+    "The review records an ISO review date and an acceptance reference.",
+    "The audit milestone stays planned with a null evidence reference; acceptance of names does not close a gap."
+  ],
+  "evidenceGaps": [
+    "No named individual is attached to any role; all owner names, dates and sign-off references are null.",
+    "No distinct reviewer acceptance or dated review record is attached.",
+    "This record is pending four-eyes acceptance and does not close M-PL-01 or any gap."
+  ]
+}

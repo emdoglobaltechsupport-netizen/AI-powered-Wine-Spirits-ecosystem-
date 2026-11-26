@@ -35,7 +35,7 @@ No penetration test, independent security audit, RLS cross-tenant run, KMS evide
 | ID | Register | Definitions | Result | Status |
 |---|---|---|---|---|
 | EV-C01 | [`LEGAL_COMPLIANCE_SIGNOFF.md`](./LEGAL_COMPLIANCE_SIGNOFF.md) | [`config/high-risk-features.json`](./config/high-risk-features.json), [`REGULATORY_DOCUMENTATION.md`](./REGULATORY_DOCUMENTATION.md), [`config/claims-change-management.json`](./config/claims-change-management.json) | `null` | Blocked register only |
-| EV-C02 | [`LAUNCH_READINESS_AUDIT.md`](./LAUNCH_READINESS_AUDIT.md) | [`config/launch-readiness-audit.json`](./config/launch-readiness-audit.json), [`check-launch-readiness-audit.mjs`](./scripts/check-launch-readiness-audit.mjs), [`LAUNCH_READINESS.md`](./LAUNCH_READINESS.md) | `null` | NO-GO planning register only; no external result attached |
+| EV-C02 | [`LAUNCH_READINESS_AUDIT.md`](./LAUNCH_READINESS_AUDIT.md) | [`config/launch-readiness-audit.json`](./config/launch-readiness-audit.json), [`check-launch-readiness-audit.mjs`](./scripts/check-launch-readiness-audit.mjs), [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json), [`check-launch-readiness-owners.mjs`](./scripts/check-launch-readiness-owners.mjs), [`LAUNCH_READINESS.md`](./LAUNCH_READINESS.md) | `null` | NO-GO planning register only; no external result attached |
 
 No signed counsel review, DPIA, regulator acknowledgement, compliance certificate or jurisdiction activation is attached.
 

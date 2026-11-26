@@ -116,3 +116,27 @@ Window: `T+8 to T+90` (planning target only). Objective: review measured outcome
 This audit is a planning and gap register only. Hosted green checks prove Phase 1 gate parity only; they are not production security, compliance, reliability or launch evidence. Local drill, latency baseline and Admin walkthrough artifacts are prototype-only and keep production refs `null`. Financial figures remain uncited projections, valuations are illustrative and non-offer, and regulatory/Jurisdiction fields are placeholders with licensing owners and effective dates pending.
 
 The register is not externally audited and not fully audited. No penetration test, DPIA, counsel opinion, regulator acknowledgement, compliance certificate, signed release, independent security audit, production DR result, immutable audit sink or production readiness evidence is attached. This repository is not launch approved, and no document or milestone here grants launch approval. The verdict remains `NO-GO`, promotion remains disabled, and every acceptance criterion must be met by independent evidence before any lifecycle-state review.
+
+## 6. Named ownership acceptance
+
+Machine authority: [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json); checked by `npm run launch-readiness-owners:check`. This record covers `M-PL-01` only. Status: `pending` four-eyes acceptance; no named individual, effective date, sign-off reference or distinct reviewer acceptance is attached. It is not launch approval.
+
+| Owner role | Named individual | Effective date | Sign-off ref | Status |
+|---|---|---|---|---|
+| Release Manager | `null` | `null` | `null` | `pending` |
+| Platform Security Lead | `null` | `null` | `null` | `pending` |
+| Platform SRE Lead | `null` | `null` | `null` | `pending` |
+| Staff Data Engineer | `null` | `null` | `null` | `pending` |
+| Legal / Compliance Lead | `null` | `null` | `null` | `pending` |
+| Vault / Investment Product Lead | `null` | `null` | `null` | `pending` |
+| Data Protection Lead | `null` | `null` | `null` | `pending` |
+| Developer Experience / Platform Lead | `null` | `null` | `null` | `pending` |
+| Principal Architect | `null` | `null` | `null` | `pending` |
+| Chief AI Officer | `null` | `null` | `null` | `pending` |
+| Payments Lead | `null` | `null` | `null` | `pending` |
+| Compliance Lead | `null` | `null` | `null` | `pending` |
+| Beverage Data / Catalog Lead | `null` | `null` | `null` | `pending` |
+| CMO / Growth lead | `null` | `null` | `null` | `pending` |
+| Chief AI Officer / Pricing Lead | `null` | `null` | `null` | `pending` |
+
+The Release Manager submission and Principal Architect review must be different named individuals, each with an ISO effective date and a resolving sign-off reference. A partial record fails closed. Even when acceptance is recorded, `M-PL-01` remains `planned` with a `null` evidence reference; owner acceptance does not close a gap, promote a phase or grant launch approval.
