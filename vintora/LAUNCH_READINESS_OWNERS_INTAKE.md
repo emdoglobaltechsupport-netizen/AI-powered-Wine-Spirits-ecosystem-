@@ -1,6 +1,6 @@
 # Vintora Launch Ownership Intake Template
 
-> **Prototype mode — no real orders are placed. NO-GO for public production launch.** This is a blank human intake template, not a signed record and not launch approval. The machine authority remains [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json), checked by `npm run launch-readiness-owners:check`. Every field below is `null` until a real human completes it.
+> **Prototype mode — no real orders are placed. NO-GO for public production launch.** This is a non-authoritative candidate intake template, not a signed record and not launch approval. The machine authority remains [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json), checked by `npm run launch-readiness-owners:check`. Candidate names and effective dates may be recorded below; every sign-off reference, acceptance reference and review date stays `null` until real humans complete them.
 
 Use this template to collect the real values for `M-PL-01`. Do not copy it into the machine config with placeholder names. Do not commit secrets or private personal data; use a resolving reference (an `http(s)` URL or a repository file path) for each sign-off. This template does not close a gap, accept the audit baseline or change the verdict.
 
@@ -8,7 +8,7 @@ Use this template to collect the real values for `M-PL-01`. Do not copy it into 
 
 | Role | Named individual | Effective date | Sign-off ref | Status |
 |---|---|---|---|---|
-| Release Manager | `null` | `null` | `null` | `pending` |
+| Release Manager | `DAVID NWAEZE` | `2026-11-27` | `null` | `candidate` |
 | Platform Security Lead | `null` | `null` | `null` | `pending` |
 | Platform SRE Lead | `null` | `null` | `null` | `pending` |
 | Staff Data Engineer | `null` | `null` | `null` | `pending` |
@@ -16,7 +16,7 @@ Use this template to collect the real values for `M-PL-01`. Do not copy it into 
 | Vault / Investment Product Lead | `null` | `null` | `null` | `pending` |
 | Data Protection Lead | `null` | `null` | `null` | `pending` |
 | Developer Experience / Platform Lead | `null` | `null` | `null` | `pending` |
-| Principal Architect | `null` | `null` | `null` | `pending` |
+| Principal Architect | `AKUCHUKEU DEBELU` | `2026-11-27` | `null` | `candidate` |
 | Chief AI Officer | `null` | `null` | `null` | `pending` |
 | Payments Lead | `null` | `null` | `null` | `pending` |
 | Compliance Lead | `null` | `null` | `null` | `pending` |
@@ -29,15 +29,15 @@ Use this template to collect the real values for `M-PL-01`. Do not copy it into 
 | Field | Value |
 |---|---|
 | Release owner role | `Release Manager` |
-| Release owner named individual | `null` |
-| Release owner effective date | `null` |
+| Release owner named individual | `DAVID NWAEZE` |
+| Release owner effective date | `2026-11-27` |
 | Distinct reviewer role | `Principal Architect` |
-| Distinct reviewer named individual | `null` |
-| Distinct reviewer effective date | `null` |
+| Distinct reviewer named individual | `AKUCHUKEU DEBELU` |
+| Distinct reviewer effective date | `2026-11-27` |
 | Acceptance reference | `null` |
 | Reviewed at | `null` |
 
-The release owner and distinct reviewer must be different named individuals. Each owner must have an ISO `YYYY-MM-DD` effective date and a resolving sign-off reference. A partial record fails closed.
+Candidate pairing recorded here: `DAVID NWAEZE` submits as Release Manager and `AKUCHUKEU DEBELU` reviews as Principal Architect. Effective dates are recorded as `2026-11-27`, but no sign-off reference, acceptance reference or review date is recorded, so this is not acceptance. The release owner and distinct reviewer must be different named individuals. Each owner must have an ISO `YYYY-MM-DD` effective date and a resolving sign-off reference. A partial record fails closed.
 
 ## 3. Completion procedure
 
