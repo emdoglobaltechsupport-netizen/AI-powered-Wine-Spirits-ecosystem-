@@ -25,6 +25,7 @@
     "ASSET_PROVENANCE.md",
     "SECURITY.md",
     "LAUNCH_READINESS_AUDIT.md",
+    "LAUNCH_READINESS_OWNERS_INTAKE.md",
     "DOCS_GOVERNANCE.md",
     "adr/README.md",
     "adr/TEMPLATE.md"

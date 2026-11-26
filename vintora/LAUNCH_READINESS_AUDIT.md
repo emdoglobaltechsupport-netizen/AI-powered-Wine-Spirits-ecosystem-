@@ -119,7 +119,7 @@ The register is not externally audited and not fully audited. No penetration tes
 
 ## 6. Named ownership acceptance
 
-Machine authority: [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json); checked by `npm run launch-readiness-owners:check`. This record covers `M-PL-01` only. Status: `pending` four-eyes acceptance; no named individual, effective date, sign-off reference or distinct reviewer acceptance is attached. It is not launch approval.
+Machine authority: [`config/launch-readiness-owners.json`](./config/launch-readiness-owners.json); checked by `npm run launch-readiness-owners:check`. Use [`LAUNCH_READINESS_OWNERS_INTAKE.md`](./LAUNCH_READINESS_OWNERS_INTAKE.md) to collect real values. This record covers `M-PL-01` only. Status: `pending` four-eyes acceptance; no named individual, effective date, sign-off reference or distinct reviewer acceptance is attached. It is not launch approval.
 
 | Owner role | Named individual | Effective date | Sign-off ref | Status |
 |---|---|---|---|---|

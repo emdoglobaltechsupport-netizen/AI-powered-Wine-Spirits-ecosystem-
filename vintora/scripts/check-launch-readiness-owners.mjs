@@ -39,6 +39,7 @@ if (typeof record.accepted !== 'boolean' || record.accepted !== record.auditBase
   fail('accepted and auditBaselineAccepted must agree');
 }
 if (!existsSync(join(ROOT, record.processDoc ?? ''))) fail(`missing process document: ${record.processDoc}`);
+if (!existsSync(join(ROOT, 'LAUNCH_READINESS_OWNERS_INTAKE.md'))) fail('missing blank ownership intake template');
 if (!pkg.scripts?.['launch-readiness-owners:check']) fail('package.json must expose launch-readiness-owners:check');
 if (audit.verdict !== 'NO-GO' || audit.publicLaunch !== false ||
     audit.promotionAllowed !== false || audit.launchApproval !== null) {
@@ -123,6 +124,7 @@ if (record.accepted) {
 for (const needle of [
   '## 6. Named ownership acceptance',
   'config/launch-readiness-owners.json',
+  'LAUNCH_READINESS_OWNERS_INTAKE.md',
   'M-PL-01',
   'pending',
   'not launch approval',
