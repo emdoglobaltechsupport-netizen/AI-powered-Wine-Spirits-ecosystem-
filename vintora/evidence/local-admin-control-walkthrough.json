@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "status": "local-prototype-admin-control-walkthrough",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "executedOn": "2026-11-26T16:05:23.435Z",
+  "runtimeProfile": "local",
+  "scope": "Loopback prototype API with the generated local seeded admin identity and a fresh local shopper identity.",
+  "targetLabel": "loopback prototype Admin API (host only)",
+  "identity": {
+    "adminAccount": "generated local seeded admin",
+    "shopperAccount": "fresh local test identity",
+    "secretsLogged": false
+  },
+  "checks": {
+    "health reports the prototype runtime boundary": true,
+    "admin access requires an elevation even for an admin role": true,
+    "JIT elevation is granted and visible in the session": true,
+    "coverage is count-only across 19 workspaces": true,
+    "high-impact kill-switch requires a distinct approver": true,
+    "privileged actions produce a local evidence manifest": true,
+    "local admin action log rejects mutation": true,
+    "ending the elevation revokes admin access immediately": true,
+    "break-glass requires a distinct named approver": true,
+    "break-glass is followed by a time-boxed JIT session and clean end": true
+  },
+  "details": {
+    "health reports the prototype runtime boundary": {
+      "runtimeProfile": "local",
+      "modules": 10,
+      "environment": "development"
+    },
+    "admin access requires an elevation even for an admin role": {
+      "anonymous": 401,
+      "shopper": 403,
+      "adminBeforeElevation": 403
+    },
+    "JIT elevation is granted and visible in the session": {
+      "mode": "jit",
+      "breakGlass": false,
+      "staffActive": true
+    },
+    "coverage is count-only across 19 workspaces": {
+      "workspaceCount": 19,
+      "rowPayloadsExposed": false
+    },
+    "high-impact kill-switch requires a distinct approver": {
+      "withoutApproverStatus": 400,
+      "toggledModels": 4,
+      "restored": true
+    },
+    "privileged actions produce a local evidence manifest": {
+      "records": 100,
+      "manifestPrefix": "sha256:"
+    },
+    "local admin action log rejects mutation": {
+      "rows": 309,
+      "mutationRejected": true
+    },
+    "ending the elevation revokes admin access immediately": {
+      "endStatus": 200,
+      "accessAfterEnd": 403
+    },
+    "break-glass requires a distinct named approver": {
+      "withoutApproverStatus": 400,
+      "distinctApprover": true
+    },
+    "break-glass is followed by a time-boxed JIT session and clean end": {
+      "jitBreakGlass": false,
+      "endStatus": 200
+    }
+  },
+  "unclosedGaps": [
+    "Production IdP-backed, phishing-resistant hardware MFA enrolment is not attached.",
+    "External immutable audit sink, WORM schedule and alert routing are not configured.",
+    "No production break-glass drill or post-incident review is attached."
+  ],
+  "resultRef": null,
+  "productionEvidenceRef": null,
+  "note": "Prototype-only local control walkthrough. Not production MFA proof, not an immutable audit sink test, not a breach or break-glass drill, not compliance sign-off and not launch approval. NO-GO remains unchanged."
+}

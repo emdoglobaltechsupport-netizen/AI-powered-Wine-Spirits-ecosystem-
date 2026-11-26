@@ -10,6 +10,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "echo 'api: run test:smoke with the API running'",
     "test:smoke": "node scripts/smoke.mjs",
+    "load:baseline": "node scripts/local-load-baseline.mjs",
+    "admin:walkthrough": "node scripts/admin-control-walkthrough.mjs",
     "db:migrate": "tsx src/db/migrate-cli.ts",
     "db:setup": "tsx src/db/cli.ts",
     "db:migrations:test": "tsx scripts/migration-mode-check.ts",

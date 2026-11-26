@@ -25,3 +25,5 @@ Local privileged actions are append-only and include MFA, elevation scope, break
 ## Verification
 
 `npm run admin:check` verifies register/code parity and records the missing external controls. It does not prove MFA enrolment, immutable forwarding, alert routing or safe production operation, and it does not grant launch clearance.
+
+`npm run admin:walkthrough:local` records a local prototype control walkthrough at [`evidence/local-admin-control-walkthrough.json`](./evidence/local-admin-control-walkthrough.json): JIT elevation, distinct-approver gates, session revocation, count-only coverage and local append-only audit, using only the generated local seeded identity. It is not production MFA proof, an immutable external audit sink test, a break-glass incident drill or launch approval.

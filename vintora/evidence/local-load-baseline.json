@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "status": "local-prototype-load-baseline",
+  "prototypeMode": true,
+  "publicLaunch": false,
+  "verdict": "NO-GO",
+  "executedOn": "2026-11-26T16:05:03.607Z",
+  "runtimeProfile": "local",
+  "scope": "Loopback prototype API only; sequential anonymous requests against a disposable local database.",
+  "targetLabel": "loopback prototype API (host only)",
+  "sample": {
+    "warmupsPerRoute": 3,
+    "measuredRequestsPerRoute": 30,
+    "concurrency": 1,
+    "totalMeasuredRequests": 90
+  },
+  "health": {
+    "status": "ok",
+    "runtimeProfile": "local",
+    "runtimeBoundaryOk": true,
+    "dbOk": true,
+    "embeddingMode": "jsonb"
+  },
+  "routes": [
+    {
+      "id": "health",
+      "method": "GET",
+      "path": "/health",
+      "designTargetRoute": null,
+      "samples": 30,
+      "statusCodes": {
+        "200": 30
+      },
+      "observedMs": {
+        "min": 10.23,
+        "p50": 15.86,
+        "p95": 21.48,
+        "p99": 21.74,
+        "max": 21.74
+      }
+    },
+    {
+      "id": "products",
+      "method": "GET",
+      "path": "/v1/products",
+      "designTargetRoute": "/v1/products",
+      "samples": 30,
+      "statusCodes": {
+        "200": 30
+      },
+      "observedMs": {
+        "min": 14.29,
+        "p50": 28.23,
+        "p95": 36.87,
+        "p99": 58.3,
+        "max": 58.3
+      }
+    },
+    {
+      "id": "sommelier",
+      "method": "POST",
+      "path": "/v1/sommelier/ask",
+      "designTargetRoute": null,
+      "samples": 30,
+      "statusCodes": {
+        "200": 30
+      },
+      "observedMs": {
+        "min": 4.19,
+        "p50": 7.72,
+        "p95": 10.93,
+        "p99": 13.2,
+        "max": 13.2
+      }
+    }
+  ],
+  "checks": {
+    "loopbackOnly": true,
+    "healthOk": true,
+    "runtimeBoundaryOk": true,
+    "allResponsesExpected": true,
+    "noRateLimitDenials": true
+  },
+  "targetIntegrity": {
+    "capacityModelMeasuredFieldsStillNull": true,
+    "testPlansStillPlanned": true,
+    "sloPipelineStillUnimplemented": true
+  },
+  "resultRef": null,
+  "productionEvidenceRef": null,
+  "note": "Prototype-only local latency baseline. Not a hosted load test, stress/soak/canary/chaos result, SLO or p95/p99-by-route evidence, production measurement, security audit or launch approval. All capacity figures remain targets and the verdict remains NO-GO."
+}

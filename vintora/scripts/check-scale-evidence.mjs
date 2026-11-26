@@ -116,6 +116,30 @@ for (const ref of policy.codeBoundaryRefs) {
   if (!existsSync(join(ROOT, ref))) fail(`missing capacity model reference: ${ref}`);
 }
 
+// A small sequential loopback baseline may be recorded as prototype evidence,
+// but it must never become a load-test, SLO or p95/p99-by-route measurement.
+if (policy.localPrototypeBaselineRef !== undefined) {
+  const baselinePath = policy.localPrototypeBaselineRef;
+  if (!existsSync(join(ROOT, baselinePath))) {
+    fail(`missing local prototype baseline evidence: ${baselinePath}`);
+  } else {
+    const baseline = JSON.parse(read(baselinePath));
+    if (baseline.status !== 'local-prototype-load-baseline' || baseline.prototypeMode !== true ||
+        baseline.publicLaunch !== false || baseline.verdict !== 'NO-GO' ||
+        baseline.resultRef !== null || baseline.productionEvidenceRef !== null) {
+      fail('local baseline must stay prototype-only with NO-GO and null external/production refs');
+    }
+    if (baseline.sample?.concurrency !== 1) {
+      fail('local baseline must stay sequential (concurrency 1), not a load test');
+    }
+    if (baseline.targetIntegrity?.capacityModelMeasuredFieldsStillNull !== true ||
+        baseline.targetIntegrity?.testPlansStillPlanned !== true ||
+        baseline.targetIntegrity?.sloPipelineStillUnimplemented !== true) {
+      fail('local baseline must record that capacity targets, test plans and SLO measurement remain untouched');
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`Scale evidence check failed: ${errors.length} finding(s).`);
   for (const error of errors) console.error(`  - ${error}`);

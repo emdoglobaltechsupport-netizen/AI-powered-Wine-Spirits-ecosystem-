@@ -90,6 +90,33 @@ requireText(doc, 'No shared super-admin identity is used.', 'ADMIN_ACCESS_CONTRO
 requireText(doc, 'No external immutable audit sink', 'ADMIN_ACCESS_CONTROLS.md');
 requireText(doc, 'not a production account', 'ADMIN_ACCESS_CONTROLS.md');
 
+// A local control walkthrough may demonstrate prototype gates, but it must not
+// be presented as production IdP/MFA proof, an immutable-sink test, an incident
+// drill or launch clearance.
+if (policy.localPrototypeWalkthroughRef !== undefined) {
+  const walkthroughPath = policy.localPrototypeWalkthroughRef;
+  if (!existsSync(join(ROOT, walkthroughPath))) {
+    fail(`missing local prototype Admin walkthrough evidence: ${walkthroughPath}`);
+  } else {
+    const walkthrough = JSON.parse(read(walkthroughPath));
+    if (walkthrough.status !== 'local-prototype-admin-control-walkthrough' ||
+        walkthrough.prototypeMode !== true || walkthrough.publicLaunch !== false ||
+        walkthrough.verdict !== 'NO-GO' || walkthrough.resultRef !== null ||
+        walkthrough.productionEvidenceRef !== null) {
+      fail('local Admin walkthrough must stay prototype-only with NO-GO and null external/production refs');
+    }
+    if (Object.values(walkthrough.checks ?? {}).some((value) => value !== true)) {
+      fail('local Admin walkthrough must record only passing control checks');
+    }
+    if (!Array.isArray(walkthrough.unclosedGaps) || walkthrough.unclosedGaps.length < 3) {
+      fail('local Admin walkthrough must list the unclosed production control gaps');
+    }
+    if (walkthrough.identity?.secretsLogged !== false) {
+      fail('local Admin walkthrough must not record credentials');
+    }
+  }
+}
+
 if (errors.length) {
   console.error(`Admin access check failed: ${errors.length} finding(s).`);
   for (const error of errors) console.error(`  - ${error}`);

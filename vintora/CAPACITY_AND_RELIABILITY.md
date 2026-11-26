@@ -57,3 +57,5 @@ Every plan has `status: "planned"`, `evidenceRef: null` and an owner role. No pl
 ## Verification and boundaries
 
 `npm run scale:check` verifies that targets are labelled, the derived workload arithmetic is consistent, all measured fields are null and all test plans remain planned. A green run proves register integrity only; it does not size production infrastructure, validate an SLO, measure latency or grant launch clearance.
+
+A small sequential loopback baseline is recorded as prototype-only evidence at [`evidence/local-load-baseline.json`](./evidence/local-load-baseline.json) via `npm run load:baseline:local`. It is a design-stage sanity check only: no load, stress, soak, canary or chaos plan was run, and `measuredP95Ms`, `measuredP99Ms` and every test-plan evidence ref remain `null`. Policy figures stay design targets and unmeasured planning estimates.

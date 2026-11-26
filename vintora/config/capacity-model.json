@@ -4,6 +4,8 @@
   "prototypeMode": true,
   "publicLaunch": false,
   "notice": "All figures below are design targets and derived planning estimates, not measured results or committed capacity. No load, stress, soak, canary or chaos test result is attached. SLOs are policies for future measurement, not observed availability.",
+  "localPrototypeBaselineRef": "evidence/local-load-baseline.json",
+  "localPrototypeBaselineNote": "Small sequential loopback baseline, prototype-only; not a load test, SLO result or p95/p99-by-route evidence.",
   "canonicalTargets": {
     "users2034": 100000000,
     "mau2034": 60000000,

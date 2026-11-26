@@ -47,6 +47,8 @@
     "africa:selftest": "npm run africa:selftest --workspace @vintora/db",
     "dev:api": "npm run dev --workspace @vintora/api",
     "dev:web": "npm run dev --workspace @vintora/web",
+    "load:baseline:local": "npm run load:baseline --workspace @vintora/api",
+    "admin:walkthrough:local": "npm run admin:walkthrough --workspace @vintora/api",
     "dev:down": "docker compose down",
     "setup": "node scripts/setup.mjs",
     "setup:env": "node scripts/setup-env.mjs",

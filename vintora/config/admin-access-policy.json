@@ -1,6 +1,7 @@
 {
   "policyVersion": "v1",
   "status": "prototype-deny-by-default",
+  "localPrototypeWalkthroughRef": "evidence/local-admin-control-walkthrough.json",
   "sharedSuperAdminIdentitiesAllowed": false,
   "individualAccountsRequired": true,
   "phishingResistantMfaRequired": true,
